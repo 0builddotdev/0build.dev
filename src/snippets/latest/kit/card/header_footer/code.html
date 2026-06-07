@@ -1,0 +1,40 @@
+<div class="z-card max-w-sm">
+  <div class="z-card-header">
+    <h3 class="z-card-title">Create project</h3>
+    <p class="mt text-muted-foreground" style="--mt: 2">
+      Deploy your new project in one-click.
+    </p>
+  </div>
+  <div class="z-card-body">
+    <div class="">
+      <label class="z-form-label" for="name">Name</label>
+      <div class="z-form-controls mt" style="--mt: 2">
+        <input
+          class="z-input"
+          id="name"
+          type="text"
+          aria-describedby="name-help-block"
+          placeholder="Name"
+        />
+        <div id="name-help-block" class="z-form-help mt" style="--mt: 2">
+          The name of your project.
+        </div>
+      </div>
+    </div>
+
+    <div class="mt" style="--mt: 4">
+      <label class="z-form-label" for="framework">Framework</label>
+      <div class="z-form-controls mt" style="--mt: 2">
+        <select class="z-select" name="framework">
+          <option value="sveltekit">Sveltekit</option>
+          <option value="astro" selected>Astro</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="z-card-footer display-flex justify-between">
+    <button class="z-button z-button-default">Cancel</button>
+    <button class="z-button z-button-primary">Deploy</button>
+  </div>
+</div>

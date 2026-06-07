@@ -1,0 +1,29 @@
+---
+group: getting-started
+project: kit
+order: 1
+text: Installation
+title: Installation
+lead: Learn how to install and integrate 0build in your projects.
+meta:
+  description: Learn how to install and integrate 0build in your projects.
+tbc: false
+---
+
+import { Code } from "astro:components";
+import { stl } from "helpers/common";
+import boilerplate from "public/boilerplate.txt?raw";
+
+Get started instantly in the online [Playground](https://play.0build.dev), or quickly <button type="button" class="z-link" x-data x-on:click="copy('/boilerplate.txt')">copy</button> the boilerplate below.
+
+<div
+  class="ec mt bg z-shadow z-rounded border-w border"
+  style={stl({
+    "--mt": "6",
+    "--bg": "#17191e",
+    "--border-w": "1px",
+    "--border": "#858b9833",
+  })}
+>
+  <Code theme="houston" code={boilerplate} lang="html" />
+</div>

@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Docs from "layouts/docs.astro";
+
+export const getStaticPaths = (async () => {
+  const latest = await getCollection("latest");
+
+  return latest.map((entry) => {
+    const pathParts = entry.id.split("/");
+    const project = pathParts[0];
+    const slug = pathParts.slice(1).join("/");
+
+    return {
+      params: { project, slug },
+      props: { id: entry.id },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.props;
+const { project } = Astro.params;
+---
+
+<Docs version="latest" id={id} project={project} />

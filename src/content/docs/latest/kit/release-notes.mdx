@@ -1,0 +1,91 @@
+---
+group: getting-started
+project: kit
+order: 0
+text: Release Notes
+title: Release Notes
+meta:
+  robots: noindex
+tbc: false
+dot: true
+---
+
+## June 14, 2026
+
+**v0.4.5**
+
+Welcome to **0build**.
+
+**Rebranding... again**
+
+We have outgrown our own skin! Franken UI and Frankenstyle no longer reflect what this project does, as it now has its own ecosystem. Frankenstyle should have been the final name, but right after its release, npm suffered another major attack (Team PCP). Hence:
+
+**Cutting off NPM**
+
+We're moving away from npm and becoming 100% CDN-based — hence the new name. For the last few months, Microsoft has kept changing the goalposts, forcing mandatory 2FA and expiring tokens. Publishing is no longer as simple as running `npm publish`. It's a nightmare for a solo maintainer.
+
+**GitHub... again**
+
+We tried to distance ourselves from Microsoft's claws by moving to Codeberg. However, we learned that we can still publish directly to `jsdelivr` using GitHub. So, we're going back.
+
+**Clean Break**
+
+We will leave the old repositories and websites as they are, with the exception of redirecting [https://franken.style](https://franken.style) to the new home at [https://038.0build.dev](https://038.0build.dev).
+
+### Ecosystem changes:
+
+- Introducing [Playground](https://play.0build.dev) - Distraction-free HTML playground that stays out of your way. Enjoy a floating editor, realtime preview, autosave, and instant downloads.
+- Discontinuation of [Frankternity](https://038.0build.dev/docs/latest/ft/introduction): its binaries are independent, so you can still use it as usual; it simply won't be updated.
+
+### Changelog
+
+- Add new [inline value shorthand](/docs/latest/style/runtime#inline-value-shorthand) feature.
+- Fix hardcoded 10% border opacity values
+- Fix runtime debugger false positives
+
+### Upgrading from FrankenstyleKit
+
+You are not forced to update. FrankenstyleKit will continue to work! However, upgrading from `v0.3.8` is fully possible if you are not relying on Tailwind CSS for your utility classes. Here's how to migrate:
+
+#### 1. Global Find & Replace
+
+- Find and replace `uk-*` with `z-*`
+- Find and replace `dropdown: w-full` with `dropdown: z-dropdown w-full`
+- Find and replace `UIkit` with `zUIkit`
+- Find and replace `FS` with `zRuntime`
+- Find and replace `Lucide` with `zLucide`
+- Find and replace `ApexCharts` with `zApexCharts`
+- Asset URL change: The easiest approach is to refer to the new [boilerplate](/boilerplate.txt).
+  
+#### 2. Asset URL Updates
+
+Because UIkit follows a different update cycle, it has been moved out of the `core.iife.js` and now has its own binary—please include it somewhere in your HTML document.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/uikit.min.js"></script>
+```
+
+### Breaking Changes
+
+- Remove `drop=""` option from `z-select` and `z-input-date` components. They will not work anymore. You can manually add `z-dropdown` class as stated above.
+- Because of changes in dropdown mechanics, a minor bug created a `z-index` issue. To fix this, you can either create a custom class with a `z-index` and apply it to the `dropdown` part via `cls="dropdown: custom-class"`, or you can set it using the `stl` attribute like so: `stl="dropdown: z-index\: 1020"`. Here's the correct implementation:
+
+  ```html
+  <z-select
+    cls="button: z-input-fake justify-between w-full; dropdown: z-dropdown w-full"
+    stl="dropdown: z-index\: 1020"
+  >
+    <!-- ... -->
+  </z-select>
+  ```
+
+  The same treatment for your `z-input-date` components:
+
+  ```html
+  <z-input-date
+    cls="z-input-fake justify-between"
+    stl="dropdown: z-index\: 1020"
+  ></z-input-date>
+  ```
+
+- The `uk-command` component is also remove. It will be replace with a better component in the future release.

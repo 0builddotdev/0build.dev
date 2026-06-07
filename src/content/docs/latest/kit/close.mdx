@@ -1,0 +1,80 @@
+---
+group: components
+project: kit
+text: Close
+title: Close
+lead: Create a close icon that can be combined with different components.
+meta:
+  description: Create a close icon that can be combined with different components.
+context: https://0build.dev/contexts/kit-implementation/close.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To apply this component, add the `data-z-close` attribute to an `<a>` or `<button>` element.
+
+```html
+<button type="button" data-z-close></button>
+
+<a href="" data-z-close></a>
+```
+
+<Snippet project="kit" component="close.basic" />
+
+## Close in alerts
+
+This is an example of how this component is used with an alert box from the [Alert component](/docs/latest/kit/alert).
+
+```html
+<div class="z-alert" data-z-alert>
+  <a href class="z-alert-close" data-z-close></a>
+</div>
+```
+
+<Snippet project="kit" component="close.alert" />
+
+## Close in drops
+
+This is an example of how this component is used with the [Drop component](/docs/latest/kit/drop).
+
+```html
+<div data-z-drop>
+  <button class="z-drop-close" type="button" data-z-close></button>
+</div>
+```
+
+<Snippet project="kit" component="close.drop" />
+
+## Close in modals
+
+This is an example of how this component is used with the [Modal component](/docs/latest/kit/modal).
+
+```html
+<div id="modal" data-z-modal>
+  <div class="z-modal-dialog z-modal-body">
+    <button
+      class="z-modal-close absolute right-4 top-4"
+      type="button"
+      data-z-close
+    ></button>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="close.modal" />
+
+## Accessibility
+
+The Close component automatically sets the appropriate WAI-ARIA roles and properties.
+
+- The _close icon_ has the `aria-label` property, and if an `<a>` element is used, the `button` role.
+
+### Internationalization
+
+The Close component uses the following translation strings. Learn more about [translating components](/docs/latest/kit/accessibility).
+
+| Key     | Default | Description             |
+| ------- | ------- | ----------------------- |
+| `label` | `Close` | `aria-label` attribute. |

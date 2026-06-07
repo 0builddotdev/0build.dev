@@ -1,0 +1,132 @@
+---
+group: getting-started
+order: 0
+text: Introduction
+title: Introduction
+context: https://0build.dev/contexts/utilities-usage.md
+---
+
+## Overview
+
+A **no-build, value-driven, utility-first CSS framework**. Takes inspiration from Tailwind CSS but simplifies setup by **removing the need for a build pipeline**. No PostCSS, no config files, no `vite.config.js`. Just drop in the CSS via CDN and start styling.
+
+Core features:
+
+* **Utility-first syntax** (similar to Tailwind CSS)
+* **Lightweight, value-driven styling** (utilities paired with CSS variables you define)
+* **Runtime state generation** (`:hover`, `:active`, etc.)
+* **Responsive and theme-aware design**
+
+## Philosophy
+
+Built around a few guiding principles:
+
+**1\.** No build process
+
+Everything is pre-compiled and can be consumed via CDN. No bundler, no file watchers, no CLI, no config.
+
+**2\.** Value-driven utilities
+
+Instead of bundling hundreds of pre-defined classes (`m-2`, `m-4`, `p-6`), the system uses **generic utility names** (`m`, `p`, `bg`) paired with **CSS custom properties** that you define.
+
+| Usage              | Purpose             |
+|--------------------|---------------------|
+| `class="p"`        | Apply padding       |
+| `style="--p: 4"`   | Define its value    |
+
+No need to memorize odd variable names. Just drop special characters from the class:
+
+| Class Name         | Variable Name        |
+|--------------------|----------------------|
+| `sm:m`             | `--sm-m`             |
+| `dark:sm:bg:hover` | `--dark-sm-bg-hover` |
+
+**3\.** Explicit, intentional styling
+
+Utility classes and their values should always go together. This prevents accidental styling and enforces intentional design.
+
+**4\.** Runtime state generation
+
+Hover, focus, and other states aren't shipped in a large CSS bundle. State CSS is **generated at runtime**, when and where it's needed.
+
+**5\.** Familiar but simplified
+
+The syntax feels like Tailwind CSS (`sm:`, `md:`, `dark:`), but values are fully customizable and declarative.
+
+## Core Concepts
+
+### 1. Value-driven utilities
+
+The framework provides the utility class, and you provide the value:
+
+```html
+<div class="m sm:m md:m" style="--m: 4; --sm-m: 8; --md-m: 16"></div>
+```
+
+* Base spacing is multiplied by `var(--spacing)` to keep values consistent.
+* Arbitrary values are supported using bracket syntax:
+
+```html
+<div class="[m]" style="--m: 4px"></div>
+```
+
+### 2. State management (`:hover`, `:active`)
+
+States are generated dynamically at runtime.
+
+```html
+<button
+  class="bg bg:hover dark:bg dark:bg:hover px py"
+  style="
+    --bg: var(--color-blue-600);
+    --bg-hover: var(--color-blue-800);
+    --dark-bg: var(--color-pink-600);
+    --dark-bg-hover: var(--color-pink-700);
+    --px: 5;
+    --py: 2.5;
+  "
+>
+  Button
+</button>
+```
+
+| Class Name       | Purpose                    |
+|------------------|----------------------------|
+| `bg:hover`       | Hover background           |
+| `dark:bg:hover`  | Dark mode hover background |
+
+Works with any color utilities (`color`, `border`, `fill`, etc.).
+
+### 3. Responsive design
+
+Follows Tailwind CSS' responsive prefixes:
+
+| Prefix  | Breakpoint       |
+|---------|------------------|
+| `sm:`   | Small            |
+| `md:`   | Medium           |
+| `lg:`   | Large            |
+| `xl:`   | Extra large      |
+| `2xl:`  | 2x Extra large   |
+
+```html
+<div class="p sm:p md:p" style="--p: 2; --sm-p: 4; --md-p: 8"></div>
+```
+
+### 4. Opacity handling
+
+Opacity is controlled with the `/o` suffix and requires two variables:
+
+```html
+<div
+  class="bg/o dark:bg/o"
+  style="
+    --bg: var(--color-blue-800);
+    --bg-o: 80%;
+    --dark-bg: var(--color-green-800);
+    --dark-bg-o: 80%;
+  "
+></div>
+```
+
+This ensures explicit opacity control and avoids inheritance issues.

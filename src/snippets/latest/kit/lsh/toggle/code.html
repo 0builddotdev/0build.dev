@@ -1,0 +1,70 @@
+<style>
+  @layer base {
+    .dark\:display-hidden:where(.dark, .dark *) {
+      display: none;
+    }
+
+    .dark\:display-inline-block:where(.dark, .dark *) {
+      display: inline-block;
+    }
+
+    .dark-slide-icon {
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+      overflow: hidden;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .dark-slide-sun {
+      transform: translate(-50%, -100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .dark-slide-moon {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dark\:dark-slide-moon:where(.dark, .dark *) {
+      transform: translate(-50%, 100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .dark\:dark-slide-sun:where(.dark, .dark *) {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+</style>
+
+<z-lsh
+  class="size"
+  style="--size: 8"
+  toggle
+  group="mode"
+  cls="z-button z-button-icon z-button-secondary z-button-small relative"
+>
+  <template data-fn="template">
+    <z-icon
+      class="dark-slide-icon dark-slide-moon dark:dark-slide-moon"
+      icon="moon"
+    >
+    </z-icon>
+    <z-icon
+      class="dark-slide-icon dark-slide-sun dark:dark-slide-sun"
+      icon="sun"
+    >
+    </z-icon>
+  </template>
+</z-lsh>

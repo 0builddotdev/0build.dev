@@ -1,0 +1,84 @@
+---
+group: components
+project: kit
+text: List
+title: List
+lead: Easily create nice looking lists, which come in different styles.
+meta:
+  description: Easily create nice looking lists, which come in different styles.
+context: https://0build.dev/contexts/kit-implementation/list.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To apply this component, add the `.z-list` class to an unordered or ordered list. The list will now display without any spacing or list-style.
+
+```html
+<ul class="z-list">
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+```
+
+<Snippet project="kit" component="list.basic" />
+
+## Style type modifiers
+
+Add one of the following classes to set the marker of a list item.
+
+| Class              | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| `.z-list-disc`    | Use a filled circle as a marker.                 |
+| `.z-list-circle`  | Use a hollow circle as marker.                   |
+| `.z-list-square`  | Use a filled square as marker                    |
+| `.z-list-decimal` | Use decimal numbers as marker. Beginning with 1. |
+| `.z-list-hyphen`  | Use a hyphen as marker                           |
+
+```html
+<ul class="z-list z-list-disc">
+  …
+</ul>
+```
+
+<Snippet project="kit" component="list.style" />
+
+## Divider modifier
+
+Add the `.z-list-divider` class to separate list items with lines.
+
+```html
+<ul class="z-list z-list-divider">
+  …
+</ul>
+```
+
+<Snippet project="kit" component="list.divider" />
+
+## Striped modifier
+
+Add zebra-striping to a list using the `.z-list-striped` class.
+
+```html
+<ul class="z-list z-list-striped">
+  …
+</ul>
+```
+
+<Snippet project="kit" component="list.striped" />
+
+## Accessibility
+
+Set the appropriate WAI-ARIA roles, states and properties to the List component.
+
+- If a `<div>` element is used, set the `list` role to the list, and the `listitem` role to the list items.
+
+```html
+<div class="z-list" role="list">
+  <div role="listitem">List item 1</div>
+  <div role="listitem">List item 2</div>
+  <div role="listitem">List item 3</div>
+</div>
+```

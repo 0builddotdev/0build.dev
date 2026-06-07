@@ -1,0 +1,252 @@
+<div data-z-filter="target: .js-filter">
+  <div class="display-flex items-center justify-between">
+    <div class="flex-1">
+      <div
+        class="display-flex gap-x [divide-x] border/o"
+        style="
+          --gap-x: 4;
+          --divide-x: 1px;
+          --border: var(--z-border);
+          --border-o: var(--z-border-o);
+        "
+      >
+        <div>
+          <ul class="z-subnav z-subnav-primary" z-margin>
+            <li class="z-active" data-z-filter-control>
+              <a href="#">All</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul class="z-subnav z-subnav-primary" z-margin>
+            <li data-z-filter-control="[data-color='white']">
+              <a href="#">White</a>
+            </li>
+            <li data-z-filter-control="[data-color='blue']">
+              <a href="#">Blue</a>
+            </li>
+            <li data-z-filter-control="[data-color='black']">
+              <a href="#">Black</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul class="z-subnav z-subnav-primary" z-margin>
+            <li data-z-filter-control="[data-size='small']">
+              <a href="#">Small</a>
+            </li>
+            <li data-z-filter-control="[data-size='medium']">
+              <a href="#">Medium</a>
+            </li>
+            <li data-z-filter-control="[data-size='large']">
+              <a href="#">Large</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="display-flex flex-none gap-x" style="--gap-x: 4">
+      <span class="z-active" data-z-filter-control="sort: data-name">
+        <a class="z-icon-link" href="#" aria-label="Sort ascending">
+          <z-icon icon="arrow-down"></z-icon>
+        </a>
+      </span>
+      <span data-z-filter-control="sort: data-name; order: desc">
+        <a class="z-icon-link" href="#" aria-label="Sort descending">
+          <z-icon icon="arrow-up"></z-icon>
+        </a>
+      </span>
+    </div>
+  </div>
+
+  <ul
+    class="js-filter mt display-grid grid-cols md:grid-cols text-center"
+    data-z-grid="masonry: true"
+    style="--mt: 4; --grid-cols: 2; --md-grid-cols: 3"
+  >
+    <li
+      class="p"
+      data-name="A"
+      data-color="white"
+      data-size="large"
+      style="--p: 4"
+    >
+      <div class="h" style="--h: 96">
+        <div class="z-position-center">A</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="B"
+      data-color="blue"
+      data-size="small"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="
+          --h: 60;
+          --bg: var(--color-blue-500);
+          --color: var(--color-blue-50);
+        "
+      >
+        <div class="z-position-center">B</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="C"
+      data-color="white"
+      data-size="medium"
+      style="--p: 4"
+    >
+      <div class="h" style="--h: 80">
+        <div class="z-position-center">C</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="D"
+      data-color="white"
+      data-size="small"
+      style="--p: 4"
+    >
+      <div class="h" style="--h: 60">
+        <div class="z-position-center">D</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="E"
+      data-color="black"
+      data-size="medium"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="--h: 80; --bg: var(--color-black); --color: var(--color-white)"
+      >
+        <div class="z-position-center">E</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="F"
+      data-color="black"
+      data-size="small"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="--h: 60; --bg: var(--color-black); --color: var(--color-white)"
+      >
+        <div class="z-position-center">F</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="G"
+      data-color="blue"
+      data-size="medium"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="
+          --h: 80;
+          --bg: var(--color-blue-500);
+          --color: var(--color-blue-50);
+        "
+      >
+        <div class="z-position-center">G</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="H"
+      data-color="black"
+      data-size="large"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="--h: 96; --bg: var(--color-black); --color: var(--color-white)"
+      >
+        <div class="z-position-center">H</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="I"
+      data-color="blue"
+      data-size="large"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="
+          --h: 96;
+          --bg: var(--color-blue-500);
+          --color: var(--color-blue-50);
+        "
+      >
+        <div class="z-position-center">I</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="J"
+      data-color="white"
+      data-size="large"
+      style="--p: 4"
+    >
+      <div class="h" style="--h: 96">
+        <div class="z-position-center">J</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="K"
+      data-color="blue"
+      data-size="medium"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="
+          --h: 80;
+          --bg: var(--color-blue-500);
+          --color: var(--color-blue-50);
+        "
+      >
+        <div class="z-position-center">K</div>
+      </div>
+    </li>
+
+    <li
+      class="p"
+      data-name="L"
+      data-color="black"
+      data-size="small"
+      style="--p: 4"
+    >
+      <div
+        class="h bg color"
+        style="--h: 60; --bg: var(--color-black); --color: var(--color-white)"
+      >
+        <div class="z-position-center">L</div>
+      </div>
+    </li>
+  </ul>
+</div>

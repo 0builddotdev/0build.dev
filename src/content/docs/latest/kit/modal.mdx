@@ -1,0 +1,293 @@
+---
+group: components
+project: kit
+text: Modal
+title: Modal
+lead: Create modal dialogs with different styles and transitions.
+meta:
+  description: Create modal dialogs with different styles and transitions.
+keywords: "dialog"
+context: https://0build.dev/contexts/kit-implementation/modal.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+The Modal component consists of an overlay, a dialog and an optional close button. You can use any element to toggle a modal dialog. To enable the necessary JavaScript, add the `data-z-toggle` attribute. An `<a>` element needs to be linked to the modal's id. If you are using another element, like a button, just add the `data-z-toggle="target: #ID"` attribute to target the id of the modal container.
+
+Add the `data-z-modal` attribute to a `<div>` element to create the modal container and an overlay that blanks out the page. It is important to add an `id` to indicate the element for toggling. Use the following classes to define the modal's sections.
+
+| Class              | Description                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------- |
+| `.z-modal-dialog` | Add this class to a child `<div>` element to create the dialog                                          |
+| `.z-modal-body`   | Add this class to create padding between the modal and its content.                                     |
+| `.z-modal-title`  | Add this class to a heading element to create the modal title.                                          |
+| `.z-modal-close`  | Add this class to an `<a>` or `<button>` element to create a close button and enable its functionality. |
+
+```html
+<!-- This is a button toggling the modal -->
+<button data-z-toggle="target: #my-id" type="button"></button>
+
+<!-- This is the modal -->
+<div class="z-modal" id="my-id" data-z-modal>
+  <div class="z-modal-dialog z-modal-body">
+    <h2 class="z-modal-title"></h2>
+    <button class="z-modal-close" type="button"></button>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="modal.basic" />
+
+## Close button
+
+To create a close button, enable its functionality and add proper styling and positioning, add the `.z-modal-close` class to an `<a>` or `<button>` element.
+
+Add the `data-z-close` attribute from the [Close component](/docs/latest/kit/close), to apply a close icon.
+
+```html
+<div>
+  <div class="z-modal-dialog">
+    <button
+      class="z-modal-close absolute right-4 top-4"
+      type="button"
+      data-z-close
+    ></button>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="modal.close" />
+
+## Center modal
+
+To vertically center the modal dialog, you can use the `.z-margin-auto-vertical` class.
+
+```html
+<div class="z-flex-top" data-z-modal>
+  <div class="z-modal-dialog z-margin-auto-vertical"></div>
+</div>
+```
+
+<Snippet project="kit" component="modal.center" />
+
+<span class="z-label z-label-primary">Note</span> `.z-flex-top` on the modal
+container is needed to support IE 11.
+
+## Header and footer
+
+To divide the modal into different content sections, use the following classes.
+
+| Class              | Description                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| `.z-modal-header` | Add this class to a `<div>` element to create the modal header. |
+| `.z-modal-footer` | Add this class to a `<div>` element to create the modal footer. |
+
+```html
+<div class="z-modal" data-z-modal>
+  <div class="z-modal-dialog">
+    <button
+      class="z-modal-close absolute right-4 top-4"
+      type="button"
+      data-z-close
+    ></button>
+    <div class="z-modal-header">
+      <h2 class="z-modal-title"></h2>
+    </div>
+    <div class="z-modal-body"></div>
+    <div class="z-modal-footer"></div>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="modal.header_footer" />
+
+## Container modifier
+
+Add the `.z-modal-container` class to expand the modal dialog to the default [Container](/docs/latest/kit/container) width.
+
+```html
+<div class="z-modal-container" data-z-modal>...</div>
+```
+
+<Snippet project="kit" component="modal.container" />
+
+## Full modifier
+
+To create a modal, that fills the entire page, add the `.z-modal-full` class.
+
+```html
+<div class="z-modal z-modal-full" data-z-modal>
+  <div class="z-modal-dialog">
+    <button class="z-modal-close" type="button" data-z-close></button>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="modal.full" />
+
+## Overflow
+
+By default, the page will scroll with the modal, if its content exceeds the window height. To apply a scrollbar inside the modal, add the `data-z-overflow-auto` attribute to the modal body.
+
+```html
+<div class="z-modal" data-z-modal>
+  <div class="z-modal-dialog" data-z-overflow-auto></div>
+</div>
+```
+
+<Snippet project="kit" component="modal.overflow" />
+
+## Media
+
+If you want to display media, you should first check, if the [Lightbox component](/docs/latest/kit/lightbox) doesn't already offer everything you need. However, you can also use the modal to have more control over the markup to wrap your media in.
+
+<span class="z-label z-label-primary">Note</span> Use the `data-z-video`
+attribute from the [Video component](/docs/latest/kit/video) to make sure videos are
+stopped when the modal is closed.
+
+```html
+<div class="z-modal" data-z-modal>
+  <div class="z-modal-dialog w-auto">
+    <iframe src="" data-z-video></iframe>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="modal.media" />
+
+## Groups
+
+You can group multiple modals by linking from one to the other and back. Use this to create multistep wizards inside your modals.
+
+```html
+<div id="modal-group-1" class="z-modal" data-z-modal>
+  <div class="z-modal-dialog">
+    <a href="#modal-group-2" data-z-toggle>Next</a>
+  </div>
+</div>
+
+<div id="modal-group-2" data-z-modal>
+  <div class="z-modal-dialog">
+    <a href="#modal-group-1" data-z-toggle>Previous</a>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="modal.groups" />
+
+## Component options
+
+Any of these options can be applied to the component attribute. Separate multiple options with a semicolon. [Learn more](/docs/latest/kit/javascript#component-configuration)
+
+| Option      | Value   | Default           | Description                                                                                                                                          |
+| ----------- | ------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `esc-close` | Boolean | `true`            | Close the modal when the _Esc_ key is pressed.                                                                                                       |
+| `bg-close`  | Boolean | `true`            | Close the modal when the background is clicked.                                                                                                      |
+| `stack`     | Boolean | `false`           | Stack modals, when more than one is open. By default, the previous modal will be hidden.                                                             |
+| `container` | String  | `true`            | Define a target container via a selector to specify where the modal should be appended in the DOM. Setting it to `false` will prevent this behavior. |
+| `cls-page`  | String  | `z-modal-page`   | Class to add to `<html>` when modal is active                                                                                                        |
+| `cls-panel` | String  | `z-modal-dialog` | Class of the element to be considered the panel of the modal                                                                                         |
+| `sel-close` | String  | `.z-modal-close` | CSS selector for all elements that should trigger the closing of the modal                                                                           |
+
+## JavaScript
+
+Learn more about [JavaScript components](/docs/latest/kit/javascript#programmatic-use).
+
+### Initialization
+
+```javascript
+zUIkit.modal(element, options);
+```
+
+### Events
+
+The following events will be triggered on elements with this component attached:
+
+| Name         | Description                                          |
+| ------------ | ---------------------------------------------------- |
+| `beforeshow` | Fires before an item is shown.                       |
+| `show`       | Fires after an item is shown.                        |
+| `shown`      | Fires after the item's show animation has completed. |
+| `beforehide` | Fires before an item is hidden.                      |
+| `hide`       | Fires after an item's hide animation has started.    |
+| `hidden`     | Fires after an item is hidden.                       |
+
+### Methods
+
+The following methods are available for the component:
+
+#### Show
+
+```javascript
+zUIkit.modal(element).show();
+```
+
+Shows the Modal.
+
+#### Hide
+
+```javascript
+zUIkit.modal(element).hide();
+```
+
+Hides the Modal.
+
+## Modal dialogs
+
+<span class="z-label z-label-primary">Note</span> While the modal dialogs work
+perfectly, customizing padding requires a custom-compiled UIkit JavaScript. If
+you're unfamiliar with compiling your JavaScript, it's advisable to build the
+modal using HTML.
+
+The component comes with a number of prepared modal dialogs that you can use for user interaction. You can call the dialog directly from JavaScript and use callback functions to process the user input.
+
+| Code                                          | Description                                              |
+| --------------------------------------------- | -------------------------------------------------------- |
+| `zUIkit.modal.alert('UIkit alert!')`           | Show an alert box with one button.                       |
+| `zUIkit.modal.confirm('UIkit confirm!')`       | Show a confirm dialog with your message and two buttons. |
+| `zUIkit.modal.prompt('Name:', 'Your name')`    | Show a dialog asking for a text input.                   |
+| `zUIkit.modal.dialog('<p>UIkit dialog!</p>');` | Show dialog with any HTML content.                       |
+
+To process the user input, the modal uses a promise based interface which provides a `then()` function to register your callback functions. The `zUIkit.modal.dialog` function however will return the modal itself.
+
+```javascript
+zUIkit.modal.confirm("UIkit confirm!").then(
+  function () {
+    console.log("Confirmed.");
+  },
+  function () {
+    console.log("Rejected.");
+  },
+);
+```
+
+The returned promise has a property `dialog`, which holds a reference to the modal itself. This lets you manipulate e.g. the markup of the modal's element.
+
+To translate the button labels, the dialog functions accepts an optional `options` object parameter. This has a key `i18n` and two properties `ok` and `cancel`.
+
+```javascript
+const modal = zUIkit.modal.confirm("UIkit confirm!", {
+  i18n: { ok: "okay" },
+}).dialog; // The modal component
+const el = modal.$el; // The modal element
+```
+
+<Snippet project="kit" component="modal.dialogs" />
+
+## Accessibility
+
+The Modal component adheres to the [Dialog (Modal) WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialogmodal/) and automatically sets the appropriate WAI-ARIA roles and properties.
+
+- The _modal_ has the `dialog` role and the `aria-modal` property.
+
+The Close component automatically sets the appropriate WAI-ARIA roles and properties.
+
+- The _close icon_ has the `aria-label` property, and if an `<a>` element is used, the `button` role.
+
+### Keyboard interaction
+
+The Modal component can be accessed through keyboard using the following keys.
+
+- The <kbd>esc</kbd> key closes the modal. This behaviour is disabled if the `bg-close: false` option is set.

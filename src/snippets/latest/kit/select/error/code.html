@@ -1,0 +1,28 @@
+<div class="space-y" style="--space-y: 2">
+  <label
+    class="z-form-label color display-block"
+    style="--color: var(--z-danger-f)"
+  >
+    Select an option
+  </label>
+  <div
+    class="z-form-controls [h]"
+    style="--h: calc(var(--z-global-font-size) * 2.5)"
+  >
+    <z-select
+      cls="button: z-input-fake z-form-danger justify-between w-full; dropdown: z-dropdown w-full"
+      stl="dropdown: z-index\: 1020"
+    >
+      <select data-fn="data-source" hidden>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+        <option value="option5">Option 5</option>
+      </select>
+    </z-select>
+  </div>
+  <p class="z-form-help color" style="--color: var(--z-danger-f)">
+    This field is required.
+  </p>
+</div>

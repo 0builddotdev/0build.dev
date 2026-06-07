@@ -1,0 +1,826 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import { stl } from "helpers/common";
+import Master from "layouts/master.astro";
+
+type Heading = {
+  depth: number;
+  slug: string;
+  text: string;
+  children?: Heading[];
+};
+
+function transformHeadings(headings: Heading[]): Heading[] {
+  const result: Heading[] = [];
+  const stack: Heading[] = [];
+
+  for (const heading of headings) {
+    const current = { ...heading };
+
+    // Remove all items from stack that have greater or equal depth
+    while (stack.length > 0 && stack[stack.length - 1].depth >= current.depth) {
+      stack.pop();
+    }
+
+    if (stack.length === 0) {
+      // This is a top-level heading
+      result.push(current);
+      stack.push(current);
+    } else {
+      // This is a child heading
+      const parent = stack[stack.length - 1];
+      if (!parent.children) {
+        parent.children = [];
+      }
+      parent.children.push(current);
+      stack.push(current);
+    }
+  }
+
+  return result;
+}
+
+function transformTitles(string: string) {
+  const wordReplacements: Record<string, string> = {
+    and: "&",
+    svg: "SVG",
+  };
+  const words = string.split("-");
+
+  return words
+    .map((word, index) => {
+      const lowerWord = word.toLowerCase();
+
+      if (lowerWord in wordReplacements) {
+        if (index === 0 || index === words.length - 1) {
+          const replacement = wordReplacements[lowerWord];
+
+          return replacement === replacement.toUpperCase()
+            ? replacement
+            : replacement.charAt(0).toUpperCase() + replacement.slice(1);
+        }
+        return wordReplacements[lowerWord];
+      }
+
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+}
+
+function titleCase(string: string) {
+  return string
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function isActive(href: string): boolean {
+  if (`${project}/${entry.data.alias}` === href) {
+    return true;
+  }
+
+  return entry.id === href;
+}
+
+type Group = {
+  href: string;
+  text: string;
+  keywords: string | undefined;
+  dot: boolean | undefined;
+  submenu:
+    | {
+        href: string;
+        text: string;
+        target?: "_self" | "_blank" | "_parent" | "_top" | undefined;
+      }[]
+    | undefined;
+  order: number | undefined;
+};
+
+const { version = "latest", id, project } = Astro.props;
+
+const docs = (await getCollection("latest")).filter(
+  (a) => a.data.project === project,
+);
+
+type Kit = {
+  "getting-started": Group[];
+  forms: Group[];
+  components: Group[];
+};
+
+type Style = {
+  "getting-started": Group[];
+  layout: Group[];
+  "flex-and-grid": Group[];
+  spacing: Group[];
+  sizing: Group[];
+  typography: Group[];
+  backgrounds: Group[];
+  borders: Group[];
+  effects: Group[];
+  filters: Group[];
+  tables: Group[];
+  "transitions-and-animations": Group[];
+  transforms: Group[];
+  interactivity: Group[];
+  svg: Group[];
+  accessibility: Group[];
+};
+
+const groups: {
+  kit: Kit;
+  style: Style;
+} = {
+  kit: {
+    "getting-started": [],
+    forms: [],
+    components: [],
+  },
+  style: {
+    "getting-started": [],
+    layout: [],
+    "flex-and-grid": [],
+    spacing: [],
+    sizing: [],
+    typography: [],
+    backgrounds: [],
+    borders: [],
+    effects: [],
+    filters: [],
+    tables: [],
+    "transitions-and-animations": [],
+    transforms: [],
+    interactivity: [],
+    svg: [],
+    accessibility: [],
+  },
+};
+
+docs.forEach((a: any) => {
+  if (a.data.hidden !== true) {
+    const b =
+      groups[project as "kit" | "style"][a.data.group as "getting-started"];
+
+    if (b) {
+      b.push({
+        href: a.id,
+        text: a.data.text,
+        keywords: a.data.keywords,
+        dot: a.data.dot,
+        submenu: a.data.submenu,
+        order: a.data.order,
+      });
+    }
+  }
+});
+
+const entry = await getEntry(version, id);
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+const tbc = transformHeadings(headings);
+---
+
+<style>
+  :root {
+    --root-offset-top: calc((var(--spacing) * 14) + 1px);
+  }
+
+  .root-layout {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: 1fr 1px auto 1px auto;
+    padding-top: var(--root-offset-top);
+  }
+
+  .root-sidebar {
+    position: relative;
+    grid-column-start: 1;
+    grid-row: 1 / -1;
+    grid-row-start: 1;
+  }
+
+  .root-sidebar-scrollable-area {
+    position: sticky;
+    inset: 0;
+    max-height: 100dvh;
+    width: var(--container-2xs);
+    overflow-y: auto;
+    padding: calc(var(--spacing) * 6);
+    top: var(--root-offset-top);
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    max-height: calc(100dvh - (var(--spacing) * 14.25));
+  }
+
+  .root-divider-l {
+    grid-column-start: 2;
+    grid-row: span 5 / span 5;
+    grid-row-start: 1;
+  }
+
+  .root-divider-r {
+    grid-column-start: 4;
+    grid-row: span 5 / span 5;
+    grid-row-start: 1;
+  }
+
+  @media (width < 64rem) {
+    .root-divider-l {
+      display: none;
+    }
+
+    .root-sidebar {
+      display: none;
+    }
+
+    .root-divider-r {
+      display: none;
+    }
+  }
+
+  .root-main {
+    position: relative;
+    grid-row-start: 1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  @media (width >= 64rem) {
+    .root-layout {
+      /* grid-template-columns: var(--container-2xs) 2.5rem minmax(0, 1fr) 2.5rem; */
+      grid-template-columns: var(--container-2xs) 1px minmax(0, 1fr);
+      padding-top: var(--root-offset-top);
+    }
+
+    .root-main {
+      grid-column-start: 3;
+    }
+  }
+</style>
+
+<Master
+  doc={{
+    title: `${remarkPluginFrontmatter.title}`,
+    meta: { ...remarkPluginFrontmatter.meta, "docsearch:version": "latest" },
+  }}
+>
+  <div
+    class="fixed inset-x top z border-b-w border-b/o"
+    style={stl({
+      "--inset-x": "0",
+      "--top": "0",
+      "--z": "20",
+      "--border-b-w": "1px",
+      "--border-b": "var(--z-border)",
+      "--border-b-o": "var(--z-border-o)",
+    })}
+  >
+    <div
+      class="bg color"
+      style={stl({
+        "--bg": "var(--z-bg)",
+        "--color": "var(--z-bg-f)",
+      })}
+    >
+      <div
+        class="display-flex h items-center justify-between gap px sm:px md:px"
+        style={stl({
+          "--h": "14",
+          "--gap": "8",
+          "--px": "4",
+          "--sm-px": "2",
+          "--md-px": "6",
+        })}
+      >
+        <div
+          class="display-flex items-center gap"
+          style={stl({
+            "--gap": "4",
+          })}
+        >
+          <a
+            class="z-focus-visible display-hidden lg:display-block font-family font-black text-xl"
+            style={stl({
+              "--font-family": "var(--font-geist-mono)",
+            })}
+            href="/"
+          >
+            0build.dev
+          </a>
+
+          <ul class="z-tab-alt display-hidden lg:display-flex">
+            <li class={project == "kit" ? "z-active" : ""}>
+              <a href="/docs/latest/kit/installation">Kit</a>
+            </li>
+            <li class={project == "style" ? "z-active" : ""}>
+              <a href="/docs/latest/style/introduction">Utilities</a>
+            </li>
+          </ul>
+
+          <button
+            class="z-button z-button-secondary z-button-icon z-button-xsmall lg:display-hidden"
+            data-z-toggle="#menu"
+          >
+            <z-icon
+              class="size"
+              style={stl({
+                "--size": "4",
+              })}
+              icon="menu"></z-icon>
+          </button>
+        </div>
+        <div
+          class="display-flex items-center gap"
+          style={stl({
+            "--gap": "2",
+          })}
+        >
+          <div
+            class="display-flex gap-x"
+            style={stl({
+              "--gap-x": "2",
+            })}
+          >
+            <a
+              href="https://play.0build.dev"
+              target="_blank"
+              class="z-button z-button-primary z-button-xsmall"
+            >
+              <z-icon class="size" style="--size: 4" icon="code-xml"></z-icon>
+              <span class="">Playground</span>
+            </a>
+            <z-lsh
+              class="size"
+              style={stl({
+                "--size": "8",
+              })}
+              toggle
+              group="mode"
+              cls="z-button z-button-icon z-button-secondary z-button-xsmall relative"
+            >
+              <template data-fn="template">
+                <z-icon
+                  class="dark-slide-icon dark-slide-moon dark:dark-slide-moon"
+                  icon="moon"
+                >
+                </z-icon>
+                <z-icon
+                  class="dark-slide-icon dark-slide-sun dark:dark-slide-sun"
+                  icon="sun"
+                >
+                </z-icon>
+              </template>
+            </z-lsh>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="root-layout">
+    <aside class="root-sidebar">
+      <div class="absolute inset" style={stl({ "--inset": "0" })}>
+        <div
+          class="root-sidebar-scrollable-area"
+          x-data
+          x-init='const asideL=document.querySelector(".root-sidebar-scrollable-area");if(asideL){let e=asideL.querySelector("li.z-parent.z-open"),i=e.querySelector("li.z-active"),o={asideL:asideL.getBoundingClientRect(),focused:i.getBoundingClientRect()},t=i.offsetTop-asideL.offsetTop-o.asideL.height/2+o.focused.height/2;asideL.scrollTo({top:t,behavior:"smooth"})}'
+        >
+          <ul
+            id="nav"
+            class="z-nav z-nav-default mx mt"
+            style="--mx: -1; --mt: 1"
+            data-z-nav="collapsible: false"
+          >
+            <li class="z-nav-header">Documentation</li>
+            {
+              Object.keys(groups[project as "kit" | "style"]).map((a) => (
+                <li
+                  class={`z-parent ${entry.data.group === a ? "z-open" : ""}`}
+                >
+                  <a href="#">
+                    {transformTitles(a)} <span data-z-nav-parent-icon />
+                  </a>
+                  <ul class="z-nav-sub" hidden={entry.data.group !== a}>
+                    {groups[project as "kit" | "style"][a as "getting-started"]
+                      .sort((z: Group, y: Group) => {
+                        if (["getting-started"].includes(a)) {
+                          return (z.order || 0) - (y.order || 0);
+                        }
+
+                        return z.text.localeCompare(y.text);
+                      })
+                      .map((z: Group, y) => (
+                        <li
+                          id={`test-${y}`}
+                          class={isActive(z.href) ? "z-active" : ""}
+                        >
+                          <a
+                            class="display-flex items-center justify-between"
+                            href={`/docs/latest/${z.href}`}
+                          >
+                            <span class="flex-1">{z.text}</span>
+                            {z.dot === true ? (
+                              <span
+                                class="relative display-flex size flex-none"
+                                style="--size: 2;"
+                              >
+                                <span
+                                  class="bg/o absolute display-inline-flex h-full w-full animate-ping rounded-full"
+                                  style="--bg: var(--color-blue-500); --bg-opacity: 75%"
+                                />
+                                <span
+                                  class="bg relative display-inline-flex size rounded-full"
+                                  style="--bg: var(--color-blue-500); --size: 2"
+                                />
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </a>
+                          {z.submenu ? (
+                            <ul>
+                              {z.submenu.map((y) => (
+                                <li>
+                                  <a
+                                    class="display-flex items-center justify-between"
+                                    href={y.href}
+                                    target={y.target || "_self"}
+                                  >
+                                    <span class="flex-1">{y.text}</span>
+                                    {y.href.startsWith("http") ? (
+                                      <z-icon icon="external-link" />
+                                    ) : (
+                                      ""
+                                    )}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            ""
+                          )}
+                        </li>
+                      ))}
+                  </ul>
+                </li>
+              ))
+            }
+          </ul>
+
+          <ul
+            class="z-nav z-nav-default mx mt"
+            style={stl({ "--mx": "-1", "--mt": "4" })}
+            data-z-nav="collapsible: false"
+          >
+            <li class="z-nav-header">Links</li>
+            <li>
+              <a
+                class="justify-between"
+                href="https://github.com/0builddotdev"
+                target="_blank"
+              >
+                Gitub <z-icon icon="external-link"></z-icon>
+              </a>
+            </li>
+            <li>
+              <a
+                class="justify-between"
+                href="https://bsky.app/profile/0builddotdev.bsky.social"
+                target="_blank"
+              >
+                Bluesky <z-icon icon="external-link"></z-icon>
+              </a>
+            </li>
+            <li>
+              <a
+                class="justify-between"
+                href="https://twitter.com/0builddotdev"
+                target="_blank"
+              >
+                Twitter <z-icon icon="external-link"></z-icon>
+              </a>
+            </li>
+          </ul>
+
+          <ul
+            class="z-nav z-nav-default mx mt"
+            style={stl({ "--mx": "-1", "--mt": "4" })}
+            data-z-nav="collapsible: false"
+          >
+            <li class="z-nav-header">Legacy</li>
+            <li>
+              <a
+                class="justify-between"
+                href="https://038.0build.dev"
+                target="_blank"
+              >
+                v0.3.8 <z-icon icon="external-link"></z-icon>
+              </a>
+            </li>
+          </ul>
+
+          <div
+            class="mt p border-w border-dashed border/o"
+            style={stl({
+              "--mt": "4",
+              "--p": "2",
+              "--border-w": "1px",
+              "--border": "var(--z-border)",
+              "--border-o": "var(--z-border-o)",
+            })}
+          >
+            <div class="text-lg font-bold">Support the Project</div>
+            <p
+              class="mt color"
+              style={stl({ "--mt": "2", "--color": "var(--z-muted-f)" })}
+            >
+              Your sponsorship helps keep it sustainable, supports new features,
+              and ensures it remains free, and accessible for everyone.
+            </p>
+
+            <div
+              class="mt display-flex flex-col gap"
+              style={stl({ "--mt": "2", "--gap": "1.5" })}
+            >
+              <a
+                class="z-button z-button-primary w-full"
+                href="https://github.com/sponsors/sveltecult"
+                target="_blank"
+              >
+                <z-icon
+                  class="size"
+                  style={stl({ "--size": "4" })}
+                  icon="github"></z-icon>
+                GitHub Sponsors
+              </a>
+
+              <a
+                class="z-button w-full"
+                href="https://ko-fi.com/sveltecult"
+                target="_blank"
+              >
+                <z-icon
+                  class="size"
+                  style={stl({ "--size": "4" })}
+                  icon="coffee"></z-icon>
+                Ko-Fi
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div
+      class="root-divider-l bg/o"
+      style={stl({
+        "--bg": "var(--z-border)",
+        "--bg-o": "var(--z-border-o)",
+      })}
+    >
+    </div>
+    <div class="root-main">
+      <div
+        class="mx-auto grid w-full max-w-2xl grid-cols gap pt md:pb xl:max-w-5xl"
+        style={stl({
+          "--grid-cols": "1",
+          "--gap": "10",
+          "--pt": "10",
+          "--md-pb": "24",
+        })}
+      >
+        <div class="px sm:px" style={stl({ "--px": "4", "--sm-px": "6" })}>
+          <h1 class="z-h1">
+            {entry.data.title}
+          </h1>
+
+          {
+            entry.data.lead ? (
+              <p class="z-text-lead mt" style={stl({ "--mt": "2" })}>
+                {entry.data.lead}
+              </p>
+            ) : (
+              ""
+            )
+          }
+
+          <div
+            class="mt display-flex gap-x"
+            style={stl({ "--mt": "2", "--gap-x": "2" })}
+          >
+            <a
+              class="z-button z-button-default z-button-xsmall"
+              href="https://github.com/0builddotdev/0build/issues"
+              target="_blank"
+            >
+              <z-icon
+                class="size"
+                style={stl({
+                  "--size": "4",
+                })}
+                icon="badge-alert"></z-icon>
+              <span class="">Report an Issue</span>
+            </a>
+
+            {
+              entry.data.context ? (
+                <a
+                  class="z-button z-button-default z-button-xsmall"
+                  href={entry.data.context}
+                  target="_blank"
+                >
+                  <z-icon
+                    class="size"
+                    style={stl({
+                      "--size": "4",
+                    })}
+                    icon="sparkles"
+                  />
+                  <span class="">Contexts</span>
+                </a>
+              ) : (
+                ""
+              )
+            }
+          </div>
+
+          {
+            entry.data.wip === true ? (
+              <div class="z-alert-warning z-alert mt" style="--mt: 6">
+                This documentation is a work in progress.
+              </div>
+            ) : (
+              ""
+            )
+          }
+
+          {
+            entry.data.tbc === false ? (
+              ""
+            ) : tbc.length > 0 ? (
+              <Fragment>
+                <h2
+                  class="z-h2 mt"
+                  style="--mt: 10"
+                  id="docs-table-of-contents"
+                >
+                  Table of contents
+                </h2>
+
+                <ul
+                  class="z-nav z-nav-default ml mt"
+                  style="--z-nav-sub-width: 0; --z-nav-item-display: inline-flex; --ml: -2; --mt: 6"
+                >
+                  {tbc.map((a) => (
+                    <li>
+                      <a href={`#${a.slug}`} data-z-scroll="offset: 40">
+                        <z-icon
+                          class="color mr size"
+                          style="--color: var(--z-danger); --mr: 2; --size: 4"
+                          icon="hash"
+                        />
+                        {a.text}
+                      </a>
+                      {a.children ? (
+                        <ul class="z-nav-sub">
+                          {a.children.map((b) => (
+                            <li>
+                              <a href={`#${b.slug}`} data-z-scroll="offset: 40">
+                                <z-icon
+                                  class="color mr size"
+                                  style="--color: var(--z-danger); --mr: 2; --size: 4"
+                                  icon="hash"
+                                />
+                                {b.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        ""
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </Fragment>
+            ) : (
+              ""
+            )
+          }
+
+          <Content />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="z-offcanvas"
+    data-z-offcanvas="overlay: true"
+    id="menu"
+    style="--z-offcanvas-bar-width: 320px; --z-offcanvas-bar-width-i: -320px;"
+  >
+    <div class="z-offcanvas-bar p" style="--p: 4">
+      <div class="mb display-flex justify-center" style="--mb: 4">
+        <button
+          class="z-button z-button-secondary z-button-xsmall z-offcanvas-close"
+        >
+          <z-icon icon="arrow-left"></z-icon>
+          <span class="ml" style="--ml: 2">Close</span>
+        </button>
+      </div>
+
+      <ul
+        id="nav"
+        class="z-nav z-nav-default mx mt"
+        style="--mx: -1; --mt: 1"
+        data-z-nav="collapsible: false"
+      >
+        <li class="z-nav-header">Documentation</li>
+        {
+          Object.keys(groups[project as "kit" | "style"]).map((a) => (
+            <li class={`z-parent ${entry.data.group === a ? "z-open" : ""}`}>
+              <a href="#">
+                {titleCase(a)} <span data-z-nav-parent-icon />
+              </a>
+              <ul class="z-nav-sub" hidden={entry.data.group !== a}>
+                {groups[project as "kit" | "style"][a as "getting-started"]
+                  .sort((z: Group, y: Group) => {
+                    if (["getting-started"].includes(a)) {
+                      return (z.order || 0) - (y.order || 0);
+                    }
+
+                    return z.text.localeCompare(y.text);
+                  })
+                  .map((z: Group, y) => (
+                    <li
+                      id={`test-${y}`}
+                      class={isActive(z.href) ? "z-active" : ""}
+                    >
+                      <a
+                        class="display-flex items-center justify-between"
+                        href={`/docs/latest/${z.href}`}
+                      >
+                        <span class="flex-1">{z.text}</span>
+                        {z.dot === true ? (
+                          <span
+                            class="relative display-flex size flex-none"
+                            style="--size: 2"
+                          >
+                            <span
+                              class="bg/o absolute display-inline-flex h-full w-full animate-ping rounded-full"
+                              style="--bg: var(--color-blue-500); --bg-opacity: 75%"
+                            />
+                            <span
+                              class="bg relative display-inline-flex size rounded-full"
+                              style="--bg: var(--color-blue-500); --size: 2"
+                            />
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </a>
+                      {z.submenu ? (
+                        <ul>
+                          {z.submenu.map((y) => (
+                            <li>
+                              <a
+                                class="display-flex items-center justify-between"
+                                href={y.href}
+                                target={y.target || "_self"}
+                              >
+                                <span class="flex-1">{y.text}</span>
+                                {y.href.startsWith("http") ? (
+                                  <z-icon icon="external-link" />
+                                ) : (
+                                  ""
+                                )}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        ""
+                      )}
+                    </li>
+                  ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt" style="--mt: 4"></div>
+
+      <ul class="z-tab-alt">
+        <li class={project == "kit" ? "z-active" : ""}>
+          <a href="/docs/latest/kit/installation">Kit</a>
+        </li>
+        <li class={project == "style" ? "z-active" : ""}>
+          <a href="/docs/latest/style/introduction">Utilities</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</Master>

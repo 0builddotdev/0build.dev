@@ -1,0 +1,24 @@
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-select
+    cls="button: z-input-fake justify-between w-full; dropdown: z-dropdown w-full"
+    stl="dropdown: z-index\: 1020"
+    searchable
+    multiple
+  >
+    <script type="application/json" data-fn="config" hidden>
+      {
+        "i18n": {
+          "search-placeholder": "Rechercher",
+          "selection-count": "{n} options sélectionnées",
+          "insert": "Insérer",
+          "list-label": "Options",
+          "button-label": "Sélectionner une option"
+        }
+      }
+    </script>
+    <select data-fn="data-source" hidden>
+      <option value="apple">Pomme</option>
+      <option value="banana">Banane</option>
+    </select>
+  </z-select>
+</div>

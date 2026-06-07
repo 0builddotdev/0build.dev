@@ -1,0 +1,42 @@
+---
+group: components
+project: kit
+text: Dotnav
+title: Dotnav
+lead: Create a dot navigation to operate slideshows or to scroll to different page sections.
+meta:
+  description: Create a dot navigation to operate slideshows or to scroll to different page sections.
+context: https://0build.dev/contexts/kit-implementation/dotnav.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To create a navigation with dots, use the following classes. This component is built with Flexbox. So to align a dotnav, you can use utility classes.
+
+| Class         | Description                                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `.z-dotnav`  | Add this class to a `<ul>` element to define the Dotnav component. Use `<a>` elements as nav items within the list. |
+| `.z-active ` | Add this class to a list item to apply an active state.                                                             |
+
+```html
+<ul class="z-dotnav">
+  <li class="z-active"><a href=""></a></li>
+  <li><a href=""></a></li>
+</ul>
+```
+
+<Snippet project="kit" component="dotnav.basic" />
+
+## Vertical alignment
+
+The dotnav can also be displayed vertically. Just add the `.z-dotnav-vertical` modifier.
+
+```html
+<ul class="z-dotnav z-dotnav-vertical">
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="dotnav.vertical" />

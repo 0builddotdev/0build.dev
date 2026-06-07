@@ -1,0 +1,45 @@
+---
+group: components
+project: kit
+text: Chart
+title: Chart
+lead: Easily create nice looking charts, which come in different styles.
+meta:
+  description: Easily create nice looking charts, which come in different styles.
+keywords: line,area
+webc: true
+context: https://0build.dev/contexts/kit-implementation/chart.md
+---
+
+import Snippet from "snippets/component.astro";
+import Charts from "components/partials/kit/charts.astro";
+
+## Usage
+
+Once everything is configured, you may now use the `<z-chart>` markup in your HTML code with one `<script type="application/json"></script>` tag as options reference.
+
+## Browse charts
+
+<Charts />
+
+## Reactivity
+
+By default, the `<z-chart>` component is not reactive. This is a deliberate design choice, as using [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) can be computationally expensive. As a result, changes to the referenced `<script type="application/json">` tag will not trigger an update.
+
+To enable reactivity, simply add the `reactive` attribute to the `<script data-fn="config" type="application/json" data-reactive>` tag. This will use [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) under the hood to monitor the `<script>` tag for changes.
+
+```html
+<z-chart>
+  <script data-fn="config" type="application/json" data-reactive></script>
+</z-chart>
+```
+
+## Attributes
+
+| Name                     | Type    | Default  | Description                                                                                                     |
+| ------------------------ | ------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `force-prevent-rerender` | Boolean | `false`  | Forcefully prevents component rerendering.                                                                      |
+| `cls`                    | String  |          | Allows you to add custom CSS classes, which will be attached to the `<div>` tag.                                |
+| `loading`                | Boolean | `false`  | Displays a loading state before the chart is rendered. Useful when chart data is being fetched asynchronously.  |
+| `width`                  | String  | `"100%"` | Sets the width of the chart container. Accepts a pixel value or any valid CSS unit (e.g. `"500px"`, `"100%"`).  |
+| `height`                 | String  | `"auto"` | Sets the height of the chart container. Accepts a pixel value or any valid CSS unit (e.g. `"400px"`, `"50vh"`). |

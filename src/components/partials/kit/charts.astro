@@ -1,0 +1,25 @@
+---
+const { version = "latest" } = Astro.props;
+---
+
+<div
+  class="mt display-grid grid-cols gap"
+  style="--mt: 6; --grid-cols: 2; --gap: 4"
+>
+  <a
+    class="chart-card z-focus-visible z-shadow z-rounded"
+    href={`/docs/${version}/kit/chart-area`}
+  >
+    <z-icon class="size" style="--size: 11" size="44" icon="chart-area"
+    ></z-icon>
+    <p class="mt font-medium" style="--mt: 2">Area Chart</p>
+  </a>
+  <a
+    class="chart-card z-focus-visible z-shadow z-rounded"
+    href={`/docs/${version}/kit/chart-line`}
+  >
+    <z-icon class="size" style="--size: 11" size="44" icon="chart-line"
+    ></z-icon>
+    <p class="mt font-medium" style="--mt: 2">Line Chart</p>
+  </a>
+</div>

@@ -1,0 +1,16 @@
+<a
+  id="js-scroll-trigger"
+  class="z-button z-button-primary"
+  href="#target"
+  data-z-scroll
+>
+  Down with callback
+</a>
+
+<script>
+  document.addEventListener("uikit:init", () => {
+    zUIkit.util.on("#js-scroll-trigger", "scrolled", function () {
+      zUIkit.modal.dialog('<p class="z-modal-body">Done</p>');
+    });
+  });
+</script>

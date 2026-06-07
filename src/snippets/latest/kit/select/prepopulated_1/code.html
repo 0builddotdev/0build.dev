@@ -1,0 +1,42 @@
+<div class="space-y" style="--space-y: 2">
+  <label class="z-form-label display-block">Select your planet</label>
+  <div class="z-form-controls">
+    <div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+      <z-select
+        cls="button: z-input-fake justify-between w-full; dropdown: z-dropdown w-full"
+        stl="dropdown: z-index\: 1020"
+        value="Earth"
+      >
+        <select data-fn="data-source" hidden>
+          <option>Mars</option>
+          <option>Jupiter</option>
+          <option>Saturn</option>
+          <option>Earth</option>
+        </select>
+      </z-select>
+    </div>
+  </div>
+</div>
+
+<div class="mt space-y" style="--mt: 4; --space-y: 2">
+  <label class="z-form-label display-block">Select your cars</label>
+  <div class="z-form-controls">
+    <div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+      <z-select
+        cls="button: z-input-fake justify-between w-full; dropdown: z-dropdown w-full"
+        stl="dropdown: z-index\: 1020"
+        multiple
+        value="Mercedes-Benz,Bentley,Porsche,Lamborghini"
+      >
+        <select data-fn="data-source" hidden>
+          <option>Mercedes-Benz</option>
+          <option>Bentley</option>
+          <option>Audi</option>
+          <option>Porsche</option>
+          <option>Lamborghini</option>
+          <option>Ferrari</option>
+        </select>
+      </z-select>
+    </div>
+  </div>
+</div>

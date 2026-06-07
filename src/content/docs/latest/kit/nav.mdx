@@ -1,0 +1,230 @@
+---
+group: components
+project: kit
+text: Nav
+title: Nav
+lead: Defines different styles for list navigations.
+meta:
+  description: Defines different styles for list navigations.
+context: https://0build.dev/contexts/kit-implementation/nav.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To apply this component, use the following classes.
+
+| Class         | Description                                                                                                      |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `.z-nav`     | Add this class to a `<ul>` element to define the Nav component. Use `<a>` elements as nav items within the list. |
+| `.z-active ` | Add this class to a list item to apply an active state to a menu item.                                           |
+
+```html
+<ul class="z-nav">
+  <li class="z-active"><a href=""></a></li>
+  <li><a href=""></a></li>
+</ul>
+```
+
+<Snippet project="kit" component="nav.basic" />
+
+<span class="z-label z-label-primary">Note</span> By default, the nav has no
+styling. That's why it is important to add a modifier class. In our example we
+are using the `.z-nav-default` class.
+
+## Nested navs
+
+Add the `.z-parent` class to an item to turn it into a parent. Add the `.z-nav-sub` class to a `<ul>` element inside the item to create the subnav.
+
+```html
+<ul class="z-nav">
+  <li class="z-parent">
+    <a href=""></a>
+    <ul class="z-nav-sub">
+      <li><a href=""></a></li>
+      <li>
+        <a href=""></a>
+        <ul>
+          ...
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+```
+
+<Snippet project="kit" component="nav.nested" />
+
+## Accordion
+
+By default, child menu items are always visible. To apply an accordion effect, just add the `data-z-nav` attribute to the main `<ul>`.
+
+<span class="z-label z-label-primary">Note</span> The attribute automatically
+sets the `.z-nav` class, so you don't have to apply it manually.
+
+```html
+<ul data-z-nav>
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="nav.accordion" />
+
+### Parent icon
+
+To create a parent icon, just add the `data-z-nav-parent-icon` attribute to a `<span>` element.
+
+```html
+<ul data-z-nav>
+  <li>
+    <a href="">Parent <span data-z-nav-parent-icon></span></a>
+    ...
+  </li>
+</ul>
+```
+
+<Snippet project="kit" component="nav.parent_icon" />
+
+### Multiple open subnavs
+
+When clicking on a parent item, an open one will close, allowing only one open nested list at a time. To allow multiple open subnavs, just add the `multiple: true` option to the attribute.
+
+```html
+<ul data-z-nav="multiple: true">
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="nav.multiple_open" />
+
+## Header and divider
+
+Add one of the following classes to a list item to create a header or a divider between items.
+
+| Element           | Description                                                                  |
+| ----------------- | ---------------------------------------------------------------------------- |
+| `.z-nav-header`  | Add this class to a `<li>` element to create a header.                       |
+| `.z-nav-divider` | Add this class to a `<li>` element to create a divider separating nav items. |
+
+```html
+<li class="z-nav-header"></li>
+
+<li class="z-nav-divider"></li>
+```
+
+<Snippet project="kit" component="nav.header_divider" />
+
+## Subtitle
+
+Add the `.z-nav-subtitle` class to a `div` element to create an item subtitled.
+
+```html
+<ul class="z-nav">
+  <li>
+    <a href="">
+      <div>
+        Item
+        <div class="z-nav-subtitle">
+          Subtitle lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+          do.
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>
+```
+
+<Snippet project="kit" component="nav.subtitle" />
+
+## Default modifier
+
+Add the `.z-nav-default` class to give the nav its default style. You can place the nav inside cards or anywhere else in your content.
+
+```html
+<ul class="z-nav z-nav-default">
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="nav.default" />
+
+## Alternative layout
+
+Add `.z-nav-alt` class to give the nav a more distinct styling.
+
+```html
+<ul class="z-nav z-nav-alt">
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="nav.primary" />
+
+### Customization
+
+You can use CSS variables to customize this component in any way you prefer.
+
+<Snippet project="kit" component="nav.custom" />
+
+## Nav in Dropdown
+
+Add the `.z-dropdown-nav` class to place a nav inside a default dropdown from the [Dropdown component](/docs/latest/kit/dropdown).
+
+```html
+<div data-z-dropdown>
+  <ul class="z-dropdown-nav z-nav">
+    ...
+  </ul>
+</div>
+```
+
+<Snippet project="kit" component="nav.nav_in_dropdown" />
+
+## Nav in offcanvas
+
+A nav can be used inside an offcanvas from the [Offcanvas component](/docs/latest/kit/offcanvas). No modifier class needs to be added.
+
+<Snippet project="kit" component="nav.nav_in_offcanvas" />
+
+## Component options
+
+Any of these options can be applied to the component attribute. Separate multiple options with a semicolon. [Learn more](/docs/latest/kit/javascript#component-configuration)
+
+| Option        | Value           | Default        | Description                                                                                |
+| ------------- | --------------- | -------------- | ------------------------------------------------------------------------------------------ |
+| `targets`     | CSS selector    | `> .z-parent` | The element(s) to toggle.                                                                  |
+| `toggle `     | CSS selector    | `> a`          | The toggle element(s).                                                                     |
+| `content`     | CSS selector    | `> ul`         | The content element(s).                                                                    |
+| `collapsible` | Boolean         | `true`         | Allow all items to be closed.                                                              |
+| `multiple`    | Boolean         | `false`        | Allow multiple open items.                                                                 |
+| `transition`  | String          | `ease`         | The transition to use.                                                                     |
+| `animation`   | Boolean, String | `true`         | Space-separated names of [animations](/docs/latest/kit/animation). Comma-separated for animation out. |
+| `duration`    | Number          | `200`          | The animation duration in milliseconds.                                                    |
+
+## JavaScript
+
+Learn more about [JavaScript components](/docs/latest/kit/javascript#programmatic-use).
+
+### Initialization
+
+```javascript
+zUIkit.nav(element, options);
+```
+
+### Methods
+
+The following methods are available for the component:
+
+#### Toggle
+
+```javascript
+zUIkit.nav(element).toggle(index, animate);
+```
+
+Toggles the content pane.
+
+| Name      | Type                 | Default | Description                                  |
+| --------- | -------------------- | ------- | -------------------------------------------- |
+| `index`   | String, Number, Node | 0       | Nav pane to toggle. 0 based index.           |
+| `animate` | Boolean              | true    | Suppress opening animation by passing false. |

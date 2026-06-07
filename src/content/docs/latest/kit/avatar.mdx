@@ -1,0 +1,64 @@
+---
+group: components
+project: kit
+text: Avatar
+title: Avatar
+lead: Easily create avatar to show a visual representation of a user profile using an image element or SVG object based on multiple styles and sizes.
+meta:
+  description: Easily create avatar to show a visual representation of a user profile using an image element or SVG object based on multiple styles and sizes.
+context: https://0build.dev/contexts/kit-implementation/avatar.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To get started with the Avatar component, simply wrap your image directly inside the `.z-avatar` class or `.z-avatar-text` if it's just a text or initials.
+
+<Snippet project="kit" component="avatar.basic" />
+
+## Bordered
+
+To add a border around your avatar, include the `.z-avatar-bordered` class along with any other modifiers you like.
+
+<Snippet project="kit" component="avatar.bordered" />
+
+## Dot indicator
+
+To indicate status or notifications, you can add a small dot using the `.z-avatar-dot` class. Or, choose one of the following classes to reposition the dot indicator:
+
+- `.z-avatar-dot-top`
+- `.z-avatar-dot-top-left`
+- `.z-avatar-dot-top-right`
+- `.z-avatar-dot-right`
+- `.z-avatar-dot-bottom`
+- `.z-avatar-dot-bottom-left`
+- `.z-avatar-dot-bottom-right`
+- `.z-avatar-dot-left`
+
+<Snippet project="kit" component="avatar.dot_indicator" />
+
+### Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-avatar-dot-danger`
+- `.z-avatar-dot-warning`
+- `.z-avatar-dot-success`
+- `.z-avatar-dot-info`
+- `.z-avatar-dot-muted`
+
+
+<Snippet project="kit" component="avatar.style" />
+
+### Customizing indicator size
+
+You can also customize the size of indicator if you want.
+
+<Snippet project="kit" component="avatar.dot_size" />
+
+## Stacked
+
+Stack multiple avatars together to represent a group or team. Use flex utilities and negative spacing to achieve the overlapping effect.
+
+<Snippet project="kit" component="avatar.stacked" />

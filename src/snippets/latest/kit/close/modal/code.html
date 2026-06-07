@@ -1,0 +1,30 @@
+<a class="z-button z-button-default" href="#modal" data-z-toggle>
+  Open modal
+</a>
+
+<div class="z-modal z-flex-top" id="modal" data-z-modal>
+  <div class="z-modal-dialog z-modal-body z-margin-auto-vertical">
+    <button
+      class="z-modal-close absolute right top"
+      style="--right: 4; --top: 4"
+      type="button"
+      aria-label="Close"
+      data-z-close
+    ></button>
+    <h2 class="z-modal-title">Are you absolutely sure?</h2>
+    <div class="my text-sm text-muted-foreground" style="--my: 4">
+      This action cannot be undone. This will permanently delete your account
+      and remove your data from our servers.
+    </div>
+    <div class="display-flex justify-end">
+      <button
+        class="z-modal-close z-button z-button-default mr"
+        style="--mr: 2"
+        type="button"
+      >
+        Cancel
+      </button>
+      <button class="z-button z-button-danger" type="button">Continue</button>
+    </div>
+  </div>
+</div>

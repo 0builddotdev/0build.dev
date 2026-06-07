@@ -1,0 +1,328 @@
+# Input Time
+
+## Usage
+
+The Input Time component is a web component built from scratch to allow users to easily select time in a 12-hour format, while outputting the selected time in a 24-hour format. To get started, simply use the `<z-input-time>` markup in your HTML code.
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-time></z-input-time>
+</div>
+```
+
+## Capturing values
+
+There are several ways to capture values from the `<z-input-time>` component. The simplest approach is to add a `name` attribute to the component. When you do this, a hidden input field with the specified name will be automatically generated, allowing you to easily capture the selected value on your server.
+
+```html
+<z-input-time name="time"></z-input-time>
+```
+
+## Prepopulating values
+
+To prepopulate the Input Time component with an existing value, simply pass the `value` attribute with a 24-hour time format. To prepopulate with current time, just use the `now` attribute and it will automatically set the current time as the default value.
+
+```html
+<z-input-time now></z-input-time>
+```
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-time value="20:00"></z-input-time>
+</div>
+
+<div class="[h] mt" style="--h: calc(var(--z-global-font-size) * 2.5); --mt: 4">
+  <z-input-time now></z-input-time>
+</div>
+```
+
+## Size modifiers
+
+There are several size modifiers available. Just add one of the following classes to the `cls` attribute to make the input smaller or larger.
+
+| Class             | Description               |
+| ----------------- | ------------------------- |
+| `.z-form-xsmall` | Applies extra small size. |
+| `.z-form-small`  | Applies small size.       |
+| `.z-form-medium` | Applies medium size.      |
+| `.z-form-large`  | Applies large size.       |
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2)">
+  <z-input-time cls="z-input-time z-form-xsmall"></z-input-time>
+</div>
+
+<div
+  class="mt [h]"
+  style="--mt: 4; --h: calc(var(--z-global-font-size) * 2.25)"
+>
+  <z-input-time cls="z-input-time z-form-small"></z-input-time>
+</div>
+
+<div
+  class="mt [h]"
+  style="--mt: 4; --h: calc(var(--z-global-font-size) * 2.75)"
+>
+  <z-input-time cls="z-input-time z-form-medium"></z-input-time>
+</div>
+
+<div class="mt [h]" style="--mt: 4; --h: calc(var(--z-global-font-size) * 3)">
+  <z-input-time cls="z-input-time z-form-large"></z-input-time>
+</div>
+```
+
+## Disable input
+
+To prevent user input, add the `disabled` attribute to the `<z-input-time>` element. This will disable all input fields, making it impossible for users to enter or modify time.
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-time disabled></z-input-time>
+</div>
+```
+
+## Error state
+
+To indicate an error state in the form, simply add the `.z-form-danger` class to the `cls` attribute. This will apply a "danger" state to the component, providing visual feedback to the user.
+
+```html
+<div class="space-y" style="--space-y: 2">
+  <label
+    class="z-form-label color display-block"
+    style="--color: var(--z-danger-f)"
+  >
+    Time
+  </label>
+  <div
+    class="z-form-controls [h]"
+    style="--h: calc(var(--z-global-font-size) * 2.5)"
+  >
+    <z-input-time
+      cls="host-inner: z-input-time; input: z-input z-form-danger; meridiem-button: z-input-fake z-form-danger"
+    ></z-input-time>
+  </div>
+  <p class="z-form-help color" style="--color: var(--z-danger-f)">
+    This field is required.
+  </p>
+</div>
+```
+
+## Preventing layout shift
+
+When loading Web Components, there may be a brief delay before the content is fully rendered. This can result in a flash of unstyled content or unprocessed templates. To mitigate this issue, consider setting a predefined height on the parent element to prevent layout shift and ensure a smooth user experience.
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-time>...</z-input-time>
+</div>
+```
+
+## Internationalization
+
+The Input Time component supports internationalization through multiple methods with the following priority order (highest to lowest):
+
+- **Component-level i18n** (via `i18n` attribute or script tag)
+- **Global component-specific namespace** (via `<script id="z-i18n">`)
+- **Default values**
+
+### Using the i18n attribute
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-time
+    i18n="am: Morning; pm: Evening; hour-label: Hour; minute-label: Minute"
+  ></z-input-time>
+</div>
+```
+
+### Using a configuration script
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-time>
+    <script type="application/json" data-fn="config">
+      {
+        "i18n": {
+          "am": "Vormittag",
+          "pm": "Nachmittag",
+          "hour-label": "Stunde",
+          "minute-label": "Minute",
+          "meridiem-label": "Tageszeit",
+          "time-label": "Uhrzeit"
+        }
+      }
+    </script>
+  </z-input-time>
+</div>
+```
+
+### Using global i18n
+
+Place this in your document `<head>` or before any input-time components:
+
+```html
+<script id="z-i18n" type="application/json">
+  {
+    "z-input-time": {
+      "am": "AM",
+      "pm": "PM",
+      "hour-label": "Hour",
+      "minute-label": "Minute",
+      "meridiem-label": "AM/PM",
+      "time-label": "Time",
+      "hour-placeholder": "HH",
+      "minute-placeholder": "MM",
+      "invalid-time": "Invalid time format"
+    }
+  }
+</script>
+```
+
+### Available i18n options
+
+| Key                  | Default             | Description                             |
+| -------------------- | ------------------- | --------------------------------------- |
+| `am`                 | AM                  | Text for AM period (12-hour clock only) |
+| `pm`                 | PM                  | Text for PM period (12-hour clock only) |
+| `hour-label`         | Hour                | Aria-label for hour input field         |
+| `minute-label`       | Minute              | Aria-label for minute input field       |
+| `meridiem-label`     | AM/PM               | Aria-label for AM/PM toggle button      |
+| `time-label`         | Time                | Aria-label for the time input group     |
+| `hour-placeholder`   | HH                  | Placeholder text for hour input         |
+| `minute-placeholder` | MM                  | Placeholder text for minute input       |
+| `invalid-time`       | Invalid time format | Error message for invalid time format   |
+
+## Custom classes
+
+The Input Time component supports custom CSS classes through the `cls` attribute. This allows you to style specific elements within the time input without modifying the component's internal structure.
+
+### Using simple string format
+
+Apply a class to the default element (container):
+
+```html
+<z-input-time cls="my-time-input"></z-input-time>
+```
+
+### Using JSON object format
+
+Target specific elements within the input time:
+
+```html
+<z-input-time
+  cls='{
+    "container": "time-input-wrapper",
+    "input": "z-input z-form-small",
+    "hour-input": "hour-field",
+    "minute-input": "minute-field",
+    "separator": "time-separator",
+    "meridiem-button": "am-pm-toggle z-button",
+    "button": "z-button"
+  }'
+></z-input-time>
+```
+
+### Using configuration script
+
+```html
+<z-input-time>
+  <script type="application/json" data-fn="config">
+    {
+      "cls": {
+        "container": "z-input-time",
+        "input": "z-input",
+        "meridiem-button": "z-input-fake"
+      }
+    }
+  </script>
+</z-input-time>
+```
+
+### Available cls targets
+
+| Target            | Description                                                 |
+| ----------------- | ----------------------------------------------------------- |
+| `container`       | The main wrapper container for the entire component         |
+| `input`           | Base class applied to both hour and minute inputs           |
+| `hour-input`      | The hour input field (overrides `input` for hour field)     |
+| `minute-input`    | The minute input field (overrides `input` for minute field) |
+| `separator`       | The colon separator between hour and minute                 |
+| `meridiem-button` | The AM/PM toggle button (12-hour clock only)                |
+| `button`          | Base button class (fallback for meridiem-button)            |
+
+## Custom inline styles
+
+The Input Time component supports custom inline styles through the `stl` attribute. This allows you to apply specific CSS styles to individual elements within the time input.
+
+### Using simple string format
+
+Apply styles to the default element (container):
+
+```html
+<z-input-time
+  stl="display\: flex; gap\: 8px; align-items\: center;"
+></z-input-time>
+```
+
+### Using JSON object format
+
+Target specific elements with custom styles:
+
+```html
+<z-input-time
+  stl='{
+    "container": "display: flex; gap: 0.5rem;",
+    "input": "width: 60px; text-align: center; font-size: 1rem;",
+    "hour-input": "border: 2px solid #1e87f0;",
+    "separator": "font-weight: bold; color: #666;",
+    "meridiem-button": "min-width: 60px; padding: 0.5rem;"
+  }'
+></z-input-time>
+```
+
+### Using configuration script
+
+```html
+<z-input-time>
+  <script type="application/json" data-fn="config">
+    {
+      "stl": {
+        "container": "gap: 0.5rem;",
+        "input": "font-size: 1.125rem;"
+      }
+    }
+  </script>
+</z-input-time>
+```
+
+### Available stl targets
+
+The `stl` attribute supports the same targets as the `cls` attribute. See the [Available cls targets](#available-cls-targets) table above for a complete list of targetable elements.
+
+## Attributes
+
+The following attributes are available for this component:
+
+| Name                     | Type    | Default | Description                                                                                  |
+| ------------------------ | ------- | ------- | -------------------------------------------------------------------------------------------- |
+| `autofocus`              | Boolean | false   | Automatically focuses on the hour input field when the component is rendered.                |
+| `now`                    | Boolean | false   | Automatically sets the current time as the default value.                                    |
+| `clock`                  | String  | 12h     | Clock format: `12h` (with AM/PM) or `24h` (without AM/PM).                                   |
+| `min`                    | String  |         | Minimum allowed time in HH:MM format.                                                        |
+| `max`                    | String  |         | Maximum allowed time in HH:MM format.                                                        |
+| `name`                   | String  |         | Name attribute for the hidden input field, enabling form submission.                         |
+| `disabled`               | Boolean | false   | Disables all input fields, making the entire component read-only.                            |
+| `required`               | Boolean | false   | Marks the time input as required for form validation.                                        |
+| `value`                  | String  |         | Pre-populated time value in 24-hour format (HH:MM).                                          |
+| `cls`                    | String  |         | Custom CSS classes. Can be a simple string or JSON object for targeting specific elements.   |
+| `stl`                    | String  |         | Custom inline styles. Can be a simple string or JSON object for targeting specific elements. |
+| `i18n`                   | String  |         | Internationalization strings as JSON object or via configuration script.                     |
+| `force-prevent-rerender` | Boolean | false   | Prevents component rerendering (useful for HTMX or SPA scenarios).                           |
+
+## Events
+
+The Input Time component triggers the following event:
+
+| Name                  | Description                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| `z-input-time:input` | Fired when the time value changes. Event detail contains `{value: string}` in 24-hour format. |

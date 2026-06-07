@@ -1,0 +1,89 @@
+<div class="z-chart-container max-w-md">
+  <div class="p" style="--p: 4">
+    <div class="z-card-title">Area Chart - Smooth</div>
+    <div class="z-text-small mt" style="--mt: 2">January - June 2024</div>
+  </div>
+
+  <div class="px" style="--px: 4">
+    <z-chart>
+      <script data-fn="config" type="application/json">
+        {
+          "apexCharts": {
+            "series": [
+              {
+                "name": "Desktops",
+                "data": [186, 305, 237, 73, 209, 214]
+              }
+            ],
+            "chart": {
+              "type": "line",
+              "zoom": {
+                "enabled": false
+              },
+              "toolbar": {
+                "show": false
+              }
+            },
+            "dataLabels": {
+              "enabled": false
+            },
+            "stroke": {
+              "curve": "straight",
+              "width": 2
+            },
+            "colors": ["var(--z-chart-1)"],
+            "grid": {
+              "row": {
+                "colors": []
+              },
+              "borderColor": "color-mix( in srgb, var(--z-border) var(--z-border-o), transparent)"
+            },
+            "xaxis": {
+              "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+              "tooltip": {
+                "enabled": false
+              },
+              "labels": {
+                "style": {
+                  "colors": "var(--z-muted-f)"
+                }
+              },
+              "axisBorder": {
+                "show": false
+              },
+              "axisTicks": {
+                "show": false
+              }
+            },
+            "yaxis": {
+              "labels": {
+                "show": false
+              }
+            },
+            "tooltip": {
+              "title": {
+                "show": false
+              }
+            }
+          }
+        }
+      </script>
+    </z-chart>
+  </div>
+
+  <div class="p" style="--p: 4">
+    <div
+      class="display-flex gap-x items-center font-medium leading-none"
+      style="--gap-x: 2"
+    >
+      Trending up by 5.2% this month
+      <z-icon icon="trending-up"></z-icon>
+    </div>
+    <div
+      class="color mt leading-none"
+      style="--color: var(--z-muted-f); --mt: 2"
+    >
+      Showing total visitors for the last 6 months
+    </div>
+  </div>
+</div>

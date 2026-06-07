@@ -1,0 +1,191 @@
+---
+project: kit
+group: forms
+text: Basic
+title: Form
+lead: Easily create nice looking forms with different styles and layouts.
+meta:
+  description: Easily create nice looking forms with different styles and layouts.
+keywords: "input,select,textarea,radio,checkbox,range,toggle switch,range"
+context: https://0build.dev/contexts/kit-implementation/form.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+Add one of the following classes to form controls inside a `<form>` element to define them.
+
+| Class               | Description                                                                     |
+| ------------------- | ------------------------------------------------------------------------------- |
+| `.z-input`         | Add this class to `<input>` elements.                                           |
+| `.z-select`        | Add this class to `<select>` elements.                                          |
+| `.z-textarea`      | Add this class to `<textarea>` elements.                                        |
+| `.z-radio`         | Add this class to `<input type="radio">` elements to create radio buttons.      |
+| `.z-checkbox`      | Add this class to `<input type="checkbox">` elements to create checkboxes.      |
+| `.z-range`         | Add this class to `<input type="range">` elements to create range forms.        |
+| `.z-toggle-switch` | Add this class to `<input type="checkbox">` elements to create toggle switches. |
+
+```html
+<form>
+  <input class="z-input" type="text" />
+  <select class="z-select">
+    <option></option>
+    <option></option>
+  </select>
+  <textarea class="z-textarea"></textarea>
+  <input class="z-radio" type="radio" />
+  <input class="z-checkbox" type="checkbox" />
+  <input class="z-range" type="range" />
+</form>
+```
+
+Add the `.z-fieldset` class to a `<fieldset>` element and the `.z-legend` class to a `<legend>` element to define a fieldset and a form legend.
+
+<Snippet project="kit" component="form.basic" />
+
+## Destructive modifier
+
+Add the `.z-form-danger` class to an `<input>`, `<select>` or `<textarea>` element to notify the user that the value is not validated.
+
+<Snippet project="kit" component="form.danger" />
+
+## Size modifiers
+
+There are several size modifiers available. Just add one of the following classes to make the form smaller or larger.
+
+| Class             | Description               |
+| ----------------- | ------------------------- |
+| `.z-form-xsmall` | Applies extra small size. |
+| `.z-form-small`  | Applies small size.       |
+| `.z-form-medium` | Applies medium size.      |
+| `.z-form-large`  | Applies large size.       |
+
+<Snippet project="kit" component="form.size" />
+
+## Width modifiers
+
+You can use utility classes alongside form classes and the it will follow its width.
+
+<Snippet project="kit" component="form.width" />
+
+## Blank modifier
+
+Add the `.z-form-blank` class to minimize the styling of form controls.
+
+<Snippet project="kit" component="form.blank" />
+
+## Layout
+
+Define labels and controls and apply a stacked layout to form elements. Layout modifiers can be added to any parent element like the `<fieldset>` element.
+
+| Class                     | Description                                                     |
+| ------------------------- | --------------------------------------------------------------- |
+| `.z-form-stacked`        | Add this class to display labels on top of controls.            |
+| `.z-form-label`          | Add this class to define form labels.                           |
+| `.z-form-label-required` | Add this class to automatically add an asterisk to form labels. |
+| `.z-form-controls`       | Add this class to define form controls.                         |
+
+```html
+<form class="z-form-stacked">
+  <div>
+    <label class="z-form-label block"></label>
+    <div class="z-form-controls">…</div>
+  </div>
+  <div>
+    <div class="z-form-label"></div>
+    <div class="z-form-controls">…</div>
+  </div>
+</form>
+```
+
+<Snippet project="kit" component="form.layout" />
+
+## Form and icons
+
+You use an icon from the [Icon component](/docs/latest/kit/icon) inside a form. Add the `.z-form-icon` class to a `<span>` element. Group it with an `<input>` element by adding the `.z-inline` class to a container element around both. The icon has to come first in the markup. By default, the icon will be placed on the left side of the form. To change the alignment, add the `.z-form-icon-flip` class.
+
+```html
+<div class="z-inline">
+  <span class="z-form-icon">
+    <z-icon icon="user"></z-icon>
+  </span>
+  <input class="z-input" />
+</div>
+```
+
+<Snippet project="kit" component="form.icon" />
+
+### Clickable icons
+
+To enable an action, for example opening a modal to pick an image or link, use an `<a>` or `<button>` element to create the icon.
+
+```html
+<div class="z-inline">
+  <a class="z-form-icon z-form-icon-flip" href="">
+    <z-icon icon="user"></z-icon>
+  </a>
+  <input class="z-input" />
+</div>
+```
+
+<Snippet project="kit" component="form.clickable_icon" />
+
+## Custom controls
+
+To replace a file input or select forms with your own HTML content, like a button or text, add the `data-z-form-custom` attribute to a container element.
+
+### File
+
+Use a button or text as a file input.
+
+```html
+<div data-z-form-custom>
+  <input type="file" />
+  <button type="button"></button>
+</div>
+```
+
+<Snippet project="kit" component="form.custom_controls_file" />
+
+<span class="z-label z-label-primary">Note</span> The hover and focus state
+for `z-form-custom` are not styled by default, but you could use the adjacent
+sibling selector to do so.
+
+### Select
+
+Use a button, text or a link as a select form. Just add the `target: SELECTOR` option to the `z-form-custom` attribute to select where the option value should be displayed. `target: true` will select the adjacent element in the markup.
+
+```html
+<div data-z-form-custom="target: true">
+  <select>
+    <option></option>
+    <option></option>
+  </select>
+  <button type="button"></button>
+</div>
+```
+
+<Snippet project="kit" component="form.custom_controls_select" />
+
+## Help block
+
+Form text can be created using `.z-form-help` and should be explicitly associated with the form control it relates to using the `aria-describedby` attribute. This will ensure that assistive technologies—such as screen readers—will announce this form text when the user focuses or enters the control.
+
+<Snippet project="kit" component="form.help_block" />
+
+## Toggle Switch
+
+Use the following toggle switch component to ask for a yes or no type of input from your users without the use of JavaScript. You can also add the the `.z-toggle-switch-danger` modifier to apply a danger style.
+
+<Snippet project="kit" component="form.toggle_switch" />
+
+## Accessibility
+
+Set the appropriate WAI-ARIA roles, states and properties to the Form component.
+
+- If no `<label>` element is associated with the form control, set the `aria-label` property to the form control to describe its meaning.
+
+```html
+<input class="z-input" type="text" aria-label="..." />
+```

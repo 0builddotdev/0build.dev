@@ -1,0 +1,64 @@
+---
+group: components
+project: kit
+text: Thumbnav
+title: Thumbnav
+lead: Create a flexible thumbnail navigation.
+meta:
+  description: Create a flexible thumbnail navigation.
+context: https://0build.dev/contexts/kit-implementation/thumbnav.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To create a navigation with thumbnails, use the following classes. This component is built with Flexbox. So to align a thumbnav, you can use utility classes.
+
+| Class          | Description                                                                                                                            |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `.z-thumbnav` | Add this class to a `<ul>` element to define the Thumbnav component. Nest your thumbnail images inside `<a>` elements within the list. |
+| `.z-active `  | Add this class to a list item to apply an active state.                                                                                |
+
+```html
+<ul class="z-thumbnav">
+  <li class="z-active">
+    <a href=""><img src="" width="" height="" alt="" /></a>
+  </li>
+  <li>
+    <a href=""><img src="" alt="" /></a>
+  </li>
+</ul>
+```
+
+<Snippet project="kit" component="thumbnav.basic" />
+
+## Vertical alignment
+
+The thumbnav can also be displayed vertically. Just add the `.z-thumbnav-vertical` modifier.
+
+```html
+<ul class="z-thumbnav z-thumbnav-vertical">
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="thumbnav.vertical" />
+
+## Position as overlay
+
+To position the thumbnav on top of an element or the [Slideshow component](/docs/latest/kit/slideshow) for example, add one of the `.z-position-*` classes from the [Position component](/docs/latest/kit/position) to a `div` element wrapping the thumbnav. To create a position context on the container, add the `.z-position-relative` class.
+
+```html
+<div class="z-position-relative">
+  <!-- The element which is wrapped goes here -->
+
+  <div class="z-position-bottom-center z-position-small">
+    <ul class="z-thumbnav">
+      ...
+    </ul>
+  </div>
+</div>
+```
+
+<Snippet project="kit" component="thumbnav.overlay" />

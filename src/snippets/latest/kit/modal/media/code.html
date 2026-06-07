@@ -1,0 +1,69 @@
+<div class="display-flex flex-wrap gap" style="--gap: 2">
+  <a class="z-button z-button-default" href="#modal-media-image" data-z-toggle>
+    Image
+  </a>
+  <a class="z-button z-button-default" href="#modal-media-video" data-z-toggle>
+    Video
+  </a>
+  <a
+    class="z-button z-button-default"
+    href="#modal-media-youtube"
+    data-z-toggle
+  >
+    YouTube
+  </a>
+  <a class="z-button z-button-default" href="#modal-media-vimeo" data-z-toggle>
+    Vimeo
+  </a>
+</div>
+
+<div id="modal-media-image" class="z-flex-top" data-z-modal>
+  <div class="z-modal-dialog z-margin-auto-vertical w-auto">
+    <button
+      class="z-modal-close absolute right top text-white"
+      style="--right: -4; --top: -4"
+      type="button"
+      data-z-close
+    ></button>
+    <img src="/images/photo.jpg" width="1800" height="1200" alt="" />
+  </div>
+</div>
+
+<div id="modal-media-video" class="z-flex-top" data-z-modal>
+  <div class="z-modal-dialog z-margin-auto-vertical w-auto">
+    <video
+      src="https://yootheme.com/site/images/media/yootheme-pro.mp4"
+      width="1920"
+      height="1080"
+      controls
+      playsinline
+      data-z-video
+    ></video>
+  </div>
+</div>
+
+<div id="modal-media-youtube" class="z-flex-top" data-z-modal>
+  <div class="z-modal-dialog z-margin-auto-vertical w-auto">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/c2pz2mlSfXA"
+      width="1920"
+      height="1080"
+      loading="lazy"
+      data-z-video
+      data-z-responsive
+    ></iframe>
+  </div>
+</div>
+
+<div id="modal-media-vimeo" class="z-flex-top" data-z-modal>
+  <div class="z-modal-dialog z-margin-auto-vertical w-auto">
+    <iframe
+      src="https://player.vimeo.com/video/1084537"
+      width="1280"
+      height="720"
+      loading="lazy"
+      data-z-video
+      data-z-responsive
+    ></iframe>
+  </div>
+</div>

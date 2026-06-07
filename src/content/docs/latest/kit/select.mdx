@@ -1,0 +1,384 @@
+---
+project: kit
+group: forms
+text: Select
+title: Select
+lead: Displays a list of options for the user to pick from—triggered by a button.
+meta:
+  description: Displays a list of options for the user to pick from—triggered by a button.
+keywords: "form,combobox"
+webc: true
+context: https://0build.dev/contexts/kit-implementation/select.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+The custom select component is a web component built from scratch to enhance the native `<select>` tag. To get started, simply use the `<z-select>` markup in your HTML code with one `<select data-fn="data-source" hidden></select>` tag as options reference.
+
+<Snippet project="kit" component="select.basic" />
+
+## Capturing values
+
+There are several ways to capture values from the `<z-select>` component. The simplest approach is to add a `name` attribute to the component. When you do this, a hidden input field with the specified name will be automatically generated, allowing you to easily capture the selected value on your server.
+
+<Snippet project="kit" component="select.capturing_values" />
+
+<span class="z-label z-label-primary">Note</span> If you don't specify a `value` attribute for an `<option>` tag, it will default to using its text content as the value instead.
+
+## Size modifiers
+
+There are several size modifiers available. Just add one of the following classes to make the fake input smaller or larger.
+
+| Class             | Description               |
+| ----------------- | ------------------------- |
+| `.z-form-xsmall` | Applies extra small size. |
+| `.z-form-small`  | Applies small size.       |
+| `.z-form-medium` | Applies medium size.      |
+| `.z-form-large`  | Applies large size.       |
+
+<Snippet project="kit" component="select.size" />
+
+## Adding header
+
+To add a header to your custom select component, use the `<optgroup>` tag, which will be automatically converted into a dropdown header, providing a seamless developer experience.
+
+<Snippet project="kit" component="select.adding_header" />
+
+## Selecting multiple values
+
+To enable the selection of multiple values, simply add the `multiple` attribute to the `<z-select>` element. This will allow users to choose multiple options from the dropdown list.
+
+<Snippet project="kit" component="select.multiple" />
+
+<span class="z-label z-label-primary">Note</span> When utilizing the
+`multiple` attribute, note that it will automatically append `[]` to the name of
+your input. This is particularly useful when your server expects multiple
+values, even if the user selects only one option. This ensures that your
+server-side logic can properly handle the input, regardless of the number of
+values selected.
+
+## Prepopulating values
+
+There are two ways to prepopulate values from the `<z-select>` component. The simplest approach is to add a `selected` attribute to one or more of your `<option>` tags.
+
+<Snippet project="kit" component="select.prepopulated" />
+
+In multiple mode:
+
+- Clicking an option toggles selection (doesn't close dropdown)
+- Selected options show checkmarks
+- Button text shows "{'{n}'} options selected" when 2+ options are selected
+- Hidden inputs are created with `name[]` for form submission
+- Options have `aria-multiselectable="true"`
+
+### Manually setting value
+
+Alternatively, if setting `selected` on individual `<option>` elements is not feasible, you can use the `value` attribute on the `<z-select>` tag to prepopulate it with default values. This attribute accepts a comma-separated list of values, allowing you to set multiple defaults, such as `value="Mercedes-Benz,Bentley,Porsche,Lamborghini"`.
+
+<Snippet project="kit" component="select.prepopulated_1" />
+
+<span class="z-label z-label-primary">Note</span> When both `value` and
+`selected` are used, the `value` attribute takes precedence. Therefore, it's
+recommended to use one method or the other to avoid conflicts.
+
+## Disabling options
+
+Similar to the native `<select>` tag, you can disable specific options in the custom select component by adding the `disabled` attribute to one or more of your `<option>` or `<optgroup>` tags. This allows you to prevent users from selecting certain options.
+
+<Snippet project="kit" component="select.disabling_options" />
+
+## Reactivity
+
+By default, the component is not reactive. This is a deliberate design choice, as using [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) can be computationally expensive. As a result, changes to the referenced `<select data-fn="data-source" hidden>` element will not trigger an update.
+
+To enable reactivity, simply add the `data-reactive` attribute to the `<select data-fn="data-source" hidden>` tag. This will use [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) under the hood to monitor the element for changes.
+
+This feature is particularly useful when using libraries like HTMX, where you may need to dynamically update the options in the `<select data-fn="data-source" hidden>` element based on user interactions, such as searching for data or fetching new options from the server.
+
+```html
+<z-select>
+  <select data-fn="data-source" data-reactive hidden>
+    <!-- -->
+  </select>
+</z-select>
+```
+
+## Searchable
+
+To add a search box, simply add the `searchable` attribute. This will add an input field within the dropdown menu, enabling users to search for specific options. This feature is particularly useful when dealing with extensive lists, such as selecting a country from a long list of options.
+
+<Snippet project="kit" component="select.searchable" />
+
+Search features:
+
+- Case-insensitive filtering
+- Real-time results as you type
+- Searches through option keywords (automatically generated from text)
+- Emits `z-select:search` event on search term change
+- Supports keyboard navigation through filtered results
+
+### Custom keywords
+
+Sometimes, there are items that have related keywords that may be slightly off or awkward when included as anchor tags. For these use cases, we can leverage the `data-keywords` attribute.
+
+For example, if we have a "Form" link but also want it to appear when users search for terms like "checkbox," "input," "toggle switch," etc., we can simply add a comma-separated list of terms like this: `data-keywords="apple, mango, lemon"`.
+
+<Snippet project="kit" component="select.custom_keywords" />
+
+## Disable input
+
+To prevent user input, add the `disabled` attribute to the `<z-select>` element. This will disable the custom select, making it impossible for users to enter or modify its value.
+
+<Snippet project="kit" component="select.disabled" />
+
+## Icon
+
+This component allows you to customize icons through the template system:
+
+<Snippet project="kit" component="select.icon" />
+
+### Options icon
+
+To add icon to options, just add `data-icon` attribute with the name of the icon to your `<option>` tags.
+
+<Snippet project="kit" component="select.options_icon" />
+
+## Internationalization
+
+The Select component supports internationalization through multiple methods with the following priority order (highest to lowest):
+
+- **Component-level i18n** (via `i18n` attribute or script tag)
+- **Global component-specific namespace** (via `<script id="z-i18n">`)
+- **Default values**
+
+### Using the i18n attribute
+
+<Snippet project="kit" component="select.i18n" />
+
+### Using a configuration script
+
+<Snippet project="kit" component="select.i18n_config" />
+
+### Using global i18n
+
+Place this in your document `<head>` or before any select components:
+
+```html
+<script id="z-i18n" type="application/json">
+{
+  "z-select": {
+    "search-placeholder": "Suchen",
+    "selection-count": "{n} Optionen ausgewählt",
+    "insert": "Einfügen",
+    "list-label": "Optionen",
+    "button-label": "Eine Option auswählen",
+  }
+}
+</script>
+```
+
+### Available i18n options
+
+| Key                  | Default                  | Description                                                                  |
+| -------------------- | ------------------------ | ---------------------------------------------------------------------------- |
+| `search-placeholder` | Search                   | Placeholder text for search input field                                      |
+| `selection-count`    | {'{n}'} options selected | Text shown when multiple options are selected (supports {'{n}'} placeholder) |
+| `insert`             | Insert                   | Button text for inserting custom options                                     |
+| `list-label`         | Options                  | ARIA label for the listbox                                                   |
+| `button-label`       | Select an option         | ARIA label and default text for the select button                            |
+
+## Custom classes
+
+The Select component supports custom CSS classes through the `cls` attribute. This allows you to style specific elements within the select without modifying the component's internal structure.
+
+### Using simple string format
+
+Apply a class to the default element (button):
+
+```html
+<z-select cls="my-custom-select-button">
+  <select data-fn="data-source" hidden>
+    <option value="apple">Apple</option>
+  </select>
+</z-select>
+```
+
+### Using JSON object format
+
+Target specific elements within the select:
+
+```html
+<z-select
+  cls='{
+    "host-inner": "select-wrapper",
+    "button": "z-input z-form-large",
+    "button-text": "select-text",
+    "icon": "select-icon",
+    "dropdown": "select-dropdown",
+    "list": "select-list",
+    "item": "select-item",
+    "item-link": "select-link",
+    "item-text": "item-label",
+    "item-check": "check-icon",
+    "search": "search-wrapper",
+    "search-input": "z-input z-form-small"
+  }'
+>
+  <select data-fn="data-source" hidden>
+    <option value="apple">Apple</option>
+  </select>
+</z-select>
+```
+
+### Using configuration script
+
+```html
+<z-select>
+  <script type="application/json" data-fn="config">
+    {
+      "cls": {
+        "button": "z-input",
+        "dropdown": "z-select-dropdown",
+        "item-link": "z-drop-close"
+      }
+    }
+  </script>
+  <select data-fn="data-source" hidden>
+    <option value="apple">Apple</option>
+  </select>
+</z-select>
+```
+
+### Available cls targets
+
+| Target          | Description                                                     |
+| --------------- | --------------------------------------------------------------- |
+| `host-inner`    | The main wrapper container for the entire component             |
+| `button`        | The clickable button that opens the dropdown                    |
+| `button-text`   | The text span inside the button showing selected option(s)      |
+| `icon`          | The icon element inside the button (when icon attribute is set) |
+| `dropdown`      | The dropdown container holding the list and search              |
+| `list`          | The listbox (ul) containing all options                         |
+| `item`          | Individual list item (li) wrapper                               |
+| `item-active`   | The active list item (li)                                       |
+| `item-disabled` | Class for disabled list item (li)                               |
+| `item-header`   | Group header for grouped options                                |
+| `item-link`     | The clickable button/link inside each item                      |
+| `item-wrapper`  | Wrapper for item content (icon + text)                          |
+| `item-icon`     | Icon element for options with data-icon                         |
+| `item-text`     | Text label for the option                                       |
+| `item-check`    | Checkmark indicator for selected options                        |
+| `item-subtitle` | Description/subtitle text for options with data-description     |
+| `search`        | Search input wrapper (when searchable is enabled)               |
+| `search-input`  | The actual search input field                                   |
+| `search-icon`   | Icon displayed in search input                                  |
+| `divider`       | Class for the divider element                                   |
+
+## Custom inline styles
+
+The Select component supports custom inline styles through the `stl` attribute. This allows you to apply specific CSS styles to individual elements within the select.
+
+### Using simple string format
+
+Apply styles to the default element (button):
+
+```html
+<z-select stl="width\: 300px; min-height\: 44px;">
+  <select data-fn="data-source">
+    <option value="apple">Apple</option>
+  </select>
+</z-select>
+```
+
+### Using JSON object format
+
+Target specific elements with custom styles:
+
+```html
+<z-select 
+  stl='{
+    "container": "position: relative;",
+    "button": "background: #f8f9fa; border: 1px solid #dee2e6; padding: 0.75rem 1rem;",
+    "button-text": "color: #495057; font-weight: 500;",
+    "dropdown": "min-width: 320px; max-height: 400px; overflow-y: auto;",
+    "item-link": "padding: 0.5rem 1rem; transition: background 0.2s;"
+  }'>
+  <select data-fn="data-source">
+    <option value="apple">Apple</option>
+  </select>
+</z-select>
+```
+
+### Using configuration script
+
+```html
+<z-select>
+  <script type="application/json" data-fn="config">
+  {
+    "stl": {
+      "button": "min-width: 250px;",
+      "dropdown": "box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+    }
+  }
+  </script>
+  <select data-fn="data-source">
+    <option value="apple">Apple</option>
+  </select>
+</z-select>
+```
+
+### Available stl targets
+
+The `stl` attribute supports the same targets as the `cls` attribute. See the [Available cls targets](#available-cls-targets) table above for a complete list of targetable elements.
+
+## Error state
+
+To indicate an error state in the form, simply add the `.z-form-danger` class to the `cls` attribute. This will apply a "danger" state to the component, providing visual feedback to the user.
+
+<Snippet project="kit" component="select.error" />
+
+## Preventing layout shift
+
+When loading Web Components, a brief delay may cause a flash of unstyled content. To mitigate this issue, consider setting a predefined height on the parent element to prevent layout shift and ensure a smooth user experience.
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-select>
+    <!-- ... -->
+  </z-select>
+</div>
+```
+
+## Attributes
+
+The following attributes are available for this component:
+
+| Name                     | Type    | Default                                               | Description                                                                      |
+| ------------------------ | ------- | ----------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `searchable`             | Boolean | false                                                 | Enables search functionality to filter options                                   |
+| `insertable`             | Boolean | false                                                 | Allows inserting custom options (auto-enables searchable)                        |
+| `send-headers`           | String  |                                                       | JSON object of HTTP headers for server validation requests                       |
+| `send-url`               | String  |                                                       | Server endpoint URL for validating inserted options                              |
+| `send-method`            | String  | POST                                                  | HTTP method for server requests                                                  |
+| `multiple`               | Boolean | false                                                 | Enables multi-select mode                                                        |
+| `icon`                   | String  |                                                       | Custom icon/text displayed in the button                                         |
+| `name`                   | String  |                                                       | Name attribute for hidden input(s), enabling form submission                     |
+| `disabled`               | Boolean | false                                                 | Disables the entire component, preventing user interaction                       |
+| `required`               | Boolean | false                                                 | Marks the select as required for form validation                                 |
+| `placeholder`            | String  |                                                       | Custom placeholder text when no option is selected                               |
+| `value`                  | String  |                                                       | Pre-selected value(s). Use comma-separated for multiple selections               |
+| `cls`                    | String  |                                                       | Custom CSS classes. Can be simple string or JSON object for targeting elements   |
+| `stl`                    | String  |                                                       | Custom inline styles. Can be simple string or JSON object for targeting elements |
+| `i18n`                   | String  |                                                       | Internationalization strings as JSON object or via configuration script          |
+| `force-prevent-rerender` | Boolean | false                                                 | Prevents component rerendering (useful for HTMX or SPA scenarios)                |
+
+## Events
+
+The Select component triggers the following events:
+
+| Name               | Description                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| `z-select:input`  | Fired when the selected value(s) change. Event detail contains `{value: string \| string[]}`.             |
+| `z-select:search` | Fired when the search term changes (when searchable is enabled). Event detail contains `{value: string}`. |

@@ -1,0 +1,32 @@
+# Progress
+
+## Usage
+
+To apply this component, add the `.z-progress` class to a `<progress>` element.
+
+```html
+<progress class="z-progress" value="" max=""></progress>
+```
+
+```html
+<progress
+  id="js-progressbar"
+  class="z-progress"
+  value="10"
+  max="100"
+></progress>
+
+<script>
+  document.addEventListener("uikit:init", () => {
+    var bar = document.getElementById("js-progressbar");
+
+    var animate = setInterval(function () {
+      bar.value += 10;
+
+      if (bar.value >= bar.max) {
+        clearInterval(animate);
+      }
+    }, 1000);
+  });
+</script>
+```

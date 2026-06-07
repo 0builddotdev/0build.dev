@@ -1,0 +1,80 @@
+---
+group: components
+project: kit
+text: Pagination
+title: Pagination
+lead: Easily create a nice looking pagination to navigate through pages.
+meta:
+  description: Easily create a nice looking pagination to navigate through pages.
+context: https://0build.dev/contexts/kit-implementation/pagination.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+The Pagination component consists of button-like styled links, that are aligned side by side in a horizontal list.
+
+| Class            | Description                                                                                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `.z-pagination` | Add this class to a `<ul>` element to define the Pagination component. Use `<a>` elements as pagination items within the list. |
+| `.z-active`     | Add this class to a list item to apply an active state and use a `<span>` instead of an `<a>` element.                         |
+| `.z-disabled`   | Add this class to a list item to apply a disabled state and use a `<span>` instead of an `<a>` element.                        |
+
+To add an icon, just add the `data-z-pagination-previous` or `data-z-pagination-next` attribute to a `<span>` element inside a pagination item.
+
+<Snippet project="kit" component="pagination.basic" />
+
+## Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-pagination-default`
+- `.z-pagination-ghost`
+- `.z-pagination-primary`
+- `.z-pagination-secondary`
+- `.z-pagination-success`
+- `.z-pagination-warning`
+- `.z-pagination-info`
+- `.z-pagination-danger`
+
+<Snippet project="kit" component="pagination.style" />
+
+## Size modifiers
+
+There are several size modifiers available. Just add one of the following classes to make the pagination smaller or larger.
+
+| Class                   | Description               |
+| ----------------------- | ------------------------- |
+| `.z-pagination-xsmall` | Applies extra small size. |
+| `.z-pagination-small`  | Applies small size.       |
+| `.z-pagination-medium` | Applies medium size.      |
+| `.z-pagination-large`  | Applies large size.       |
+
+<Snippet project="kit" component="pagination.size" />
+
+## Alignment
+
+The Pagination component utilizes flexbox, so navigations can easily be aligned with Flex utility classes.
+
+```html
+<ul class="z-pagination justify-center">
+  ...
+</ul>
+```
+
+<Snippet project="kit" component="pagination.alignment" />
+
+## Accessibility
+
+The previous/next pagination adheres to the [button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) and automatically sets the appropriate WAI-ARIA roles, states and properties.
+
+- The _prev/next pagination items_ have the `button` role and the `aria-label` property.
+
+### Internationalization
+
+The Pagination component uses the following translation strings. Learn more about [translating components](/docs/latest/kit/accessibility#internationalization).
+
+| Key     | Default              | Description             |
+| ------- | -------------------- | ----------------------- |
+| `label` | `Next/Previous page` | `aria-label` attribute. |

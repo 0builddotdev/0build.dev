@@ -1,0 +1,69 @@
+---
+group: components
+project: kit
+text: Subnav
+title: Subnav
+lead: Defines different styles for a sub navigation.
+meta:
+  description: Defines different styles for a sub navigation.
+context: https://0build.dev/contexts/kit-implementation/subnav.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To apply this component, use the following classes. To align a subnav, for example to horizontally center it, you can use utility classes.
+
+| Class         | Description                                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `.z-subnav`  | Add this class to a `<ul>` element to define the Subnav component. Use `<a>` elements as nav items within the list. |
+| `.z-active ` | Add this class to a list item to apply an active state.                                                             |
+
+To add list items without a link, use a `<span>` element instead of an `<a>`. Alternatively, disable an `<a>` element by adding the `.z-disabled` class to the `<li>` element and remove the `href` attribute from the anchor to make it inaccessible through keyboard navigation.
+
+```html
+<ul class="z-subnav">
+  <li class="z-active"><a href=""></a></li>
+  <li><a href=""></a></li>
+  <li><span></span></li>
+</ul>
+```
+
+<Snippet project="kit" component="subnav.basic" />
+
+## Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-subnav-primary`
+
+<Snippet project="kit" component="subnav.style" />
+
+### Customization
+
+You can use CSS variables to customize this component in any way you prefer.
+
+<Snippet project="kit" component="subnav.custom" />
+
+## Subnav and Dropdown
+
+You can also use a dropdown from the [Dropdown component](/docs/latest/kit/dropdown) with a subnav.
+
+```html
+<ul class="z-subnav">
+  <li>
+    <!-- This is the menu item toggling the dropdown -->
+    <a href=""></a>
+
+    <!-- This is the dropdown -->
+    <div data-z-dropdown="mode: click">
+      <ul class="z-dropdown-nav z-nav">
+        ...
+      </ul>
+    </div>
+  </li>
+</ul>
+```
+
+<Snippet project="kit" component="subnav.dropdown" />

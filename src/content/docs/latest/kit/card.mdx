@@ -1,0 +1,75 @@
+---
+group: components
+project: kit
+text: Card
+title: Card
+lead: Create layout boxes with different styles.
+meta:
+  description: Create layout boxes with different styles.
+context: https://0build.dev/contexts/kit-implementation/card.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+The Card component consists of the card itself, the card body and an optional card title. Typically, cards are arranged in grid columns.
+
+| Class            | Description                                                                    |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `.z-card`       | Add this class to a `<div>` element to define the Card component.              |
+| `.z-card-body`  | Add this class to the card to create padding between the card and its content. |
+| `.z-card-title` | Add this class to a heading to define a card title.                            |
+
+```html
+<div class="z-card z-card-body">
+  <h3 class="z-card-title"></h3>
+</div>
+```
+
+<Snippet project="kit" component="card.basic" />
+
+## Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-card-primary`
+- `.z-card-secondary`
+- `.z-badge-danger`
+- `.z-badge-warning`
+- `.z-badge-success`
+- `.z-badge-info`
+
+```html
+<div class="z-card"></div>
+
+<div class="z-card z-card-primary"></div>
+
+<div class="z-card z-card-secondary"></div>
+
+<div class="z-card z-card-success"></div>
+
+<div class="z-card z-card-warning"></div>
+
+<div class="z-card z-card-info"></div>
+
+<div class="z-card z-card-danger"></div>
+```
+
+<Snippet project="kit" component="card.style" />
+
+## Header and footer
+
+You can also divide a card into header and footer — around the default body. Just add the `.z-card-header` or `.z-card-footer` class to a `<div>` element inside the card.
+
+```html
+<div class="z-card">
+  <div class="z-card-header">
+    <h3 class="z-card-title"></h3>
+  </div>
+  <div class="z-card-body"></div>
+  <div class="z-card-footer"></div>
+</div>
+```
+
+<Snippet project="kit" component="card.header_footer" />

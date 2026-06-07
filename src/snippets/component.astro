@@ -1,0 +1,97 @@
+---
+import { readFileSync, existsSync } from "fs";
+import { stl } from "helpers/common";
+import { resolve } from "path";
+
+const { version = "latest", component, project = "style" } = Astro.props;
+
+const route = `/hx/ec/${version}/${project}/${component.replace(".", "/")}`;
+const e = `copy_${project}_${component.replace(".", "_")}`;
+
+let preview = "";
+let lines = 0;
+
+const basePath = resolve(
+  "src",
+  "snippets",
+  version,
+  project,
+  component.replace(".", "/"),
+);
+
+const codePath = resolve(basePath, "code.html");
+const previewPath = resolve(basePath, "code.preview.html");
+
+try {
+  const codeContent = readFileSync(codePath, "utf-8");
+  lines = codeContent.trim().split("\n").length || 1;
+
+  preview = existsSync(previewPath)
+    ? readFileSync(previewPath, "utf-8")
+    : codeContent;
+} catch (error) {
+  const componentPath = component.replace(".", "/");
+  console.error(`Error reading files for ${componentPath}:`, error);
+}
+---
+
+<div class="snippet mt relative" style="--mt: 10">
+  <ul class="z-tab" data-z-tab="swiping: false; animation: z-animation-fade">
+    <li class="z-active">
+      <a href="#" style="--z-tab-item-padding: 0.5rem 1rem 0.75rem 1rem"
+        >Preview</a
+      >
+    </li>
+    <li>
+      <a href="#" style="--z-tab-item-padding: 0.5rem 1rem 0.75rem 1rem"
+        >Markup</a
+      >
+    </li>
+  </ul>
+
+  <ul
+    class="z-switcher mt border-b/o border-b-w"
+    style="--mt: 6; --border-b: var(--z-border); --border-b-o: var(--z-border-o); --border-b-w: 1px;"
+  >
+    <li class="z-active">
+      <div class="pt pb" style="--pt: 6; --pb: 10;" set:html={preview} />
+    </li>
+    <li>
+      <div
+        class="ec mt bg z-shadow z-rounded border-w border"
+        style={stl({
+          "--mt": "6",
+          "--bg": "#17191e",
+          "--border-w": "1px",
+          "--border": "#858b9833",
+        })}
+      >
+        <pre><div hx-trigger="intersect" hx-get={`${route}/markup`} hx-select="code" hx-swap="outerHTML" style={stl({height: `calc((${lines} * var(--z-global-line-height)) + (var(--highlighter-padding) * 2))`})} /></pre>
+      </div>
+    </li>
+  </ul>
+
+  <div
+    class="z-button-group absolute [top] right display-hidden md:display-flex"
+    style="--top: 0; --right: 0"
+  >
+    <button
+      type="button"
+      class="z-button z-button-default z-button-xsmall"
+      data-z-tooltip="Copy"
+      x-data
+      x-on:click={`copy('${route}/clipboard', '${e}')`}
+    >
+      <z-icon class="size" style="--size: 4" icon="copy"></z-icon>
+    </button>
+
+    <a
+      class="z-button z-button-default z-button-xsmall"
+      data-z-tooltip="Report an issue or submit a PR"
+      href={`https://github.com/0builddotdev/0build.dev/tree/master/src/snippets/${version}/${project}/${component.replace(".", "/")}`}
+      target="_blank"
+    >
+      <z-icon class="size" style="--size: 4" icon="bug-off"></z-icon>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-select
+    cls="button: z-button z-button-default"
+    drop="mode: click; pos: right-center"
+    searchable
+  >
+    <select data-fn="data-source" hidden>
+      <option data-description="Can view and comment." value="viewer">
+        Viewer
+      </option>
+      <option data-description="Can view, comment and edit." value="developer">
+        Developer
+      </option>
+      <option
+        data-description="Can view, comment and manage billing."
+        value="billing"
+      >
+        Billing
+      </option>
+      <option data-description="Admin-level to all resources." value="owner">
+        Owner
+      </option>
+    </select>
+  </z-select>
+</div>

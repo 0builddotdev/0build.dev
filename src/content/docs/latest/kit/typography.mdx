@@ -1,0 +1,88 @@
+---
+group: components
+project: kit
+text: Typography
+title: Typography
+lead: Documentation and examples for typography, including headings, body text, lists, and more.
+meta:
+  description: Documentation and examples for typography, including headings, body text, lists, and more.
+keywords: article,heading,hero,text
+context: https://0build.dev/contexts/kit-implementation/typography.md
+---
+
+import Snippet from "snippets/component.astro";
+
+<Snippet project="kit" component="typography.basic" />
+
+## Headings
+
+Add one of the following classes to modify the size and style of headings. Usually, these classes would be used on heading elements, but they work also with any other element like a `div` element.
+
+| Class    | Description                            |
+| -------- | -------------------------------------- |
+| `.z-h1` | Add this class to apply an h1 heading. |
+| `.z-h2` | Add this class to apply an h2 heading. |
+| `.z-h3` | Add this class to apply an h3 heading. |
+| `.z-h4` | Add this class to apply an h4 heading. |
+| `.z-h5` | Add this class to apply an h5 heading. |
+| `.z-h6` | Add this class to apply an h6 heading. |
+
+<Snippet project="kit" component="typography.headings" />
+
+## Hero
+
+Add one of the following classes to apply hero headings. These classes are typically used to add a prominent message with a very large font size.
+
+| Class              | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| `.z-hero-small`   | Add this class to apply a small-sized heading.   |
+| `.z-hero-medium`  | Add this class to apply a medium-sized heading.  |
+| `.z-hero-large`   | Add this class to apply a large-sized heading.   |
+| `.z-hero-xlarge`  | Add this class to apply a xlarge-sized heading.  |
+| `.z-hero-2xlarge` | Add this class to apply a 2xlarge-sized heading. |
+| `.z-hero-3xlarge` | Add this class to apply a 3xlarge-sized heading. |
+
+<Snippet project="kit" component="typography.hero" />
+
+## Heading Styles
+
+Add one of the following classes to modify the size and style of headings.
+
+| Class                 | Description                                                      |
+| --------------------- | ---------------------------------------------------------------- |
+| `.z-heading-divider` | Add this class to apply a divider to a heading.                  |
+| `.z-heading-line`    | Add this class to apply a vertically centered line to a heading. |
+| `.z-heading-bullet`  | Add this class to apply a bullet to a heading.                   |
+
+<Snippet project="kit" component="typography.heading_styles" />
+
+## Paragraph
+
+<Snippet project="kit" component="typography.paragraph" />
+
+## Blockquote
+
+<Snippet project="kit" component="typography.blockquote" />
+
+## Inline code
+
+<Snippet project="kit" component="typography.codespan" />
+
+## Text
+
+| Class               | Description                                                                                                          |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `.z-text-lead`     | <span class="z-text-lead">Add this class to highlight text, for example in article subtitles.</span>                |
+| `.z-text-meta`     | <span class="z-text-meta">Add this class to a paragraph that contains meta text about an article or similar.</span> |
+| `.z-text-truncate` | Prevents text from wrapping into multiple lines, truncating it and displaying an ellipsis instead.                   |
+| `.z-text-break`    | Breaks strings, if their length exceeds the width of their container.                                                |
+
+### Background
+
+To apply a gradient or background image to text, add the `.z-text-background` class to a `<span>` element inside the text element. Styles that don't define a `background-image`, will apply the primary color.
+
+```html
+<h1><span class="z-text-background"></span></h1>
+```
+
+<Snippet project="kit" component="typography.text_background" />

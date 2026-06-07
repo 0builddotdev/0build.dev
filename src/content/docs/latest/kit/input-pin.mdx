@@ -1,0 +1,285 @@
+---
+group: forms
+project: kit
+text: OTP / PIN
+title: Input PIN
+lead: Allows users to input a sequence of one-character alphanumeric inputs.
+meta:
+  description: Allows users to input a sequence of one-character alphanumeric inputs.
+keywords: "form,otp"
+webc: true
+context: https://0build.dev/contexts/kit-implementation/input-pin.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+The Input PIN component is a web component built from scratch to allow users to input a sequence of one-character alphanumeric inputs. This is particularly useful in scenarios such as:
+
+- Entering a verification code sent via SMS or email
+- Authenticating with a two-factor authentication system
+- Creating a secure password or passphrase
+
+To get started, simply use the `<z-input-pin>` markup in your HTML code.
+
+<Snippet project="kit" component="input_pin.basic" />
+
+## Capturing values
+
+There are several ways to capture values from the `<z-input-pin>` component. The simplest approach is to add a `name` attribute to the component. When you do this, a hidden input field with the specified name will be automatically generated, allowing you to easily capture the selected value on your server.
+
+```html
+<z-input-pin name="pin"></z-input-pin>
+```
+
+## Customize length
+
+By default, the Input PIN component is set to accept 6 characters. However, you can easily customize this by adding the `length` attribute to the `<z-input-pin>` element. Simply specify the desired length as a numerical value, and the component will automatically adjust to accommodate the specified number of inputs.
+
+<Snippet project="kit" component="input_pin.length" />
+
+## Separated input
+
+By default, the input fields in the Input PIN component are displayed adjacent to each other. To add visual separation between each input, simply add the `.z-input-pin-separated` class to the `cls` attribute. This will add gaps between each input, making it easier for users to distinguish between individual characters.
+
+<Snippet project="kit" component="input_pin.separated" />
+
+## Size modifiers
+
+There are several size modifiers available. Just add one of the following classes to the `cls` attribute to make the input smaller or larger.
+
+| Class             | Description               |
+| ----------------- | ------------------------- |
+| `.z-form-xsmall` | Applies extra small size. |
+| `.z-form-small`  | Applies small size.       |
+| `.z-form-medium` | Applies medium size.      |
+| `.z-form-large`  | Applies large size.       |
+
+<Snippet project="kit" component="input_pin.size" />
+
+## Disable input
+
+To prevent user input, add the `disabled` attribute to the `<z-input-pin>` element. This will disable all input fields, making it impossible for users to enter or modify the PIN sequence.
+
+<Snippet project="kit" component="input_pin.disabled" />
+
+## Error state
+
+To indicate an error state in the form, simply add the `.z-form-danger` class to the `cls` attribute. This will apply a "danger" state to the component, providing visual feedback to the user.
+
+<Snippet project="kit" component="input_pin.error" />
+
+## Internationalization
+
+The Input PIN component supports internationalization through multiple methods with the following priority order (highest to lowest):
+
+- **Component-level i18n** (via `i18n` attribute or script tag)
+- **Global component-specific namespace** (via `<script id="z-i18n">`)
+- **Default values**
+
+### Using the i18n attribute
+
+<Snippet project="kit" component="input_pin.i18n" />
+
+### Using a configuration script
+
+<Snippet project="kit" component="input_pin.i18n_config" />
+
+### Using global i18n
+
+Place this in your document `<head>` or before any input-pin components:
+
+```html
+<script id="z-i18n" type="application/json">
+  {
+    "z-input-pin": {
+      "label": "Bestätigungscode",
+      "description": "Geben Sie den {length}-stelligen Code ein",
+      "field-label": "Ziffer {n} von {total}",
+      "loaded": "PIN-Eingabe bereit",
+      "complete": "PIN-Eingabe abgeschlossen",
+      "field-filled": "Feld {n} ausgefüllt",
+      "invalid-character": "Ungültiges Zeichen eingegeben"
+    }
+  }
+</script>
+```
+
+### Available i18n options
+
+| Key                 | Default                       | Description                                                                      |
+| ------------------- | ----------------------------- | -------------------------------------------------------------------------------- |
+| `label`             | PIN Code                      | Main label for the PIN input group                                               |
+| `description`       | Enter {'{length}'}-digit code | Description text (supports {'{length}'} placeholder)                             |
+| `field-label`       | Digit {'{n}'} of {'{total}'}  | ARIA label for individual fields (supports {'{n}'}, {'{total}'} placeholders)    |
+| `loaded`            | PIN input ready               | Screen reader announcement when component loads                                  |
+| `complete`          | PIN entry complete            | Screen reader announcement when all fields are filled                            |
+| `field-filled`      | Field {'{n}'} filled          | Screen reader announcement when a field is filled (supports {'{n}'} placeholder) |
+| `invalid-character` | Invalid character entered     | Screen reader announcement for invalid input                                     |
+
+## Custom classes
+
+The Input PIN component supports custom CSS classes through the `cls` attribute. This allows you to style specific elements within the PIN input without modifying the component's internal structure.
+
+### Using simple string format
+
+Apply a class to the default element (host-inner):
+
+```html
+<z-input-pin cls="my-pin-input"></z-input-pin>
+```
+
+### Using JSON object format
+
+Target specific elements within the input pin:
+
+```html
+<z-input-pin
+  cls='{
+    "host-inner": "pin-container",
+    "wrapper": "z-input-pin z-input-pin-separated",
+    "input": "z-input z-form-large",
+    "label": "pin-label",
+    "description": "pin-desc"
+  }'
+>
+</z-input-pin>
+```
+
+### Using configuration script
+
+```html
+<z-input-pin>
+  <script type="application/json" data-fn="config">
+    {
+      "cls": {
+        "wrapper": "z-input-pin z-input-pin-separated",
+        "input": "z-input"
+      }
+    }
+  </script>
+</z-input-pin>
+```
+
+### Available cls targets
+
+| Target        | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| `host-inner`  | The main container div                               |
+| `wrapper`     | The div wrapping all input fields                    |
+| `input`       | Individual input fields                              |
+| `label`       | The label element (visually hidden by default)       |
+| `description` | The description element (visually hidden by default) |
+
+## Custom inline styles
+
+The Input PIN component supports custom inline styles through the `stl` attribute. This allows you to apply specific CSS styles to individual elements within the PIN input.
+
+### Using simple string format
+
+Apply styles to the default element (host-inner):
+
+```html
+<z-input-pin stl="margin\: 2rem 0;"></z-input-pin>
+```
+
+### Using JSON object format
+
+Target specific elements with custom styles:
+
+```html
+<z-input-pin
+  stl='{
+    "container": "margin: 2rem 0;",
+    "wrapper": "gap: 1rem; display: flex;",
+    "input": "width: 50px; height: 60px; font-size: 24px; text-align: center; border: 2px solid #ddd; border-radius: 8px;",
+    "label": "font-weight: 600; font-size: 1.125rem;",
+    "description": "color: #666; font-size: 0.875rem;"
+  }'
+>
+</z-input-pin>
+```
+
+### Using configuration script
+
+```html
+<z-input-pin>
+  <script type="application/json" data-fn="config">
+    {
+      "stl": {
+        "wrapper": "gap: 0.75rem;",
+        "input": "width: 45px; height: 55px;"
+      }
+    }
+  </script>
+</z-input-pin>
+```
+
+### Available stl targets
+
+The `stl` attribute supports the same targets as the `cls` attribute. See the [Available cls targets](#available-cls-targets) table above for a complete list of targetable elements.
+
+## Keyboard navigation
+
+The Input PIN component provides comprehensive keyboard support:
+
+| Key            | Action                                                   |
+| -------------- | -------------------------------------------------------- |
+| Type character | Auto-advances to next field                              |
+| Backspace      | Deletes character and moves to previous field (if empty) |
+| Delete         | Moves to next field (if current is empty)                |
+| Arrow Left     | Move to previous field                                   |
+| Arrow Right    | Move to next field                                       |
+| Home           | Jump to first field                                      |
+| End            | Jump to last filled field                                |
+| Paste (Ctrl+V) | Distributes pasted content across fields                 |
+
+## Paste support
+
+The component supports pasting complete PIN codes. When a user pastes text:
+
+- Content is automatically distributed across input fields
+- Text is trimmed to the PIN length
+- Pattern validation is applied (if configured)
+- Focus moves to the next empty field or blurs if complete
+- Invalid pastes are rejected with screen reader announcement
+
+## Preventing layout shift
+
+When loading Web Components, there may be a brief delay before the content is fully rendered. This can result in a flash of unstyled content or unprocessed templates. To mitigate this issue, consider setting a predefined height on the parent element to prevent layout shift and ensure a smooth user experience.
+
+```html
+<div class="[h]" style="--h: calc(var(--z-global-font-size) * 2.5)">
+  <z-input-pin>...</z-input-pin>
+</div>
+```
+
+## Attributes
+
+The following attributes are available for this component:
+
+| Name                     | Type    | Default | Description                                                                       |
+| ------------------------ | ------- | ------- | --------------------------------------------------------------------------------- |
+| `autofocus`              | Boolean | false   | Automatically focuses on the first input field when the component is rendered     |
+| `length`                 | Number  | 6       | Number of PIN digits/characters to collect                                        |
+| `input-mode`             | String  | numeric | Input mode for mobile keyboards: `numeric` or `text`                              |
+| `pattern`                | String  |         | Pattern for input validation (e.g., `[0-9]` for digits only)                      |
+| `show-labels`            | Boolean | false   | Whether to show labels and descriptions visually (default: hidden but accessible) |
+| `name`                   | String  |         | Name attribute for the hidden input field, enabling form submission               |
+| `disabled`               | Boolean | false   | Disables all input fields, making the entire component read-only                  |
+| `required`               | Boolean | false   | Marks the PIN input as required for form validation                               |
+| `value`                  | String  |         | Pre-populated PIN value (validated against pattern if provided)                   |
+| `cls`                    | String  |         | Custom CSS classes. Can be simple string or JSON object for targeting elements    |
+| `stl`                    | String  |         | Custom inline styles. Can be simple string or JSON object for targeting elements  |
+| `i18n`                   | String  |         | Internationalization strings as JSON object or via configuration script           |
+| `force-prevent-rerender` | Boolean | false   | Prevents component rerendering (useful for HTMX or SPA scenarios)                 |
+
+## Events
+
+The Input PIN component triggers the following events:
+
+| Name                    | Description                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `z-input-pin:change`   | Fired when the PIN value changes. Event detail contains `{value: string}`.     |
+| `z-input-pin:complete` | Fired when all PIN fields are filled. Event detail contains `{value: string}`. |

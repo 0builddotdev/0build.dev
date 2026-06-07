@@ -1,0 +1,101 @@
+---
+group: components
+project: kit
+text: Button
+title: Button
+lead: Easily create nice looking buttons, which come in different styles.
+meta:
+  description: Easily create nice looking buttons, which come in different styles.
+context: https://0build.dev/contexts/kit-implementation/button.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To apply this component, add the `.z-button` class and a modifier such as `.z-button-default` to an `<a>` or `<button>` element. Add the `disabled` attribute to a `<button>` element to disable the button.
+
+```html
+<a class="z-button z-button-default" href=""></a>
+
+<button class="z-button z-button-default"></button>
+
+<button class="z-button z-button-default" disabled></button>
+```
+
+<Snippet project="kit" component="button.basic" />
+
+## Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-button-default`
+- `.z-button-ghost`
+- `.z-button-primary`
+- `.z-button-secondary`
+- `.z-button-success`
+- `.z-button-warning`
+- `.z-button-info`
+- `.z-button-danger`
+- `.z-button-text`
+
+```html
+<button class="z-button z-button-primary"></button>
+```
+
+<Snippet project="kit" component="button.style" />
+
+## Customization
+
+You can use CSS variables to customize this component in any way you prefer.
+
+<Snippet project="kit" component="button.custom" />
+
+## Size modifiers
+
+There are several size modifiers available. Just add one of the following classes to make the button smaller or larger.
+
+| Class        | Description               |
+| ------------ | ------------------------- |
+| `.z-button-xsmall` | Applies extra small size. |
+| `.z-button-small` | Applies small size.       |
+| `.z-button-medium` | Applies medium size.      |
+| `.z-button-large` | Applies large size.       |
+
+<Snippet project="kit" component="button.size" />
+
+## Width modifiers
+
+You can use  utility classes alongside button classes and the it will follow its width.
+
+<Snippet project="kit" component="button.width" />
+
+## Icon
+
+Use `.z-button-icon` class to create an icon button, which can be used for social icons or toolbars.
+
+<Snippet project="kit" component="button.icon" />
+
+## Group
+
+To create a button group, add the `.z-button-group` class to a `<div>` element around the buttons. That's it! No further markup is needed.
+
+<Snippet project="kit" component="button.group" />
+
+## Button with dropdowns
+
+A button can be used to trigger a dropdown menu from the [Dropdown component](/docs/latest/kit/dropdown).
+
+```html
+<!-- A button toggling a dropdown -->
+<button class="z-button z-button-default" type="button"></button>
+<div data-z-dropdown></div>
+```
+
+<Snippet project="kit" component="button.dropdown" />
+
+## Loading
+
+You can use utilities or the [Spinner component](/docs/latest/kit/spinner) to add a loading state.
+
+<Snippet project="kit" component="button.loading" />

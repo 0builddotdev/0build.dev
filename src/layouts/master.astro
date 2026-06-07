@@ -1,0 +1,151 @@
+---
+import "css/app.css";
+import { stl } from "helpers/common";
+
+const { doc } = Astro.props;
+---
+
+<!doctype html>
+<html class="antialiased z-ff-a" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{doc.title}</title>
+
+    <link
+      rel="preload"
+      href="/fonts/geist-font/fonts/GeistVariableVF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/geist-font/fonts/GeistMonoVariableVF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/fonts/geist-font/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/css/kit.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/css/chart.min.css"
+    />
+
+    <script is:inline>
+      const htmlElement = document.documentElement;
+
+      const __Z_THEME__ = JSON.parse(
+        localStorage.getItem("__Z_THEME__") || "{}",
+      );
+
+      if (
+        __Z_THEME__.mode === "dark" ||
+        (!__Z_THEME__.mode &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        htmlElement.classList.add("dark");
+      } else {
+        htmlElement.classList.remove("dark");
+      }
+
+      htmlElement.classList.add(__Z_THEME__.layout || "z-layout-small");
+    </script>
+
+    {
+      doc.meta &&
+        Object.keys(doc.meta).map((key) => (
+          <meta name={key} content={doc.meta[key]} />
+        ))
+    }
+
+    <script
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/hwc/core.iife.js"
+      type="module"></script>
+  </head>
+  <body
+    class="bg color font-family"
+    style={stl({
+      "--bg": "var(--z-bg)",
+      "--color": " var(--z-bg-f)",
+      "--font-family": "var(--z-global-font-family-sans)",
+    })}
+  >
+    <slot />
+
+    <script is:inline>
+      window.zRuntime = {};
+
+      zRuntime.debug = true;
+    </script>
+
+    <script
+      is:inline
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/runtime.iife.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/uikit.min.js"
+    ></script>
+    <script
+      is:inline
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/hwc/icon.iife.js"
+    ></script>
+    <script
+      is:inline
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/hwc/chart.iife.js"
+    ></script>
+    <script
+      is:inline
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.4.5/dist/js/hwc/components.iife.js"
+    ></script>
+
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
+    ></script>
+
+    <script is:inline>
+      window.copy = async function (route) {
+        try {
+          const response = await fetch(route);
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const text = await response.text();
+
+          await navigator.clipboard.writeText(text);
+
+          window.zUIkit.notification({
+            message: "Copied to clipboard.",
+            status: "info",
+            pos: "bottom-right",
+          });
+        } catch (err) {
+          window.zUIkit.notification({
+            message: "Network error. Please try again.",
+            status: "danger",
+            pos: "bottom-right",
+          });
+        }
+      };
+    </script>
+  </body>
+</html>

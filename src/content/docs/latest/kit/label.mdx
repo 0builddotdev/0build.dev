@@ -1,0 +1,39 @@
+---
+project: kit
+group: components
+text: Label
+title: Label
+lead: Indicate important notes and highlight parts of your content.
+meta:
+  description: Indicate important notes and highlight parts of your content.
+context: https://0build.dev/contexts/kit-implementation/label.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To create a label, just add the `.z-label` class to an inline element like `<a>` or `<span>` element.
+
+```html
+<span class="z-label"></span>
+```
+
+<Snippet project="kit" component="label.basic" />
+
+## Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-label-danger`
+- `.z-label-warning`
+- `.z-label-success`
+- `.z-label-info`
+
+<Snippet project="kit" component="label.style" />
+
+## Customization
+
+You can use CSS variables to customize this component in any way you prefer.
+
+<Snippet project="kit" component="label.custom" />

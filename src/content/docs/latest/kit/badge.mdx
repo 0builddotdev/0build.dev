@@ -1,0 +1,39 @@
+---
+project: kit
+group: components
+text: Badge
+title: Badge
+lead: Easily create nice looking notification badges.
+meta:
+  description: Displays a badge or a component that looks like a badge.
+context: https://0build.dev/contexts/kit-implementation/badge.md
+---
+
+import Snippet from "snippets/component.astro";
+
+## Usage
+
+To create a badge, just add the `.z-badge` class to an inline element like `<a>` or `<span>` element.
+
+```html
+<span class="z-badge"></span>
+```
+
+<Snippet project="kit" component="badge.basic" />
+
+## Style modifiers
+
+There are several style modifiers available. Just add one of the following classes to apply a different look.
+
+- `.z-badge-danger`
+- `.z-badge-warning`
+- `.z-badge-success`
+- `.z-badge-info`
+
+<Snippet project="kit" component="badge.style" />
+
+## Customization
+
+You can use CSS variables to customize this component in any way you prefer.
+
+<Snippet project="kit" component="badge.custom" />
