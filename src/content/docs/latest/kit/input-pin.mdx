@@ -241,7 +241,6 @@ The component supports pasting complete PIN codes. When a user pastes text:
 
 - Content is automatically distributed across input fields
 - Text is trimmed to the PIN length
-- Pattern validation is applied (if configured)
 - Focus moves to the next empty field or blurs if complete
 - Invalid pastes are rejected with screen reader announcement
 
@@ -264,12 +263,11 @@ The following attributes are available for this component:
 | `autofocus`              | Boolean | false   | Automatically focuses on the first input field when the component is rendered     |
 | `length`                 | Number  | 6       | Number of PIN digits/characters to collect                                        |
 | `input-mode`             | String  | numeric | Input mode for mobile keyboards: `numeric` or `text`                              |
-| `pattern`                | String  |         | Pattern for input validation (e.g., `[0-9]` for digits only)                      |
 | `show-labels`            | Boolean | false   | Whether to show labels and descriptions visually (default: hidden but accessible) |
 | `name`                   | String  |         | Name attribute for the hidden input field, enabling form submission               |
 | `disabled`               | Boolean | false   | Disables all input fields, making the entire component read-only                  |
 | `required`               | Boolean | false   | Marks the PIN input as required for form validation                               |
-| `value`                  | String  |         | Pre-populated PIN value (validated against pattern if provided)                   |
+| `value`                  | String  |         | Pre-populated PIN value                                                           |
 | `cls`                    | String  |         | Custom CSS classes. Can be simple string or JSON object for targeting elements    |
 | `stl`                    | String  |         | Custom inline styles. Can be simple string or JSON object for targeting elements  |
 | `i18n`                   | String  |         | Internationalization strings as JSON object or via configuration script           |
