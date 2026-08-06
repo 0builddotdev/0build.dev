@@ -343,14 +343,31 @@ const tbc = transformHeadings(headings);
               "--gap-x": "2",
             })}
           >
-            <a
-              href="https://play.0build.dev"
-              target="_blank"
-              class="z-button z-button-primary z-button-xsmall"
-            >
-              <z-icon class="size" style="--size: 4" icon="code-xml"></z-icon>
-              <span class="">Playground</span>
-            </a>
+            <div class="z-button-group">
+              <a
+                href="https://play.0build.dev"
+                target="_blank"
+                class="z-button z-button-primary z-button-xsmall"
+              >
+                <z-icon class="size" style="--size: 4" icon="code-xml"></z-icon>
+                <span class="">Playground</span>
+              </a>
+              <a
+                href="https://play.0build.dev/convert"
+                target="_blank"
+                class="z-button z-button-primary z-button-xsmall z-button-icon"
+              >
+                <z-icon class="size" style="--size: 4" icon="arrow-left-right"
+                ></z-icon>
+              </a>
+              <a
+                href="https://play.0build.dev/theme-builder"
+                target="_blank"
+                class="z-button z-button-primary z-button-xsmall z-button-icon"
+              >
+                <z-icon class="size" style="--size: 4" icon="palette"></z-icon>
+              </a>
+            </div>
             <z-lsh
               class="size"
               style={stl({
