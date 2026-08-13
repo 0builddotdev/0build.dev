@@ -1,0 +1,43 @@
+---
+group: getting-started
+project: kit
+order: 0
+text: Introduction
+title: Introduction
+tbc: false
+---
+
+0build.dev is a full-fledged, opinionated, and highly customizable frontend design system. Born from real-world necessity, we don't chase hype. We build on what actually works. Our foundational approach worked a decade ago, and it will still work a decade from now.
+
+## Kit
+
+Includes a large collection of commonly used components designed to look great on their own and work seamlessly together:
+
+- **Beautiful Defaults:** Built on a powerful combination of `shadcn/ui` and `coss/ui`. Your app is guaranteed to look modern and polished right out of the box, without the usual configuration complexity.
+- **Perfectly Puzzled:** Components naturally fit together, even when mixed and matched across different frameworks. We take the best parts of existing libraries, strip out the friction, and combine them. (Fun fact: We were previously known as Franken UI!)
+- **Easily Customizable:** Need to make a change? Simple overrides make it effortless. Your browser's devtools are your best friend, so there is no need to rebuild the entire system from scratch.
+- **AI Ready:** Clean Markdown documentation is provided for every component, making it easy to feed directly to your LLM companion for instant context and coding assistance.
+
+## Utilities
+
+At 0build, plain CSS and semantic classes come first (e.g., `.z-card` or `.z-button-primary`). Write them in a stylesheet the normal way.
+
+Utilities are here as an escape hatch and helper, useful for a one-off spacing tweak or a fast prototype, not as the default way to build a page. We include them because the frontend landscape has moved toward utility-first workflows, and pretending otherwise doesn't help anyone ship.
+
+### The Modern Reality
+
+It is 2026, and coding is dramatically cheaper and faster than it was a decade ago. Use vanilla CSS on top of our design API. This way, you aren't fighting the framework, because it actually works for you.
+
+### The Trade-Offs
+
+Utility-first CSS asks a lot of you. Here is the honest breakdown of what we fixed and what we couldn't:
+
+- **What we removed:** Tailwind's build pipeline headache, including npm configs and compilers watching your project in the background.
+- **What we manage:** A runtime that introduces inheritance issues, which can sometimes be tricky to trace back to their source.
+- **What nobody can fix:** The readability cost of a wall of utility classes paired with inline styles. That friction is baked into the approach itself.
+
+**The Golden Rule:** Reach for plain CSS when a named class is the clearer choice. Reach for utilities when speed or a genuinely one-off case matters more than pristine clarity.
+
+## Attribution
+
+We would like to thank the open-source community and the creators of the incredible projects that power 0build:

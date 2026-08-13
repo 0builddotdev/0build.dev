@@ -1,78 +1,16 @@
 ---
+import "css/docs.css";
 import { getCollection, getEntry, render } from "astro:content";
 import { stl } from "helpers/common";
 import Master from "layouts/master.astro";
-
-type Heading = {
-  depth: number;
-  slug: string;
-  text: string;
-  children?: Heading[];
-};
-
-function transformHeadings(headings: Heading[]): Heading[] {
-  const result: Heading[] = [];
-  const stack: Heading[] = [];
-
-  for (const heading of headings) {
-    const current = { ...heading };
-
-    // Remove all items from stack that have greater or equal depth
-    while (stack.length > 0 && stack[stack.length - 1].depth >= current.depth) {
-      stack.pop();
-    }
-
-    if (stack.length === 0) {
-      // This is a top-level heading
-      result.push(current);
-      stack.push(current);
-    } else {
-      // This is a child heading
-      const parent = stack[stack.length - 1];
-      if (!parent.children) {
-        parent.children = [];
-      }
-      parent.children.push(current);
-      stack.push(current);
-    }
-  }
-
-  return result;
-}
-
-function transformTitles(string: string) {
-  const wordReplacements: Record<string, string> = {
-    and: "&",
-    svg: "SVG",
-  };
-  const words = string.split("-");
-
-  return words
-    .map((word, index) => {
-      const lowerWord = word.toLowerCase();
-
-      if (lowerWord in wordReplacements) {
-        if (index === 0 || index === words.length - 1) {
-          const replacement = wordReplacements[lowerWord];
-
-          return replacement === replacement.toUpperCase()
-            ? replacement
-            : replacement.charAt(0).toUpperCase() + replacement.slice(1);
-        }
-        return wordReplacements[lowerWord];
-      }
-
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
-}
-
-function titleCase(string: string) {
-  return string
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
+import {
+  transformHeadings,
+  transformTitles,
+  titleCase,
+  type Group,
+  type Kit,
+  type Style,
+} from "helpers/docs";
 
 function isActive(href: string): boolean {
   if (`${project}/${entry.data.alias}` === href) {
@@ -82,51 +20,11 @@ function isActive(href: string): boolean {
   return entry.id === href;
 }
 
-type Group = {
-  href: string;
-  text: string;
-  keywords: string | undefined;
-  dot: boolean | undefined;
-  submenu:
-    | {
-        href: string;
-        text: string;
-        target?: "_self" | "_blank" | "_parent" | "_top" | undefined;
-      }[]
-    | undefined;
-  order: number | undefined;
-};
-
 const { version = "latest", id, project } = Astro.props;
 
 const docs = (await getCollection("latest")).filter(
   (a) => a.data.project === project,
 );
-
-type Kit = {
-  "getting-started": Group[];
-  forms: Group[];
-  components: Group[];
-};
-
-type Style = {
-  "getting-started": Group[];
-  layout: Group[];
-  "flex-and-grid": Group[];
-  spacing: Group[];
-  sizing: Group[];
-  typography: Group[];
-  backgrounds: Group[];
-  borders: Group[];
-  effects: Group[];
-  filters: Group[];
-  tables: Group[];
-  "transitions-and-animations": Group[];
-  transforms: Group[];
-  interactivity: Group[];
-  svg: Group[];
-  accessibility: Group[];
-};
 
 const groups: {
   kit: Kit;
@@ -840,4 +738,72 @@ const tbc = transformHeadings(headings);
       </ul>
     </div>
   </div>
+
+  <script>
+    // Setup logic handles multiple instances of the component on the same page
+    const containers = document.querySelectorAll(
+      '.example-container[data-resizable="true"]',
+    );
+
+    containers.forEach((container) => {
+      const handle = container.querySelector(".example-handle") as HTMLElement;
+      if (!handle) return;
+
+      let isDragging = false;
+      let startX = 0;
+      let startOffset = 0;
+      let currentOffset = 0;
+
+      // Reset width to 0 when the overall window/container resizes
+      const observer = new ResizeObserver(() => {
+        if (!isDragging) {
+          currentOffset = 0;
+          (container as HTMLElement).style.setProperty("--drag-offset", "0px");
+        }
+      });
+      observer.observe(container);
+
+      // Mouse Down (Start drag)
+      handle.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        isDragging = true;
+        startX = e.clientX;
+        startOffset = currentOffset;
+
+        container.setAttribute("data-dragging", "true");
+        document.documentElement.classList.add("is-resizing");
+      });
+
+      // Mouse Move (Calculate and apply width constraint)
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        const deltaX = e.clientX - startX;
+        let newOffset = startOffset - deltaX;
+
+        // Limit how small the box can be dragged based on "left: 15rem" constraint (240px)
+        const containerWidth = container.getBoundingClientRect().width;
+        const maxOffset = containerWidth - 240;
+
+        // Clamp offset boundaries
+        if (newOffset > maxOffset) newOffset = maxOffset;
+        if (newOffset < 0) newOffset = 0;
+
+        currentOffset = newOffset;
+        (container as HTMLElement).style.setProperty(
+          "--drag-offset",
+          `${newOffset}px`,
+        );
+      });
+
+      // Mouse Up (End drag)
+      window.addEventListener("mouseup", () => {
+        if (isDragging) {
+          isDragging = false;
+          container.setAttribute("data-dragging", "false");
+          document.documentElement.classList.remove("is-resizing");
+        }
+      });
+    });
+  </script>
 </Master>

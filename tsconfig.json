@@ -9,7 +9,8 @@
       "snippets/*": ["src/snippets/*"],
       "components/*": ["src/components/*"],
       "data/*": ["src/data/*"],
-      "helpers/*": ["src/helpers/*"]
+      "helpers/*": ["src/helpers/*"],
+      "registry/*": ["src/registry/*"]
     }
   },
   "exclude": ["dist", "public"]

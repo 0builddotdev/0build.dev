@@ -1,0 +1,198 @@
+---
+import { Code } from "astro:components";
+import { stl } from "helpers/common";
+
+import { rules, vd } from "registry/rules";
+import meta from "registry/meta/index";
+
+export interface Props {
+  selectors: string[];
+}
+
+const { selectors } = Astro.props;
+
+function createCssVarName({
+  isDark = false,
+  prefix = null,
+  name = "",
+  state = "",
+} = {}) {
+  const parts = [
+    isDark ? "dark" : "",
+    prefix,
+    name.replace(/[^a-zA-Z0-9-]/g, ""),
+    state.split(/::?/).filter(Boolean).join("-"),
+  ];
+  return `--${parts.filter(Boolean).join("-")}`;
+}
+
+const tableData = selectors
+  .map((selector, index) => {
+    const rule = rules.find((r) => r.selector === selector);
+    if (!rule) return null;
+
+    let metaItem = null;
+    for (const category of Object.values(meta)) {
+      const found = category.items?.find((item) => item.name === selector);
+      if (found) {
+        metaItem = found;
+        break;
+      }
+    }
+
+    const isVd = vd.has(selector);
+    const baseVarName = createCssVarName({ name: selector });
+
+    // 1. Determine all required variables
+    let requiredVars: string[] = [];
+    if (isVd) {
+      if (rule.placeholders) {
+        requiredVars = Object.values(rule.placeholders).map(
+          (val) => `--${val}`,
+        );
+      } else {
+        requiredVars = [baseVarName];
+      }
+    }
+
+    const properties = Array.isArray(rule.properties)
+      ? rule.properties
+      : [rule.properties];
+
+    const cssRules = properties
+      .map((prop) => {
+        let value = rule.arbitrary
+          ? `var(${baseVarName})`
+          : rule.values
+            ? rule.values[0]
+            : "...";
+
+        if (rule.placeholders) {
+          Object.entries(rule.placeholders).forEach(([key, val]) => {
+            value = value.replaceAll(key, `--${val}`);
+          });
+        }
+
+        return `${prop}: ${value};`;
+      })
+      .join("\n");
+
+    // 2. Format HTML example for readability
+    let exampleHtml = "";
+    if (isVd && requiredVars.length > 1) {
+      const styleLines = requiredVars
+        .map((v) => `        ${v}: /* value */;`)
+        .join("\n");
+
+      exampleHtml = `<element
+    class="${selector}"
+    style="
+${styleLines}
+    "
+></element>`;
+    } else if (isVd && requiredVars.length === 1) {
+      exampleHtml = `<element class="${selector}" style="${requiredVars[0]}: /* value */;" />`;
+    } else {
+      exampleHtml = `<element class="${selector}" />`;
+    }
+
+    // Base variable name is used for the unique ID
+    const cleanId = baseVarName.replace("--", "") || "selector";
+
+    return {
+      id: `api-${cleanId}-${index}`,
+      selector,
+      description: metaItem?.description || `Applies styles for ${selector}.`,
+      isVd,
+      requiredVars,
+      cssRules,
+      exampleHtml,
+    };
+  })
+  .filter(Boolean);
+---
+
+<div class="relative isolate scroll-mt" style="--scroll-mt: 16">
+  <div class="w-full overflow-x-auto whitespace-nowrap">
+    <table class="z-table z-table-divider">
+      <thead>
+        <tr>
+          <th class="z-table-shrink"></th>
+          <th class="z-table-expand">Class</th>
+          <th class="z-table-expand">Rules</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          tableData.map((data: any) => (
+            <tr>
+              <td class="z-table-shrink">
+                <button
+                  class="z-focus-visible"
+                  type="button"
+                  data-z-toggle={`#${data.id}`}
+                >
+                  <z-icon icon="circle-question-mark" />
+                </button>
+                <div id={data.id} class="z-flex-top" data-z-modal>
+                  <div class="z-modal-dialog z-margin-auto-vertical">
+                    <div class="z-modal-header">
+                      <code class="z-modal-title">.{data.selector}</code>
+                    </div>
+                    <div class="z-modal-body">
+                      <p>{data.description}</p>
+                      <div
+                        class="ec mt bg z-shadow z-rounded border-w border"
+                        style={stl({
+                          "--mt": "6",
+                          "--bg": "#17191e",
+                          "--border-w": "1px",
+                          "--border": "#858b9833",
+                        })}
+                      >
+                        <Code
+                          theme="houston"
+                          code={data.exampleHtml}
+                          lang="html"
+                        />
+                      </div>
+                      {data.isVd && data.requiredVars.length > 0 && (
+                        <div class="z-alert z-alert-warning mt" style="--mt: 6">
+                          The{" "}
+                          <code class="font-semibold">.{data.selector}</code>{" "}
+                          class is flagged as a value-driven selector.
+                          {data.requiredVars.length > 1
+                            ? " The variables "
+                            : " A pair "}
+                          {data.requiredVars.map((v, i) => (
+                            <Fragment key={v}>
+                              {i > 0 && i === data.requiredVars.length - 1
+                                ? " and "
+                                : i > 0
+                                  ? ", "
+                                  : ""}
+                              <code class="font-semibold">{v}</code>
+                            </Fragment>
+                          ))}
+                          {data.requiredVars.length > 1
+                            ? " are required."
+                            : " is required."}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="z-table-expand">
+                <code class="z-codespan">.{data.selector}</code>
+              </td>
+              <td class="z-table-expand">
+                <code class="z-codespan whitespace-pre">{data.cssRules}</code>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

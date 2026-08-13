@@ -1,0 +1,37 @@
+---
+export interface Props {
+  resizable?: boolean;
+  padding?: boolean;
+  class?: string;
+}
+
+const { resizable = false, padding = true, class: customClass } = Astro.props;
+---
+
+{
+  !resizable ? (
+    <div
+      class:list={[
+        "example-base example-content static-mode",
+        { "has-padding": padding },
+        customClass,
+      ]}
+    >
+      <slot />
+    </div>
+  ) : (
+    <div
+      class:list={["example-base example-container", customClass]}
+      data-resizable="true"
+      data-dragging="false"
+    >
+      <div class:list={["example-content", { "has-padding": padding }]}>
+        <slot />
+      </div>
+
+      <div class="example-constraints">
+        <div class="example-handle" title="Drag to resize" />
+      </div>
+    </div>
+  )
+}
