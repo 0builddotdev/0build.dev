@@ -236,36 +236,35 @@ const tbc = transformHeadings(headings);
           })}
         >
           <div
-            class="display-flex gap-x"
+            class="display-flex gap-x items-center"
             style={stl({
               "--gap-x": "2",
             })}
           >
-            <div class="z-button-group">
+            <nav
+              class="display-hidden font-medium sm:display-flex gap-x mr"
+              style={stl({ "--gap-x": "4", "--mr": "2" })}
+            >
               <a
+                class="z-focus-visible"
                 href="https://play.0build.dev"
-                target="_blank"
-                class="z-button z-button-primary z-button-xsmall"
+                target="_blank">Playground</a
               >
-                <z-icon class="size" style="--size: 4" icon="code-xml"></z-icon>
-                <span class="">Playground</span>
-              </a>
               <a
+                class="z-focus-visible"
                 href="https://play.0build.dev/convert"
                 target="_blank"
-                class="z-button z-button-primary z-button-xsmall z-button-icon"
               >
-                <z-icon class="size" style="--size: 4" icon="arrow-left-right"
-                ></z-icon>
+                Converter
               </a>
               <a
+                class="z-focus-visible"
                 href="https://play.0build.dev/theme-builder"
                 target="_blank"
-                class="z-button z-button-primary z-button-xsmall z-button-icon"
               >
-                <z-icon class="size" style="--size: 4" icon="palette"></z-icon>
+                Theme Builder
               </a>
-            </div>
+            </nav>
             <z-lsh
               class="size"
               style={stl({
@@ -288,6 +287,84 @@ const tbc = transformHeadings(headings);
                 </z-icon>
               </template>
             </z-lsh>
+            <div class="z-inline">
+              <button
+                class="z-button z-button-icon z-button-secondary z-button-xsmall"
+                type="button"
+              >
+                <z-icon
+                  class="size"
+                  style={stl({
+                    "--size": "4",
+                  })}
+                  icon="settings"
+                >
+                </z-icon>
+              </button>
+              <div
+                class="z-drop min-w p bg border-w border/o"
+                style={stl({
+                  "--min-w": "80",
+                  "--p": "4",
+                  "--bg": "var(--z-drop)",
+                  "--border-w": "1px",
+                  "--border": "var(--z-border)",
+                  "--border-o": "var(--z-border-o)",
+                })}
+                data-z-drop="mode: click; pos: bottom-right; offset: 24px"
+              >
+                <div
+                  class="space-y"
+                  style={stl({
+                    "--space-y": "6",
+                  })}
+                >
+                  {
+                    [
+                      {
+                        label: "Choose a layout",
+                        group: "layout",
+                        options: [
+                          { value: "z-layout-small", text: "Sm" },
+                          { value: "z-layout-default", text: "Base" },
+                          { value: "z-layout-medium", text: "Md" },
+                        ],
+                      },
+                    ].map((a) => (
+                      <div>
+                        <div class="z-form-label">{a.label}</div>
+                        <div
+                          class="display-flex gap-x mt"
+                          style={stl({
+                            "--gap-x": "2",
+                            "--mt": "2",
+                          })}
+                        >
+                          {a.options.map((b) => (
+                            <z-lsh
+                              group={a.group}
+                              value={b.value}
+                              cls="ts z-button z-button-default z-button-xsmall"
+                            >
+                              <template data-fn="template">
+                                <z-icon
+                                  class="ts-icon color"
+                                  style={stl({
+                                    "--color": "var(--color-blue-500)",
+                                  })}
+                                  icon="check"
+                                />
+                                {b.text}
+                              </template>
+                            </z-lsh>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,55 @@
+---
+import { stl } from "helpers/common";
+
+const features = [
+  {
+    title: "Beautiful Defaults",
+    description:
+      "Built on a powerful combination of <code class='z-codespan'>shadcn/ui</code> and <code class='z-codespan'>coss/ui</code>. Your app is guaranteed to look modern and polished right out of the box, without the usual configuration complexity.",
+  },
+  {
+    title: "Perfectly Puzzled",
+    description:
+      "Components naturally fit together, even when mixed and matched across different frameworks. We take the best parts of existing libraries, strip out the friction, and combine them.",
+  },
+  {
+    title: "Easily Customizable",
+    description:
+      "Need to make a change? Simple overrides make it effortless. Your browser's devtools are your best friend, so there is no need to rebuild the entire system from scratch.",
+  },
+  {
+    title: "AI Ready",
+    description:
+      "Clean Markdown documentation is provided for every component, making it easy to feed directly to your LLM companion for instant context and coding assistance.",
+  },
+];
+---
+
+<div class="docs-grid mt" style={stl({ "--mt": "10" })}>
+  <span class="docs-grid-corner docs-grid-corner--tl"></span>
+  <span class="docs-grid-corner docs-grid-corner--tr"></span>
+  <span class="docs-grid-corner docs-grid-corner--bl"></span>
+  <span class="docs-grid-corner docs-grid-corner--br"></span>
+
+  <div class="docs-grid-items docs-grid-items--cols-2">
+    {
+      features.map((feature) => (
+        <div
+          class="docs-grid-card p"
+          style={stl({
+            "--p": "6",
+          })}
+        >
+          <div class="z-text-medium font-semibold">{feature.title}</div>
+          <p
+            class="mt"
+            style={stl({
+              "--mt": "6",
+            })}
+            set:html={feature.description}
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>

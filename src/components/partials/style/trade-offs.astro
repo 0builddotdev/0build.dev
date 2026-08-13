@@ -1,0 +1,50 @@
+---
+import { stl } from "helpers/common";
+
+const tradeoffs = [
+  {
+    title: "What we removed",
+    description:
+      "Tailwind's build pipeline headache, including npm configs and compilers watching your project in the background.",
+  },
+  {
+    title: "What we manage",
+    description:
+      "A runtime and value-driven utilities that can introduce inheritance issues depending on authoring, making them tricky to trace.",
+  },
+  {
+    title: "What nobody can fix",
+    description:
+      "The readability cost of a wall of utility classes paired with inline styles. That friction is baked into the approach itself.",
+  },
+];
+---
+
+<div class="docs-grid mt" style={stl({ "--mt": "10" })}>
+  <span class="docs-grid-corner docs-grid-corner--tl"></span>
+  <span class="docs-grid-corner docs-grid-corner--tr"></span>
+  <span class="docs-grid-corner docs-grid-corner--bl"></span>
+  <span class="docs-grid-corner docs-grid-corner--br"></span>
+
+  <div class="docs-grid-items docs-grid-items--cols-3">
+    {
+      tradeoffs.map((tradeoff) => (
+        <div
+          class="docs-grid-card p"
+          style={stl({
+            "--p": "6",
+          })}
+        >
+          <div class="z-text-medium font-semibold">{tradeoff.title}</div>
+          <p
+            class="mt"
+            style={stl({
+              "--mt": "6",
+            })}
+            set:html={tradeoff.description}
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>

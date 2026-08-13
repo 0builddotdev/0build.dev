@@ -1,25 +1,56 @@
 ---
+import { stl } from "helpers/common";
+
 const { version = "latest" } = Astro.props;
+
+const charts = [
+  {
+    slug: "chart-area",
+    title: "Area Chart",
+    description:
+      "An area chart visually represents data over time, displaying trends and patterns through filled-in areas under a line graph.",
+  },
+  {
+    slug: "chart-line",
+    title: "Line Chart",
+    description:
+      "A line chart visually displays data points connected by straight lines, illustrating trends or relationships over a continuous axis.",
+  },
+];
 ---
 
-<div
-  class="mt display-grid grid-cols gap"
-  style="--mt: 6; --grid-cols: 2; --gap: 4"
->
-  <a
-    class="chart-card z-focus-visible z-shadow z-rounded"
-    href={`/docs/${version}/kit/chart-area`}
-  >
-    <z-icon class="size" style="--size: 11" size="44" icon="chart-area"
-    ></z-icon>
-    <p class="mt font-medium" style="--mt: 2">Area Chart</p>
-  </a>
-  <a
-    class="chart-card z-focus-visible z-shadow z-rounded"
-    href={`/docs/${version}/kit/chart-line`}
-  >
-    <z-icon class="size" style="--size: 11" size="44" icon="chart-line"
-    ></z-icon>
-    <p class="mt font-medium" style="--mt: 2">Line Chart</p>
-  </a>
+<div class="docs-grid mt" style={stl({ "--mt": "10" })}>
+  <span class="docs-grid-corner docs-grid-corner--tl"></span>
+  <span class="docs-grid-corner docs-grid-corner--tr"></span>
+  <span class="docs-grid-corner docs-grid-corner--bl"></span>
+  <span class="docs-grid-corner docs-grid-corner--br"></span>
+
+  <div class="docs-grid-items docs-grid-items--cols-2">
+    {
+      charts.map((chart) => (
+        <div
+          class="docs-grid-card p relative"
+          style={stl({
+            "--p": "6",
+          })}
+        >
+          <a
+            href={`/docs/${version}/kit/${chart.slug}`}
+            class="z-text-medium font-semibold"
+          >
+            {chart.title}
+            <span class="absolute inset" style={stl({ "--inset": "0" })} />
+          </a>
+          <p
+            class="mt"
+            style={stl({
+              "--mt": "6",
+            })}
+          >
+            {chart.description}
+          </p>
+        </div>
+      ))
+    }
+  </div>
 </div>

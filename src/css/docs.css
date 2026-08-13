@@ -158,3 +158,198 @@
     border-bottom: 0.0625rem solid var(--border-color);
   }
 }
+
+@layer components {
+  :root {
+    --ui-border: color-mix(
+      in srgb,
+      var(--z-border) var(--z-border-o),
+      transparent
+    );
+  }
+
+  .docs-grid {
+    position: relative; /* required so the corner dots anchor to this box */
+    border: 1px solid var(--ui-border);
+  }
+
+  .docs-grid-items {
+    display: grid;
+  }
+
+  .docs-grid-items--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .docs-grid-items--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .docs-grid-card {
+    border-style: solid;
+    border-color: var(--ui-border);
+    border-width: 0;
+  }
+
+  .docs-grid-card:hover {
+    --docs-grid-card-hover-bg-computed: color-mix(
+      in srgb,
+      var(--z-muted) var(--z-muted-o),
+      transparent
+    );
+
+    background-color: var(--docs-grid-card-hover-bg-computed);
+    transition-property:
+      color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, --tw-gradient-from,
+      --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(
+      --tw-ease,
+      var(--default-transition-timing-function)
+    );
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+
+  /* 2x2 layout (4 cards) */
+  .docs-grid-items--cols-2 .docs-grid-card:nth-child(1) {
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+  }
+
+  .docs-grid-items--cols-2 .docs-grid-card:nth-child(2) {
+    border-bottom-width: 1px;
+  }
+
+  .docs-grid-items--cols-2 .docs-grid-card:nth-child(3) {
+    border-right-width: 1px;
+  }
+
+  .docs-grid-items--cols-2:has(.docs-grid-card:nth-child(2):last-child)
+    .docs-grid-card {
+    border-bottom-width: 0;
+  }
+
+  /* single-row 3-up layout (3 cards) */
+  .docs-grid-items--cols-3 .docs-grid-card:nth-child(1),
+  .docs-grid-items--cols-3 .docs-grid-card:nth-child(2) {
+    border-right-width: 1px;
+  }
+
+  .docs-grid-items--cols-3:has(.docs-grid-card:nth-child(2):last-child)
+    .docs-grid-card {
+    border-right-width: 0;
+  }
+
+  .docs-grid-corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--z-bg);
+    border: 1px solid var(--ui-border);
+    z-index: 2;
+  }
+
+  .docs-grid-corner::before,
+  .docs-grid-corner::after {
+    content: "";
+    position: absolute;
+    background: var(--ui-border);
+  }
+
+  .docs-grid-corner::before {
+    width: 14px;
+    height: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .docs-grid-corner::after {
+    width: 1px;
+    height: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .docs-grid-corner--tl {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+  .docs-grid-corner--tl::before {
+    right: calc(100% + 1px);
+  }
+  .docs-grid-corner--tl::after {
+    bottom: calc(100% + 1px);
+  }
+
+  .docs-grid-corner--tr {
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+  .docs-grid-corner--tr::before {
+    left: calc(100% + 1px);
+  }
+  .docs-grid-corner--tr::after {
+    bottom: calc(100% + 1px);
+  }
+
+  .docs-grid-corner--bl {
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 50%);
+  }
+  .docs-grid-corner--bl::before {
+    right: calc(100% + 1px);
+  }
+  .docs-grid-corner--bl::after {
+    top: calc(100% + 1px);
+  }
+
+  .docs-grid-corner--br {
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+  }
+  .docs-grid-corner--br::before {
+    left: calc(100% + 1px);
+  }
+  .docs-grid-corner--br::after {
+    top: calc(100% + 1px);
+  }
+
+  @media (max-width: 640px) {
+    .docs-grid-items--cols-2,
+    .docs-grid-items--cols-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .docs-grid-card {
+      padding: 32px 24px;
+    }
+
+    /* 2x2 -> stacked */
+    .docs-grid-items--cols-2 .docs-grid-card:nth-child(1),
+    .docs-grid-items--cols-2 .docs-grid-card:nth-child(2),
+    .docs-grid-items--cols-2 .docs-grid-card:nth-child(3) {
+      border-right-width: 0;
+      border-bottom-width: 1px;
+    }
+
+    .docs-grid-items--cols-2 .docs-grid-card:nth-child(4) {
+      border-bottom-width: 0;
+    }
+
+    /* 3-up -> stacked */
+    .docs-grid-items--cols-3 .docs-grid-card:nth-child(1),
+    .docs-grid-items--cols-3 .docs-grid-card:nth-child(2) {
+      border-right-width: 0;
+      border-bottom-width: 1px;
+    }
+
+    .docs-grid-items--cols-3 .docs-grid-card:nth-child(3) {
+      border-right-width: 0;
+    }
+  }
+}

@@ -1,0 +1,126 @@
+---
+import boilerplate from "public/boilerplate.txt?raw";
+import SyntaxHighlighter from "./syntax-highlighter.astro";
+import { Code } from "astro:components";
+---
+
+<div class="mt" style="--mt: 6">
+  <div class="max-w" style="--max-w: 64">
+    <ul
+      class="z-tab-alt"
+      data-z-switcher="connect: .wizard; swiping: false"
+      role="tablist"
+    >
+      <li class="z-active">
+        <a href="#">Playground</a>
+      </li>
+      <li>
+        <a href="#">Boilerplate </a>
+      </li>
+    </ul>
+  </div>
+  <ul class="wizard z-switcher mt" style="--mt: 10">
+    <li class="z-active">
+      <style is:inline>
+        :root {
+          --ft-cell-border-color: var(--color-neutral-300);
+          --ft-cell-fill-color: var(--color-neutral-100);
+          --ft-cell-shadow-color: var(--color-neutral-500);
+        }
+
+        .dark {
+          --ft-cell-border-color: var(--color-neutral-700);
+          --ft-cell-fill-color: var(--color-neutral-900);
+          --ft-cell-shadow-color: var(--color-neutral-800);
+        }
+
+        .dark .ft-cell {
+          box-shadow: inset 0px 0px 40px 1px var(--ft-cell-shadow-color);
+        }
+
+        .ft-cell:hover {
+          opacity: 0.8;
+        }
+
+        @keyframes ft-cell-ripple {
+          0% {
+            opacity: 0.4;
+          }
+          50% {
+            opacity: 0.8;
+          }
+          100% {
+            opacity: 0.4;
+          }
+        }
+      </style>
+
+      <div
+        class="display-flex relative min-h-screen w-full flex-col items-start justify-start overflow-hidden"
+      >
+        <div data-ft-bg-ripple-effect></div>
+
+        <div class="mt w-full" style="--mt: 40">
+          <h2
+            class="z-hero-small z color dark:color relative mx-auto max-w-4xl text-center"
+            style="
+        --z: 10;
+        --color: var(--color-neutral-800);
+        --dark-color: var(--color-neutral-100);
+      "
+          >
+            Open in Playground
+          </h2>
+          <p
+            class="z mt color dark:color relative mx-auto max-w-xl text-center"
+            style="
+        --z: 10;
+        --mt: 4;
+        --color: var(--color-neutral-800);
+        --dark-color: var(--color-neutral-500);
+      "
+          >
+            Distraction-free HTML playground that stays out of your way. Enjoy a
+            floating editor, realtime preview, autosave, and instant downloads.
+          </p>
+
+          <div
+            class="z relative display-flex mt gap-x justify-center px sm:px"
+            style="--z: 10; --mt: 8; --gap-x: 2; --px: 4; --sm-px: 0"
+          >
+            <a
+              class="z-button z-button-primary z-button-large gap-x"
+              style="--gap-x: 2"
+              href="https://play.0build.dev"
+              target="_blank"
+            >
+              Playground
+            </a>
+            <a
+              class="z-button z-button-default z-button-large gap-x"
+              style="--gap-x: 2"
+              x-data
+              x-on:click="copy('/boilerplate.txt')"
+            >
+              Copy
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <script
+        is:inline
+        src="https://cdn.jsdelivr.net/npm/frankenstyle@0.3.8/dist/js/ft-core.iife.js"
+      ></script>
+      <script
+        is:inline
+        src="https://cdn.jsdelivr.net/npm/frankenstyle@0.3.8/dist/js/ft/bg-ripple-effect.iife.js"
+      ></script>
+    </li>
+    <li>
+      <SyntaxHighlighter>
+        <Code theme="houston" code={boilerplate} lang="html" />
+      </SyntaxHighlighter>
+    </li>
+  </ul>
+</div>
