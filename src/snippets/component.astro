@@ -1,4 +1,5 @@
 ---
+import SyntaxHighlighter from "components/syntax-highlighter.astro";
 import { readFileSync, existsSync } from "fs";
 import { stl } from "helpers/common";
 import { resolve } from "path";
@@ -57,17 +58,9 @@ try {
       <div class="pt pb" style="--pt: 6; --pb: 10;" set:html={preview} />
     </li>
     <li>
-      <div
-        class="ec mt bg z-shadow z-rounded border-w border"
-        style={stl({
-          "--mt": "6",
-          "--bg": "#17191e",
-          "--border-w": "1px",
-          "--border": "#858b9833",
-        })}
-      >
+      <SyntaxHighlighter>
         <pre><div hx-trigger="intersect" hx-get={`${route}/markup`} hx-select="code" hx-swap="outerHTML" style={stl({height: `calc((${lines} * var(--z-global-line-height)) + (var(--highlighter-padding) * 2))`})} /></pre>
-      </div>
+      </SyntaxHighlighter>
     </li>
   </ul>
 

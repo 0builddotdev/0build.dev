@@ -1,9 +1,8 @@
 ---
 import { Code } from "astro:components";
-import { stl } from "helpers/common";
-
 import { rules, vd } from "registry/rules";
 import meta from "registry/meta/index";
+import SyntaxHighlighter from "components/syntax-highlighter.astro";
 
 export interface Props {
   selectors: string[];
@@ -11,9 +10,30 @@ export interface Props {
 
 const { selectors } = Astro.props;
 
+const STUBS = {
+  default: `<element class="{{class}}" />`,
+  vdSingle: `<element class="{{class}}" style="{{vars}}: /* value */;" />`,
+  vdMulti: `<element\n  class="{{class}}"\n  style="\n{{vars}}\n  "\n></element>`,
+};
+
+function generateExample(className: string, vars: string[] = []) {
+  if (vars.length > 1) {
+    const styleLines = vars.map((v) => `    ${v}: /* value */;`).join("\n");
+
+    return STUBS.vdMulti
+      .replace("{{class}}", className)
+      .replace("{{vars}}", styleLines);
+  } else if (vars.length === 1) {
+    return STUBS.vdSingle
+      .replace("{{class}}", className)
+      .replace("{{vars}}", vars[0]);
+  }
+  return STUBS.default.replace("{{class}}", className);
+}
+
 function createCssVarName({
   isDark = false,
-  prefix = null,
+  prefix = null as string | null,
   name = "",
   state = "",
 } = {}) {
@@ -50,42 +70,37 @@ const tableData = selectors
     }
 
     const isVd = vd.has(selector);
+    const hasDarkMode = !!rule.dark;
     const baseVarName = createCssVarName({ name: selector });
 
-    // 1. Determine all required variables
-    let requiredVars: string[] = [];
-
-    if (isVd) {
-      if (rule.placeholders) {
-        requiredVars = Object.values(rule.placeholders).map(
-          (val) => `--${val}`,
-        );
-      } else {
-        requiredVars = [baseVarName];
+    const getVars = (mod = {}) => {
+      if (!isVd) {
+        return [];
       }
-    }
+
+      if (rule.placeholders) {
+        return Object.values(rule.placeholders).map((val) =>
+          createCssVarName({ ...mod, name: val }),
+        );
+      }
+      return [createCssVarName({ ...mod, name: selector })];
+    };
+
+    const requiredVars = getVars();
+    const responsiveVars = getVars({ prefix: "md" });
+    const stateVars = getVars({ state: "hover" });
+
+    // Only generate dark mode variables if the rule specifies dark mode support
+    const darkResponsiveVars = hasDarkMode
+      ? getVars({ isDark: true, prefix: "sm" })
+      : [];
+    const complexVars = hasDarkMode
+      ? getVars({ isDark: true, prefix: "sm", state: "hover" })
+      : [];
 
     const properties = Array.isArray(rule.properties)
       ? rule.properties
       : [rule.properties];
-
-    const cssRules = properties
-      .map((prop) => {
-        let value = rule.arbitrary
-          ? `var(${baseVarName})`
-          : rule.values
-            ? rule.values[0]
-            : "...";
-
-        if (rule.placeholders) {
-          Object.entries(rule.placeholders).forEach(([key, val]) => {
-            value = value.replaceAll(key, `--${val}`);
-          });
-        }
-
-        return `${prop}: ${value};`;
-      })
-      .join("\n");
 
     function resolveValue() {
       let value = rule.arbitrary
@@ -107,26 +122,33 @@ const tableData = selectors
     const escapedSelector = escapeCssSelector(selector);
     const cssBlock = `.${escapedSelector} {\n${cssLines.join("\n")}\n}`;
 
-    // 2. Format HTML example for readability
-    let exampleHtml = "";
-    if (isVd && requiredVars.length > 1) {
-      const styleLines = requiredVars
-        .map((v) => `        ${v}: /* value */;`)
-        .join("\n");
+    const exampleHtml = generateExample(selector, requiredVars);
+    const responsiveExampleHtml = generateExample(
+      `md:${selector}`,
+      responsiveVars,
+    );
+    const stateExampleHtml = generateExample(`${selector}:hover`, stateVars);
 
-      exampleHtml = `<element
-    class="${selector}"
-    style="
-${styleLines}
-    "
-></element>`;
-    } else if (isVd && requiredVars.length === 1) {
-      exampleHtml = `<element class="${selector}" style="${requiredVars[0]}: /* value */;" />`;
-    } else {
-      exampleHtml = `<element class="${selector}" />`;
-    }
+    // Only generate dark mode examples if the rule specifies dark mode support
+    const darkResponsiveExampleHtml = hasDarkMode
+      ? generateExample(`dark:sm:${selector}`, darkResponsiveVars)
+      : "";
+    const complexExampleHtml = hasDarkMode
+      ? generateExample(`dark:sm:${selector}:hover`, complexVars)
+      : "";
 
-    // Base variable name is used for the unique ID
+    const pseudoBeforeVars = isVd ? getVars({ state: "before" }) : [];
+    const pseudoAfterVars = isVd ? getVars({ state: "after" }) : [];
+
+    const pseudoBeforeHtml = generateExample(
+      `content-before ${selector}::before`,
+      pseudoBeforeVars,
+    );
+    const pseudoAfterHtml = generateExample(
+      `content-after ${selector}::after`,
+      pseudoAfterVars,
+    );
+
     const cleanId = baseVarName.replace("--", "") || "selector";
 
     return {
@@ -134,9 +156,16 @@ ${styleLines}
       selector,
       description: metaItem?.description || `Applies styles for ${selector}.`,
       isVd,
+      hasDarkMode,
       requiredVars,
       cssBlock,
       exampleHtml,
+      responsiveExampleHtml,
+      darkResponsiveExampleHtml,
+      stateExampleHtml,
+      complexExampleHtml,
+      pseudoBeforeHtml,
+      pseudoAfterHtml,
     };
   })
   .filter(Boolean);
@@ -172,8 +201,9 @@ ${styleLines}
                   <div
                     class="z-modal-dialog"
                     style="--z-modal-dialog-width: var(--container-4xl)"
+                    data-z-overflow-auto
                   >
-                    <div class="z-modal-body">
+                    <div class="z-modal-body text-wrap">
                       <h2 class="z-h2">{data.selector}</h2>
 
                       <p class="mt" style="--mt: 6">
@@ -184,38 +214,29 @@ ${styleLines}
                         CSS Rules
                       </h3>
 
-                      <div
-                        class="ec mt bg z-shadow z-rounded border-w border"
-                        style={stl({
-                          "--mt": "6",
-                          "--bg": "#17191e",
-                          "--border-w": "1px",
-                          "--border": "#858b9833",
-                        })}
-                      >
+                      <SyntaxHighlighter>
                         <Code theme="houston" code={data.cssBlock} lang="css" />
-                      </div>
+                      </SyntaxHighlighter>
 
-                      <h4 class="z-h3 mt" style="--mt: 8">
+                      <h3 class="z-h3 mt" style="--mt: 8">
                         Usage
-                      </h4>
+                      </h3>
 
                       {data.isVd && data.requiredVars.length > 0 && (
-                        <div class="mt" style="--mt: 6">
-                          The{" "}
-                          <code class="font-semibold">.{data.selector}</code>{" "}
+                        <div class="z-paragraph mb" style="--mb: 4">
+                          The <code class="z-codespan">.{data.selector}</code>{" "}
                           class is flagged as a value-driven selector.
                           {data.requiredVars.length > 1
                             ? " The variables "
-                            : " A pair "}
-                          {data.requiredVars.map((v, i) => (
+                            : " The variable "}
+                          {data.requiredVars.map((v: string, i: number) => (
                             <Fragment key={v}>
                               {i > 0 && i === data.requiredVars.length - 1
                                 ? " and "
                                 : i > 0
                                   ? ", "
                                   : ""}
-                              <code class="font-semibold">{v}</code>
+                              <code class="z-codespan">{v}</code>
                             </Fragment>
                           ))}
                           {data.requiredVars.length > 1
@@ -224,21 +245,174 @@ ${styleLines}
                         </div>
                       )}
 
-                      <div
-                        class="ec mt bg z-shadow z-rounded border-w border"
-                        style={stl({
-                          "--mt": "6",
-                          "--bg": "#17191e",
-                          "--border-w": "1px",
-                          "--border": "#858b9833",
-                        })}
-                      >
+                      <SyntaxHighlighter>
                         <Code
                           theme="houston"
                           code={data.exampleHtml}
                           lang="html"
                         />
-                      </div>
+                      </SyntaxHighlighter>
+
+                      <h3 class="z-h3 mt" style="--mt: 10">
+                        Responsive {data.hasDarkMode && "& Dark Mode"}
+                      </h3>
+
+                      <p class="z-paragraph">
+                        Prefix
+                        <code class="z-codespan">.{data.selector}</code>
+                        utility with a breakpoint variant (e.g.,{" "}
+                        <code class="z-codespan">md:</code>) to apply styles at
+                        specific screen sizes (Supported breakpoints are
+                        <code class="z-codespan">xm</code> through{" "}
+                        <code class="z-codespan">2xl</code>).
+                        {data.hasDarkMode && (
+                          <Fragment>
+                            {" "}
+                            If dark mode is applied, the{" "}
+                            <code class="z-codespan">dark:</code> prefix always
+                            comes first.
+                          </Fragment>
+                        )}
+                      </p>
+
+                      <SyntaxHighlighter>
+                        <Code
+                          theme="houston"
+                          code={
+                            data.hasDarkMode
+                              ? data.responsiveExampleHtml +
+                                "\n\n" +
+                                data.darkResponsiveExampleHtml
+                              : data.responsiveExampleHtml
+                          }
+                          lang="html"
+                        />
+                      </SyntaxHighlighter>
+
+                      <h3 class="z-h3 mt" style="--mt: 10">
+                        States
+                      </h3>
+
+                      <p class="z-paragraph">
+                        States are generated dynamically at runtime and always
+                        come last. Append a state like{" "}
+                        <code class="z-codespan">:hover</code> or
+                        <code class="z-codespan">:focus</code> to the end of the
+                        class. This works in conjunction with breakpoints
+                        {data.hasDarkMode ? " and dark mode." : "."}
+                      </p>
+
+                      <p class="z-paragraph mt" style="--mt: 4">
+                        Supported pseudo-classes:{" "}
+                        <code class="z-codespan">:hover</code>,{" "}
+                        <code class="z-codespan">:active</code>,{" "}
+                        <code class="z-codespan">:focus</code>,{" "}
+                        <code class="z-codespan">:focus-visible</code>,{" "}
+                        <code class="z-codespan">:focus-within</code>,{" "}
+                        <code class="z-codespan">:target</code>,{" "}
+                        <code class="z-codespan">:checked</code>,{" "}
+                        <code class="z-codespan">:disabled</code>, and{" "}
+                        <code class="z-codespan">:group-hover</code>.
+                      </p>
+
+                      <SyntaxHighlighter>
+                        <Code
+                          theme="houston"
+                          code={
+                            data.hasDarkMode
+                              ? data.stateExampleHtml +
+                                "\n\n" +
+                                data.complexExampleHtml
+                              : data.stateExampleHtml
+                          }
+                          lang="html"
+                        />
+                      </SyntaxHighlighter>
+
+                      <h4 class="z-h4 mt" style="--mt: 6">
+                        Group Hover Example
+                      </h4>
+
+                      <p class="z-paragraph">
+                        The <code class="z-codespan">:group-hover</code> state
+                        applies styles when a parent element with the{" "}
+                        <code class="z-codespan">.group</code> class is hovered.
+                      </p>
+
+                      <SyntaxHighlighter>
+                        <Code
+                          theme="houston"
+                          code={`<element class="group">\n  <element class="${data.selector}:group-hover">...</element>\n</element>`}
+                          lang="html"
+                        />
+                      </SyntaxHighlighter>
+
+                      <h3 class="z-h3 mt" style="--mt: 10">
+                        Pseudo-Elements
+                      </h3>
+
+                      <p class="z-paragraph">
+                        The <code class="z-codespan">::before</code> and{" "}
+                        <code class="z-codespan">::after</code> utility classes
+                        are supported too. Granted that you add the mandatory{" "}
+                        <code class="z-codespan">content-before</code> or{" "}
+                        <code class="z-codespan">content-after</code> class in
+                        order for them to work.
+                      </p>
+
+                      <SyntaxHighlighter>
+                        <Code
+                          theme="houston"
+                          code={`${data.pseudoBeforeHtml}\n\n${data.pseudoAfterHtml}`}
+                          lang="html"
+                        />
+                      </SyntaxHighlighter>
+
+                      {data.isVd && (
+                        <Fragment>
+                          <h3 class="z-h3 mt" style="--mt: 10">
+                            Shorthand
+                          </h3>
+
+                          <p class="z-paragraph">
+                            Value-driven classes support a shorthand syntax like{" "}
+                            <code class="z-codespan">bg=pink</code> or{" "}
+                            <code class="z-codespan">p=4</code>. The runtime
+                            processes this for you. Unlike{" "}
+                            <code class="z-codespan">:hover</code> that is
+                            generating CSS on the fly, shorthand only splits it
+                            and appends the corresponding style.
+                          </p>
+
+                          <SyntaxHighlighter>
+                            <Code
+                              theme="houston"
+                              code={`<!-- Input -->\n<element class="${data.selector}=value" />\n\n<!-- Output -->\n<element class="${data.selector}" style="${data.requiredVars[0] || "--var"}: value;" />`}
+                              lang="html"
+                            />
+                          </SyntaxHighlighter>
+
+                          <div
+                            class="z-alert z-alert-warning mt"
+                            style="--mt: 6"
+                          >
+                            <div class="display-flex gap-x" style="--gap-x: 2">
+                              <z-icon
+                                class="mt"
+                                style="--mt: 1;"
+                                icon="triangle-alert"
+                              />
+                              <p>
+                                While this feature is supported, it is highly
+                                discouraged as it may cause CLS (Cumulative
+                                Layout Shift). However, if you are working on
+                                internal apps, this might be fine for some use
+                                cases.
+                              </p>
+                            </div>
+                          </div>
+                        </Fragment>
+                      )}
                     </div>
                   </div>
                 </div>
