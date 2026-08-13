@@ -8,9 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector        | Style                                                                                    | Variables Required                   |
-| --------------- | ---------------------------------------------------------------------------------------- | ------------------------------------ |
-| `.color`        | `color: var(--color)`                                                                    | `--color`                            |
-| `.dark:color`   | `color: var(--dark-color)`                                                               | `--dark-color`                       |
-| `.color/o`      | `color: color-mix(in oklab, var(--color) var(--color-o, 100%), transparent)`             | `--color`<br />`--color-o`           |
-| `.dark:color/o` | `color: color-mix( in oklab, var(--dark-color) var(--dark-color-o, 100%), transparent )` | `--dark-color`<br />`--dark-color-o` |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["color", "color/o"]} />

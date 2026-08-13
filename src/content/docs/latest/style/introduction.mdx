@@ -12,10 +12,10 @@ A **no-build, value-driven, utility-first CSS framework**. Takes inspiration fro
 
 Core features:
 
-* **Utility-first syntax** (similar to Tailwind CSS)
-* **Lightweight, value-driven styling** (utilities paired with CSS variables you define)
-* **Runtime state generation** (`:hover`, `:active`, etc.)
-* **Responsive and theme-aware design**
+- **Utility-first syntax** (similar to Tailwind CSS)
+- **Lightweight, value-driven styling** (utilities paired with CSS variables you define)
+- **Runtime state generation** (`:hover`, `:active`, etc.)
+- **Responsive and theme-aware design**
 
 ## Philosophy
 
@@ -29,15 +29,15 @@ Everything is pre-compiled and can be consumed via CDN. No bundler, no file watc
 
 Instead of bundling hundreds of pre-defined classes (`m-2`, `m-4`, `p-6`), the system uses **generic utility names** (`m`, `p`, `bg`) paired with **CSS custom properties** that you define.
 
-| Usage              | Purpose             |
-|--------------------|---------------------|
-| `class="p"`        | Apply padding       |
-| `style="--p: 4"`   | Define its value    |
+| Usage            | Purpose          |
+| ---------------- | ---------------- |
+| `class="p"`      | Apply padding    |
+| `style="--p: 4"` | Define its value |
 
 No need to memorize odd variable names. Just drop special characters from the class:
 
 | Class Name         | Variable Name        |
-|--------------------|----------------------|
+| ------------------ | -------------------- |
 | `sm:m`             | `--sm-m`             |
 | `dark:sm:bg:hover` | `--dark-sm-bg-hover` |
 
@@ -63,8 +63,8 @@ The framework provides the utility class, and you provide the value:
 <div class="m sm:m md:m" style="--m: 4; --sm-m: 8; --md-m: 16"></div>
 ```
 
-* Base spacing is multiplied by `var(--spacing)` to keep values consistent.
-* Arbitrary values are supported using bracket syntax:
+- Base spacing is multiplied by `var(--spacing)` to keep values consistent.
+- Arbitrary values are supported using bracket syntax:
 
 ```html
 <div class="[m]" style="--m: 4px"></div>
@@ -90,10 +90,10 @@ States are generated dynamically at runtime.
 </button>
 ```
 
-| Class Name       | Purpose                    |
-|------------------|----------------------------|
-| `bg:hover`       | Hover background           |
-| `dark:bg:hover`  | Dark mode hover background |
+| Class Name      | Purpose                    |
+| --------------- | -------------------------- |
+| `bg:hover`      | Hover background           |
+| `dark:bg:hover` | Dark mode hover background |
 
 Works with any color utilities (`color`, `border`, `fill`, etc.).
 
@@ -101,13 +101,13 @@ Works with any color utilities (`color`, `border`, `fill`, etc.).
 
 Follows Tailwind CSS' responsive prefixes:
 
-| Prefix  | Breakpoint       |
-|---------|------------------|
-| `sm:`   | Small            |
-| `md:`   | Medium           |
-| `lg:`   | Large            |
-| `xl:`   | Extra large      |
-| `2xl:`  | 2x Extra large   |
+| Prefix | Breakpoint     |
+| ------ | -------------- |
+| `sm:`  | Small          |
+| `md:`  | Medium         |
+| `lg:`  | Large          |
+| `xl:`  | Extra large    |
+| `2xl:` | 2x Extra large |
 
 ```html
 <div class="p sm:p md:p" style="--p: 2; --sm-p: 4; --md-p: 8"></div>

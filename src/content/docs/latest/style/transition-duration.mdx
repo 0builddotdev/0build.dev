@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector            | Style                                  | Variables Required |
-| ------------------- | -------------------------------------- | ------------------ |
-| `.duration`         | `transition-duration: var(--duration)` | `--duration`       |
-| `.duration-initial` | `transition-duration: initial`         | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["duration", "duration-initial"]} />

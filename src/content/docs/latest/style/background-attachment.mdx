@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector     | Style                           | Variables Required |
-| ------------ | ------------------------------- | ------------------ |
-| `.bg-fixed`  | `background-attachment: fixed`  | -                  |
-| `.bg-local`  | `background-attachment: local`  | -                  |
-| `.bg-scroll` | `background-attachment: scroll` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["bg-fixed", "bg-local", "bg-scroll"]} />

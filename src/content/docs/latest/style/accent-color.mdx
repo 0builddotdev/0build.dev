@@ -8,9 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector         | Style                                                                                             | Variables Required                     |
-| ---------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `.accent`        | `accent-color: var(--accent)`                                                                     | `--accent`                             |
-| `.dark:accent`   | `accent-color: var(--dark-accent)`                                                                | `--dark-accent`                        |
-| `.accent/o`      | `accent-color: color-mix( in oklab, var(--accent) var(--accent-o, 100%), transparent )`           | `--accent`<br />`--accent-o`           |
-| `.dark:accent/o` | `accent-color: color-mix( in oklab, var(--dark-accent) var(--dark-accent-o, 100%), transparent )` | `--dark-accent`<br />`--dark-accent-o` |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["accent", "accent/o"]} />

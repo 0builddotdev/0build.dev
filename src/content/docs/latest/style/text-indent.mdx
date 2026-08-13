@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector    | Style                                               | Variables Required |
-| ----------- | --------------------------------------------------- | ------------------ |
-| `.indent`   | `text-indent: calc(var(--spacing) * var(--indent))` | `--indent`         |
-| `.[indent]` | `text-indent: var(--indent)`                        | `--indent`         |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["indent", "[indent]"]} />

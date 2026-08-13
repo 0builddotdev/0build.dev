@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector                | Style                                                                    | Variables Required |
-| ----------------------- | ------------------------------------------------------------------------ | ------------------ |
-| `.box-decoration-slice` | `-webkit-box-decoration-break: slice`<br />`box-decoration-break: slice` | -                  |
-| `.box-decoration-clone` | `-webkit-box-decoration-break: clone`<br />`box-decoration-break: clone` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["box-decoration-slice", "box-decoration-clone"]} />

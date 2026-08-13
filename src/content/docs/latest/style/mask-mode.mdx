@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                     | Variables Required |
-| ----------------- | ------------------------- | ------------------ |
-| `.mask-alpha`     | `mask-mode: alpha`        | -                  |
-| `.mask-luminance` | `mask-mode: luminance`    | -                  |
-| `.mask-match`     | `mask-mode: match-source` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["mask-alpha", "mask-luminance", "mask-match"]} />

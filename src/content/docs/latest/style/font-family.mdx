@@ -8,9 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector       | Style                                   | Variables Required |
-| -------------- | --------------------------------------- | ------------------ |
-| `.font-family` | `font-family: var(--font-family)`       | `--font-family`    |
-| `.font-mono`   | `font-family: var(--font-family-mono)`  | -                  |
-| `.font-sans`   | `font-family: var(--font-family-sans)`  | -                  |
-| `.font-serif`  | `font-family: var(--font-family-serif)` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["font-family", "font-mono", "font-sans", "font-serif"]} />

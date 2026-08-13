@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                | Variables Required |
-| ----------------- | -------------------- | ------------------ |
-| `.isolate`        | `isolation: isolate` | -                  |
-| `.isolation-auto` | `isolation: auto`    | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["isolate", "isolation-auto"]} />

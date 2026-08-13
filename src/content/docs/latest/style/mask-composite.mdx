@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                       | Variables Required |
-| ----------------- | --------------------------- | ------------------ |
-| `.mask-add`       | `mask-composite: add`       | -                  |
-| `.mask-subtract`  | `mask-composite: subtract`  | -                  |
-| `.mask-intersect` | `mask-composite: intersect` | -                  |
-| `.mask-exclude`   | `mask-composite: exclude`   | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["mask-add", "mask-subtract", "mask-intersect", "mask-exclude"]}
+/>

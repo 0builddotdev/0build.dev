@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector       | Style               | Variables Required |
-| -------------- | ------------------- | ------------------ |
-| `.select-none` | `user-select: none` | -                  |
-| `.select-text` | `user-select: text` | -                  |
-| `.select-all`  | `user-select: all`  | -                  |
-| `.select-auto` | `user-select: auto` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["select-none", "select-text", "select-all", "select-auto"]}
+/>

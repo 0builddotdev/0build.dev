@@ -8,8 +8,12 @@ meta:
 tbc: false
 ---
 
-| Selector                | Style                                                    | Variables Required       |
-| ----------------------- | -------------------------------------------------------- | ------------------------ |
-| `.decoration-thickness` | `text-decoration-thickness: var(--decoration-thickness)` | `--decoration-thickness` |
-| `.decoration-from-font` | `text-decoration-thickness: from-font`                   | -                        |
-| `.decoration-auto`      | `text-decoration-thickness: auto`                        | -                        |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "decoration-thickness",
+    "decoration-from-font",
+    "decoration-auto",
+  ]}
+/>

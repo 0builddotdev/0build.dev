@@ -8,15 +8,19 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                                     | Variables Required |
-| ------------------ | ----------------------------------------- | ------------------ |
-| `.bg-position`     | `background-position: var(--bg-position)` | `--bg-position`    |
-| `.bg-top-left`     | `background-position: top left`           | -                  |
-| `.bg-top`          | `background-position: top`                | -                  |
-| `.bg-top-right`    | `background-position: top right`          | -                  |
-| `.bg-left`         | `background-position: left`               | -                  |
-| `.bg-center`       | `background-position: center`             | -                  |
-| `.bg-right`        | `background-position: right`              | -                  |
-| `.bg-bottom-left`  | `background-position: bottom left`        | -                  |
-| `.bg-bottom`       | `background-position: bottom`             | -                  |
-| `.bg-bottom-right` | `background-position: bottom right`       | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "bg-position",
+    "bg-top-left",
+    "bg-top",
+    "bg-top-right",
+    "bg-left",
+    "bg-center",
+    "bg-right",
+    "bg-bottom-left",
+    "bg-bottom",
+    "bg-bottom-right",
+  ]}
+/>

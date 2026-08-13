@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector        | Style                                             | Variables Required |
-| --------------- | ------------------------------------------------- | ------------------ |
-| `.break-normal` | `overflow-wrap: normal`<br />`word-break: normal` | -                  |
-| `.break-words`  | `overflow-wrap: break-word`                       | -                  |
-| `.break-all`    | `word-break: break-all`                           | -                  |
-| `.break-keep`   | `word-break: keep-all`                            | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["break-normal", "break-words", "break-all", "break-keep"]}
+/>

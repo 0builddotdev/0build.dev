@@ -8,7 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector                    | Style                       | Variables Required |
-| --------------------------- | --------------------------- | ------------------ |
-| `.forced-color-adjust-auto` | `forced-color-adjust: auto` | -                  |
-| `.forced-color-adjust-none` | `forced-color-adjust: none` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["forced-color-adjust-auto", "forced-color-adjust-none"]}
+/>

@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector                | Style                                     | Variables Required  |
-| ----------------------- | ----------------------------------------- | ------------------- |
-| `.backdrop-filter`      | `backdrop-filter: var(--backdrop-filter)` | `--backdrop-filter` |
-| `.backdrop-filter-none` | `backdrop-filter: none`                   | -                   |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["backdrop-filter", "backdrop-filter-none"]} />

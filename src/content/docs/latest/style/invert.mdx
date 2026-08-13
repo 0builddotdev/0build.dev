@@ -8,6 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector  | Style                           | Variables Required |
-| --------- | ------------------------------- | ------------------ |
-| `.invert` | `filter: invert(var(--invert))` | `--invert`         |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["invert"]} />

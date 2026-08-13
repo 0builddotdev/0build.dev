@@ -8,9 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector      | Style                             | Variables Required |
-| ------------- | --------------------------------- | ------------------ |
-| `.bg-size`    | `background-size: var(--bg-size)` | `--bg-size`        |
-| `.bg-auto`    | `background-size: auto`           | -                  |
-| `.bg-cover`   | `background-size: cover`          | -                  |
-| `.bg-contain` | `background-size: contain`        | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["bg-size", "bg-auto", "bg-cover", "bg-contain"]} />

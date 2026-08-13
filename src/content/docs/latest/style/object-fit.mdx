@@ -8,10 +8,14 @@ meta:
 tbc: false
 ---
 
-| Selector             | Style                    | Variables Required |
-| -------------------- | ------------------------ | ------------------ |
-| `.object-contain`    | `object-fit: contain`    | -                  |
-| `.object-cover`      | `object-fit: cover`      | -                  |
-| `.object-fill`       | `object-fit: fill`       | -                  |
-| `.object-none`       | `object-fit: none`       | -                  |
-| `.object-scale-down` | `object-fit: scale-down` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "object-contain",
+    "object-cover",
+    "object-fill",
+    "object-none",
+    "object-scale-down",
+  ]}
+/>

@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                                            | Variables Required |
-| ----------------- | ------------------------------------------------ | ------------------ |
-| `.hyphens-none`   | `-webkit-hyphens: none`<br />`hyphens: none`     | -                  |
-| `.hyphens-manual` | `-webkit-hyphens: manual`<br />`hyphens: manual` | -                  |
-| `.hyphens-auto`   | `-webkit-hyphens: auto`<br />`hyphens: auto`     | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["hyphens-none", "hyphens-manual", "hyphens-auto"]} />

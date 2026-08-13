@@ -8,12 +8,16 @@ meta:
 tbc: false
 ---
 
-| Selector        | Style                 | Variables Required |
-| --------------- | --------------------- | ------------------ |
-| `.order`        | `order: var(--order)` | `--order`          |
-| `.-order-first` | `order: 9999`         | -                  |
-| `.-order-last`  | `order: -9999`        | -                  |
-| `.-order-none`  | `order: 0`            | -                  |
-| `.order-first`  | `order: -9999`        | -                  |
-| `.order-last`   | `order: 9999`         | -                  |
-| `.order-none`   | `order: 0`            | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "order",
+    "-order-first",
+    "-order-last",
+    "-order-none",
+    "order-first",
+    "order-last",
+    "order-none",
+  ]}
+/>

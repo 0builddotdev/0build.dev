@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector     | Style                  | Variables Required |
-| ------------ | ---------------------- | ------------------ |
-| `.visible`   | `visibility: visible`  | -                  |
-| `.invisible` | `visibility: hidden`   | -                  |
-| `.collapse`  | `visibility: collapse` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["visible", "invisible", "collapse"]} />

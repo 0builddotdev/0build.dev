@@ -8,15 +8,19 @@ meta:
 tbc: false
 ---
 
-| Selector             | Style                                 | Variables Required |
-| -------------------- | ------------------------------------- | ------------------ |
-| `.mask-position`     | `mask-position: var(--mask-position)` | `--mask-position`  |
-| `.mask-top-left`     | `mask-position: top left`             | -                  |
-| `.mask-top`          | `mask-position: top`                  | -                  |
-| `.mask-top-right`    | `mask-position: top right`            | -                  |
-| `.mask-left`         | `mask-position: left`                 | -                  |
-| `.mask-center`       | `mask-position: center`               | -                  |
-| `.mask-right`        | `mask-position: right`                | -                  |
-| `.mask-bottom-left`  | `mask-position: bottom left`          | -                  |
-| `.mask-bottom`       | `mask-position: bottom`               | -                  |
-| `.mask-bottom-right` | `mask-position: bottom right`         | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "mask-position",
+    "mask-top-left",
+    "mask-top",
+    "mask-top-right",
+    "mask-left",
+    "mask-center",
+    "mask-right",
+    "mask-bottom-left",
+    "mask-bottom",
+    "mask-bottom-right",
+  ]}
+/>

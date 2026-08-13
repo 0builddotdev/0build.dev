@@ -8,6 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                                           | Variables Required |
-| ----------------- | ----------------------------------------------- | ------------------ |
-| `.backdrop-sepia` | `backdrop-filter: sepia(var(--backdrop-sepia))` | `--backdrop-sepia` |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["backdrop-sepia"]} />

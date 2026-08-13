@@ -8,9 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector        | Style                          | Variables Required |
-| --------------- | ------------------------------ | ------------------ |
-| `.list`         | `list-style-type: var(--list)` | `--list`           |
-| `.list-decimal` | `list-style-type: decimal`     | -                  |
-| `.list-disc`    | `list-style-type: disc`        | -                  |
-| `.list-none`    | `list-style-type: none`        | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["list", "list-decimal", "list-disc", "list-none"]} />

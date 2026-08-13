@@ -8,20 +8,24 @@ meta:
 tbc: false
 ---
 
-| Selector    | Style                                     | Variables Required |
-| ----------- | ----------------------------------------- | ------------------ |
-| `.h`        | `height: calc(var(--spacing) * var(--h))` | `--h`              |
-| `.[h]`      | `height: var(--h)`                        | `--h`              |
-| `.h-auto`   | `height: auto`                            | -                  |
-| `.h-full`   | `height: 100%`                            | -                  |
-| `.h-screen` | `height: 100vh`                           | -                  |
-| `.h-dvh`    | `height: 100dvh`                          | -                  |
-| `.h-dvw`    | `height: 100dvw`                          | -                  |
-| `.h-lvh`    | `height: 100lvh`                          | -                  |
-| `.h-lvw`    | `height: 100lvw`                          | -                  |
-| `.h-svh`    | `height: 100svh`                          | -                  |
-| `.h-svw`    | `height: 100svw`                          | -                  |
-| `.h-min`    | `height: min-content`                     | -                  |
-| `.h-max`    | `height: max-content`                     | -                  |
-| `.h-fit`    | `height: fit-content`                     | -                  |
-| `.h-lh`     | `height: 1lh`                             | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "h",
+    "[h]",
+    "h-auto",
+    "h-full",
+    "h-screen",
+    "h-dvh",
+    "h-dvw",
+    "h-lvh",
+    "h-lvw",
+    "h-svh",
+    "h-svw",
+    "h-min",
+    "h-max",
+    "h-fit",
+    "h-lh",
+  ]}
+/>

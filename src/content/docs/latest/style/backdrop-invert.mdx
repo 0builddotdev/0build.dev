@@ -8,6 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                                             | Variables Required  |
-| ------------------ | ------------------------------------------------- | ------------------- |
-| `.backdrop-invert` | `backdrop-filter: invert(var(--backdrop-invert))` | `--backdrop-invert` |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["backdrop-invert"]} />

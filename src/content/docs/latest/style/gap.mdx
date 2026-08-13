@@ -8,11 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector   | Style                                             | Variables Required |
-| ---------- | ------------------------------------------------- | ------------------ |
-| `.gap`     | `gap: calc(var(--spacing) * var(--gap))`          | `--gap`            |
-| `.gap-x`   | `column-gap: calc(var(--spacing) * var(--gap-x))` | `--gap-x`          |
-| `.gap-y`   | `row-gap: calc(var(--spacing) * var(--gap-y))`    | `--gap-y`          |
-| `.[gap]`   | `gap: var(--gap)`                                 | `--gap`            |
-| `.[gap-x]` | `column-gap: var(--gap-x)`                        | `--gap-x`          |
-| `.[gap-y]` | `row-gap: var(--gap-y)`                           | `--gap-y`          |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["gap", "gap-x", "gap-y", "[gap]", "[gap-x]", "[gap-y]"]}
+/>

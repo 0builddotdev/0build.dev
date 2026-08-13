@@ -8,6 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector              | Style                                           | Variables Required     |
-| --------------------- | ----------------------------------------------- | ---------------------- |
-| `.perspective-origin` | `perspective-origin: var(--perspective-origin)` | `--perspective-origin` |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["perspective-origin"]} />

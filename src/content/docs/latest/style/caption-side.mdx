@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                  | Variables Required |
-| ----------------- | ---------------------- | ------------------ |
-| `.caption-top`    | `caption-side: top`    | -                  |
-| `.caption-bottom` | `caption-side: bottom` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["caption-top", "caption-bottom"]} />

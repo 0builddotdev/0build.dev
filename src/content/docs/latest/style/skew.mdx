@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector  | Style                                                                                                                                                                                      | Variables Required |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| `.skew`   | `--tw-skew-x: skewX(var(--skew))`<br />`--tw-skew-y: skewY(var(--skew))`<br />`transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)` | `--skew`           |
-| `.skew-x` | `--tw-skew-x: skewX(var(--skew-x))`<br />`transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)`                                      | `--skew-x`         |
-| `.skew-y` | `--tw-skew-y: skewY(var(--skew-y))`<br />`transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)`                                      | `--skew-y`         |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["skew", "skew-x", "skew-y"]} />

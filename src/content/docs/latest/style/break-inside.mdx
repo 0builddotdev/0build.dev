@@ -8,9 +8,13 @@ meta:
 tbc: false
 ---
 
-| Selector                     | Style                        | Variables Required |
-| ---------------------------- | ---------------------------- | ------------------ |
-| `.break-inside-auto`         | `break-inside: auto`         | -                  |
-| `.break-inside-avoid`        | `break-inside: avoid`        | -                  |
-| `.break-inside-avoid-page`   | `break-inside: avoid-page`   | -                  |
-| `.break-inside-avoid-column` | `break-inside: avoid-column` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "break-inside-auto",
+    "break-inside-avoid",
+    "break-inside-avoid-page",
+    "break-inside-avoid-column",
+  ]}
+/>

@@ -8,11 +8,15 @@ meta:
 tbc: false
 ---
 
-| Selector                   | Style                       | Variables Required |
-| -------------------------- | --------------------------- | ------------------ |
-| `.whitespace-normal`       | `white-space: normal`       | -                  |
-| `.whitespace-nowrap`       | `white-space: nowrap`       | -                  |
-| `.whitespace-pre`          | `white-space: pre`          | -                  |
-| `.whitespace-pre-line`     | `white-space: pre-line`     | -                  |
-| `.whitespace-pre-wrap`     | `white-space: pre-wrap`     | -                  |
-| `.whitespace-break-spaces` | `white-space: break-spaces` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "whitespace-normal",
+    "whitespace-nowrap",
+    "whitespace-pre",
+    "whitespace-pre-line",
+    "whitespace-pre-wrap",
+    "whitespace-break-spaces",
+  ]}
+/>

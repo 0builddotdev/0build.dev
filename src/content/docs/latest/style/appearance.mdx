@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style              | Variables Required |
-| ------------------ | ------------------ | ------------------ |
-| `.appearance-none` | `appearance: none` | -                  |
-| `.appearance-auto` | `appearance: auto` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["appearance-none", "appearance-auto"]} />

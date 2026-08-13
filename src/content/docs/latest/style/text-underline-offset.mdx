@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector                 | Style                                            | Variables Required   |
-| ------------------------ | ------------------------------------------------ | -------------------- |
-| `.underline-offset`      | `text-underline-offset: var(--underline-offset)` | `--underline-offset` |
-| `.underline-offset-auto` | `text-underline-offset: auto`                    | -                    |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["underline-offset", "underline-offset-auto"]} />

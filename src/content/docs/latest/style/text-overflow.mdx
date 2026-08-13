@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector         | Style                                                                        | Variables Required |
-| ---------------- | ---------------------------------------------------------------------------- | ------------------ |
-| `.truncate`      | `overflow: hidden`<br />`text-overflow: ellipsis`<br />`white-space: nowrap` | -                  |
-| `.text-ellipsis` | `text-overflow: ellipsis`                                                    | -                  |
-| `.text-clip`     | `text-overflow: clip`                                                        | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["truncate", "text-ellipsis", "text-clip"]} />

@@ -8,18 +8,22 @@ meta:
 tbc: false
 ---
 
-| Selector             | Style                             | Variables Required |
-| -------------------- | --------------------------------- | ------------------ |
-| `.tracking`          | `letter-spacing: var(--tracking)` | `--tracking`       |
-| `.-tracking-normal`  | `letter-spacing: -0em`            | -                  |
-| `.-tracking-tight`   | `letter-spacing: 0.025em`         | -                  |
-| `.-tracking-tighter` | `letter-spacing: 0.05em`          | -                  |
-| `.-tracking-wide`    | `letter-spacing: -0.025em`        | -                  |
-| `.-tracking-wider`   | `letter-spacing: -0.05em`         | -                  |
-| `.-tracking-widest`  | `letter-spacing: -0.1em`          | -                  |
-| `.tracking-normal`   | `letter-spacing: 0em`             | -                  |
-| `.tracking-tight`    | `letter-spacing: -0.025em`        | -                  |
-| `.tracking-tighter`  | `letter-spacing: -0.05em`         | -                  |
-| `.tracking-wide`     | `letter-spacing: 0.025em`         | -                  |
-| `.tracking-wider`    | `letter-spacing: 0.05em`          | -                  |
-| `.tracking-widest`   | `letter-spacing: 0.1em`           | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "tracking",
+    "-tracking-normal",
+    "-tracking-tight",
+    "-tracking-tighter",
+    "-tracking-wide",
+    "-tracking-wider",
+    "-tracking-widest",
+    "tracking-normal",
+    "tracking-tight",
+    "tracking-tighter",
+    "tracking-wide",
+    "tracking-wider",
+    "tracking-widest",
+  ]}
+/>

@@ -8,6 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector               | Style                                                     | Variables Required      |
-| ---------------------- | --------------------------------------------------------- | ----------------------- |
-| `.backdrop-brightness` | `backdrop-filter: brightness(var(--backdrop-brightness))` | `--backdrop-brightness` |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["backdrop-brightness"]} />

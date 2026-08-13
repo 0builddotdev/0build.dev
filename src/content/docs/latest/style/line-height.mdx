@@ -8,13 +8,17 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                                                | Variables Required |
-| ------------------ | ---------------------------------------------------- | ------------------ |
-| `.leading`         | `line-height: calc(var(--spacing) * var(--leading))` | `--leading`        |
-| `.[leading]`       | `line-height: var(--leading)`                        | `--leading`        |
-| `.leading-loose`   | `line-height: 2`                                     | -                  |
-| `.leading-none`    | `line-height: 1`                                     | -                  |
-| `.leading-normal`  | `line-height: 1.5`                                   | -                  |
-| `.leading-relaxed` | `line-height: 1.625`                                 | -                  |
-| `.leading-snug`    | `line-height: 1.375`                                 | -                  |
-| `.leading-tight`   | `line-height: 1.25`                                  | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "leading",
+    "[leading]",
+    "leading-loose",
+    "leading-none",
+    "leading-normal",
+    "leading-relaxed",
+    "leading-snug",
+    "leading-tight",
+  ]}
+/>

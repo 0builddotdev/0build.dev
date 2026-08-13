@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector         | Style                               | Variables Required |
-| ---------------- | ----------------------------------- | ------------------ |
-| `.aspect`        | `aspect-ratio: var(--aspect)`       | `--aspect`         |
-| `.aspect-square` | `aspect-ratio: 1/1`                 | -                  |
-| `.aspect-video`  | `aspect-ratio: var(--aspect-video)` | -                  |
-| `.aspect-auto`   | `aspect-ratio: auto`                | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["aspect", "aspect-square", "aspect-video", "aspect-auto"]}
+/>

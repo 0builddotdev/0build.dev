@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector            | Style                            | Variables Required |
-| ------------------- | -------------------------------- | ------------------ |
-| `.flex-row`         | `flex-direction: row`            | -                  |
-| `.flex-row-reverse` | `flex-direction: row-reverse`    | -                  |
-| `.flex-col`         | `flex-direction: column`         | -                  |
-| `.flex-col-reverse` | `flex-direction: column-reverse` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["flex-row", "flex-row-reverse", "flex-col", "flex-col-reverse"]}
+/>

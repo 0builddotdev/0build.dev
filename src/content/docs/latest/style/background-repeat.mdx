@@ -8,11 +8,15 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                          | Variables Required |
-| ------------------ | ------------------------------ | ------------------ |
-| `.bg-repeat`       | `background-repeat: repeat`    | -                  |
-| `.bg-repeat-x`     | `background-repeat: repeat-x`  | -                  |
-| `.bg-repeat-y`     | `background-repeat: repeat-y`  | -                  |
-| `.bg-repeat-space` | `background-repeat: space`     | -                  |
-| `.bg-repeat-round` | `background-repeat: round`     | -                  |
-| `.bg-no-repeat`    | `background-repeat: no-repeat` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "bg-repeat",
+    "bg-repeat-x",
+    "bg-repeat-y",
+    "bg-repeat-space",
+    "bg-repeat-round",
+    "bg-no-repeat",
+  ]}
+/>

@@ -8,10 +8,14 @@ meta:
 tbc: false
 ---
 
-| Selector             | Style                           | Variables Required |
-| -------------------- | ------------------------------- | ------------------ |
-| `.decoration-solid`  | `text-decoration-style: solid`  | -                  |
-| `.decoration-double` | `text-decoration-style: double` | -                  |
-| `.decoration-dotted` | `text-decoration-style: dotted` | -                  |
-| `.decoration-dashed` | `text-decoration-style: dashed` | -                  |
-| `.decoration-wavy`   | `text-decoration-style: wavy`   | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "decoration-solid",
+    "decoration-double",
+    "decoration-dotted",
+    "decoration-dashed",
+    "decoration-wavy",
+  ]}
+/>

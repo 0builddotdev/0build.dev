@@ -8,9 +8,13 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                          | Variables Required |
-| ------------------ | ------------------------------ | ------------------ |
-| `.bg-clip-border`  | `background-clip: border-box`  | -                  |
-| `.bg-clip-padding` | `background-clip: padding-box` | -                  |
-| `.bg-clip-content` | `background-clip: content-box` | -                  |
-| `.bg-clip-text`    | `background-clip: text`        | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "bg-clip-border",
+    "bg-clip-padding",
+    "bg-clip-content",
+    "bg-clip-text",
+  ]}
+/>

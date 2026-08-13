@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector        | Style                         | Variables Required |
-| --------------- | ----------------------------- | ------------------ |
-| `.mask-size`    | `mask-size: var(--mask-size)` | `--mask-size`      |
-| `.mask-auto`    | `mask-size: auto`             | -                  |
-| `.mask-cover`   | `mask-size: cover`            | -                  |
-| `.mask-contain` | `mask-size: contain`          | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["mask-size", "mask-auto", "mask-cover", "mask-contain"]}
+/>

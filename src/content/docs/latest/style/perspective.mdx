@@ -8,12 +8,16 @@ meta:
 tbc: false
 ---
 
-| Selector                | Style                                      | Variables Required |
-| ----------------------- | ------------------------------------------ | ------------------ |
-| `.perspective`          | `perspective: var(--perspective)`          | `--perspective`    |
-| `.perspective-dramatic` | `perspective: var(--perspective-dramatic)` | -                  |
-| `.perspective-near`     | `perspective: var(--perspective-near)`     | -                  |
-| `.perspective-normal`   | `perspective: var(--perspective-normal)`   | -                  |
-| `.perspective-midrange` | `perspective: var(--perspective-midrange)` | -                  |
-| `.perspective-distant`  | `perspective: var(--perspective-distant)`  | -                  |
-| `.perspective-none`     | `perspective: none`                        | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "perspective",
+    "perspective-dramatic",
+    "perspective-near",
+    "perspective-normal",
+    "perspective-midrange",
+    "perspective-distant",
+    "perspective-none",
+  ]}
+/>

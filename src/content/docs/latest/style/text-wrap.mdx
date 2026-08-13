@@ -8,9 +8,8 @@ meta:
 tbc: false
 ---
 
-| Selector        | Style                | Variables Required |
-| --------------- | -------------------- | ------------------ |
-| `.text-wrap`    | `text-wrap: wrap`    | -                  |
-| `.text-nowrap`  | `text-wrap: nowrap`  | -                  |
-| `.text-balance` | `text-wrap: balance` | -                  |
-| `.text-pretty`  | `text-wrap: pretty`  | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={["text-wrap", "text-nowrap", "text-balance", "text-pretty"]}
+/>

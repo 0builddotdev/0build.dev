@@ -8,13 +8,17 @@ meta:
 tbc: false
 ---
 
-| Selector               | Style                        | Variables Required |
-| ---------------------- | ---------------------------- | ------------------ |
-| `.items-start`         | `align-items: flex-start`    | -                  |
-| `.items-end`           | `align-items: flex-end`      | -                  |
-| `.items-center`        | `align-items: center`        | -                  |
-| `.items-stretch`       | `align-items: stretch`       | -                  |
-| `.items-baseline`      | `align-items: baseline`      | -                  |
-| `.items-end-safe`      | `align-items: safe flex-end` | -                  |
-| `.items-center-safe`   | `align-items: safe center`   | -                  |
-| `.items-baseline-last` | `align-items: last baseline` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "items-start",
+    "items-end",
+    "items-center",
+    "items-stretch",
+    "items-baseline",
+    "items-end-safe",
+    "items-center-safe",
+    "items-baseline-last",
+  ]}
+/>

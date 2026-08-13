@@ -8,10 +8,14 @@ meta:
 tbc: false
 ---
 
-| Selector       | Style                 | Variables Required |
-| -------------- | --------------------- | ------------------ |
-| `.float-start` | `float: inline-start` | -                  |
-| `.float-end`   | `float: inline-end`   | -                  |
-| `.float-right` | `float: right`        | -                  |
-| `.float-left`  | `float: left`         | -                  |
-| `.float-none`  | `float: none`         | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "float-start",
+    "float-end",
+    "float-right",
+    "float-left",
+    "float-none",
+  ]}
+/>

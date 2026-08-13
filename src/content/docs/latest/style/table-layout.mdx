@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector       | Style                 | Variables Required |
-| -------------- | --------------------- | ------------------ |
-| `.table-auto`  | `table-layout: auto`  | -                  |
-| `.table-fixed` | `table-layout: fixed` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["table-auto", "table-fixed"]} />

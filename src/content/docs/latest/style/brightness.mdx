@@ -8,6 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector      | Style                                   | Variables Required |
-| ------------- | --------------------------------------- | ------------------ |
-| `.brightness` | `filter: brightness(var(--brightness))` | `--brightness`     |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["brightness"]} />

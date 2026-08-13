@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector  | Style               | Variables Required |
-| --------- | ------------------- | ------------------ |
-| `.z`      | `z-index: var(--z)` | `--z`              |
-| `.z-auto` | `z-index: auto`     | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["z", "z-auto"]} />

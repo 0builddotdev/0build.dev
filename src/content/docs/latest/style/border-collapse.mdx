@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                       | Variables Required |
-| ------------------ | --------------------------- | ------------------ |
-| `.border-collapse` | `border-collapse: collapse` | -                  |
-| `.border-separate` | `border-collapse: separate` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["border-collapse", "border-separate"]} />

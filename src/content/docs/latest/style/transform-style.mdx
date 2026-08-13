@@ -8,7 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector          | Style                          | Variables Required |
-| ----------------- | ------------------------------ | ------------------ |
-| `.transform-3d`   | `transform-style: preserve-3d` | -                  |
-| `.transform-flat` | `transform-style: flat`        | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["transform-3d", "transform-flat"]} />

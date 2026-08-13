@@ -8,12 +8,16 @@ meta:
 tbc: false
 ---
 
-| Selector                    | Style                       | Variables Required |
-| --------------------------- | --------------------------- | ------------------ |
-| `.justify-self-auto`        | `justify-self: auto`        | -                  |
-| `.justify-self-start`       | `justify-self: start`       | -                  |
-| `.justify-self-end`         | `justify-self: end`         | -                  |
-| `.justify-self-center`      | `justify-self: center`      | -                  |
-| `.justify-self-stretch`     | `justify-self: stretch`     | -                  |
-| `.justify-self-end-safe`    | `justify-self: safe end`    | -                  |
-| `.justify-self-center-safe` | `justify-self: safe center` | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "justify-self-auto",
+    "justify-self-start",
+    "justify-self-end",
+    "justify-self-center",
+    "justify-self-stretch",
+    "justify-self-end-safe",
+    "justify-self-center-safe",
+  ]}
+/>

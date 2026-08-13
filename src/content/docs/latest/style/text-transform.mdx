@@ -8,9 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector       | Style                        | Variables Required |
-| -------------- | ---------------------------- | ------------------ |
-| `.uppercase`   | `text-transform: uppercase`  | -                  |
-| `.lowercase`   | `text-transform: lowercase`  | -                  |
-| `.capitalize`  | `text-transform: capitalize` | -                  |
-| `.normal-case` | `text-transform: none`       | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["uppercase", "lowercase", "capitalize", "normal-case"]} />

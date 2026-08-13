@@ -8,15 +8,19 @@ meta:
 tbc: false
 ---
 
-| Selector               | Style                                                    | Variables Required |
-| ---------------------- | -------------------------------------------------------- | ------------------ |
-| `.justify-normal`      | `justify-content: normal`<br />`justify-content: normal` | -                  |
-| `.justify-start`       | `justify-content: flex-start`                            | -                  |
-| `.justify-end`         | `justify-content: flex-end`                              | -                  |
-| `.justify-center`      | `justify-content: center`                                | -                  |
-| `.justify-between`     | `justify-content: space-between`                         | -                  |
-| `.justify-around`      | `justify-content: space-around`                          | -                  |
-| `.justify-evenly`      | `justify-content: space-evenly`                          | -                  |
-| `.justify-stretch`     | `justify-content: stretch`                               | -                  |
-| `.justify-end-safe`    | `justify-content: safe flex-end`                         | -                  |
-| `.justify-center-safe` | `justify-content: safe center`                           | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable
+  selectors={[
+    "justify-normal",
+    "justify-start",
+    "justify-end",
+    "justify-center",
+    "justify-between",
+    "justify-around",
+    "justify-evenly",
+    "justify-stretch",
+    "justify-end-safe",
+    "justify-center-safe",
+  ]}
+/>

@@ -8,8 +8,6 @@ meta:
 tbc: false
 ---
 
-| Selector           | Style                       | Variables Required |
-| ------------------ | --------------------------- | ------------------ |
-| `.wrap-break-word` | `overflow-wrap: break-word` | -                  |
-| `.wrap-anywhere`   | `overflow-wrap: anywhere`   | -                  |
-| `.wrap-normal`     | `overflow-wrap: normal`     | -                  |
+import ApiTable from "components/partials/style/api-table.astro";
+
+<ApiTable selectors={["wrap-break-word", "wrap-anywhere", "wrap-normal"]} />
