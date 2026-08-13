@@ -26,14 +26,23 @@ function createCssVarName({
   return `--${parts.filter(Boolean).join("-")}`;
 }
 
+function escapeCssSelector(selector: string): string {
+  return selector.replace(/[^a-zA-Z0-9_-]/g, (char) => `\\${char}`);
+}
+
 const tableData = selectors
   .map((selector, index) => {
     const rule = rules.find((r) => r.selector === selector);
-    if (!rule) return null;
+
+    if (!rule) {
+      return null;
+    }
 
     let metaItem = null;
+
     for (const category of Object.values(meta)) {
       const found = category.items?.find((item) => item.name === selector);
+
       if (found) {
         metaItem = found;
         break;
@@ -45,6 +54,7 @@ const tableData = selectors
 
     // 1. Determine all required variables
     let requiredVars: string[] = [];
+
     if (isVd) {
       if (rule.placeholders) {
         requiredVars = Object.values(rule.placeholders).map(
@@ -77,6 +87,26 @@ const tableData = selectors
       })
       .join("\n");
 
+    function resolveValue() {
+      let value = rule.arbitrary
+        ? `var(${baseVarName})`
+        : rule.values
+          ? rule.values[0]
+          : "...";
+
+      if (rule.placeholders) {
+        Object.entries(rule.placeholders).forEach(([key, val]) => {
+          value = value.replaceAll(key, `--${val}`);
+        });
+      }
+
+      return value;
+    }
+
+    const cssLines = properties.map((prop) => `  ${prop}: ${resolveValue()};`);
+    const escapedSelector = escapeCssSelector(selector);
+    const cssBlock = `.${escapedSelector} {\n${cssLines.join("\n")}\n}`;
+
     // 2. Format HTML example for readability
     let exampleHtml = "";
     if (isVd && requiredVars.length > 1) {
@@ -105,7 +135,7 @@ ${styleLines}
       description: metaItem?.description || `Applies styles for ${selector}.`,
       isVd,
       requiredVars,
-      cssRules,
+      cssBlock,
       exampleHtml,
     };
   })
@@ -118,8 +148,8 @@ ${styleLines}
       <thead>
         <tr>
           <th class="z-table-shrink"></th>
-          <th class="z-table-expand">Class</th>
-          <th class="z-table-expand">Rules</th>
+          <th class="z-table-shrink">Class</th>
+          <th class="z-table-expand">Description</th>
         </tr>
       </thead>
       <tbody>
@@ -132,15 +162,28 @@ ${styleLines}
                   type="button"
                   data-z-toggle={`#${data.id}`}
                 >
-                  <z-icon icon="circle-question-mark" />
+                  <z-icon
+                    class="size"
+                    style="--size: 4;"
+                    icon="circle-question-mark"
+                  />
                 </button>
-                <div id={data.id} class="z-flex-top" data-z-modal>
-                  <div class="z-modal-dialog z-margin-auto-vertical">
-                    <div class="z-modal-header">
-                      <code class="z-modal-title">.{data.selector}</code>
-                    </div>
+                <div id={data.id} class="z-modal" data-z-modal>
+                  <div
+                    class="z-modal-dialog"
+                    style="--z-modal-dialog-width: var(--container-4xl)"
+                  >
                     <div class="z-modal-body">
-                      <p>{data.description}</p>
+                      <h2 class="z-h2">{data.selector}</h2>
+
+                      <p class="mt" style="--mt: 6">
+                        {data.description}
+                      </p>
+
+                      <h3 class="z-h3 mt" style="--mt: 8">
+                        CSS Rules
+                      </h3>
+
                       <div
                         class="ec mt bg z-shadow z-rounded border-w border"
                         style={stl({
@@ -150,14 +193,15 @@ ${styleLines}
                           "--border": "#858b9833",
                         })}
                       >
-                        <Code
-                          theme="houston"
-                          code={data.exampleHtml}
-                          lang="html"
-                        />
+                        <Code theme="houston" code={data.cssBlock} lang="css" />
                       </div>
+
+                      <h4 class="z-h3 mt" style="--mt: 8">
+                        Usage
+                      </h4>
+
                       {data.isVd && data.requiredVars.length > 0 && (
-                        <div class="z-alert z-alert-warning mt" style="--mt: 6">
+                        <div class="mt" style="--mt: 6">
                           The{" "}
                           <code class="font-semibold">.{data.selector}</code>{" "}
                           class is flagged as a value-driven selector.
@@ -179,16 +223,30 @@ ${styleLines}
                             : " is required."}
                         </div>
                       )}
+
+                      <div
+                        class="ec mt bg z-shadow z-rounded border-w border"
+                        style={stl({
+                          "--mt": "6",
+                          "--bg": "#17191e",
+                          "--border-w": "1px",
+                          "--border": "#858b9833",
+                        })}
+                      >
+                        <Code
+                          theme="houston"
+                          code={data.exampleHtml}
+                          lang="html"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </td>
-              <td class="z-table-expand">
+              <td class="z-table-shrink">
                 <code class="z-codespan">.{data.selector}</code>
               </td>
-              <td class="z-table-expand">
-                <code class="z-codespan whitespace-pre">{data.cssRules}</code>
-              </td>
+              <td class="z-table-expand">{data.description}</td>
             </tr>
           ))
         }
