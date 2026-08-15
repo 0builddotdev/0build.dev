@@ -1,10 +1,9 @@
----
-group: getting-started
-order: 0
-text: Introduction
-title: Introduction
-context: https://0build.dev/contexts/utilities-usage.md
----
+## Relevant documents
+
+For better context, please download the following or ask the user to manually upload it:
+
+- https://0build.dev/contexts/utilities-usage.md
+- https://0build.dev/contexts/runtime-implementation.md
 
 ## Overview
 
@@ -39,21 +38,7 @@ In practice:
 
 Same intent, same visual result, but the right side never needed a compiler to exist.
 
-<div
-    class="z-alert z-alert-info mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-        class="size flex-none mt"
-        style="--size: 4; --mt: 1;"
-        icon="info"
-        ></z-icon>
-        <div>
-            <p>Already have a Tailwind layout you like? You don't have to rewrite it by hand. Run it through our <a target="_blank" href="https://play.0build.dev/convert">converter</a> and it'll turn <code class="font-semibold">class="m-8"</code> into <code class="font-semibold">class="m" style="--m: 8"</code> (and everything else) for you.</p>
-        </div>
-    </div>
-</div>
+Already have a Tailwind layout you like? You don't have to rewrite it by hand. Run it through our [converter](https://play.0build.dev/convert) and it'll turn `class="m-8"` into `class="m" style="--m: 8"` (and everything else) for you.
 
 ## Syntax
 
@@ -79,21 +64,7 @@ Some utility values are multiplied by `var(--spacing)` behind the scenes, so a v
 
 Because the class and its value always come in pairs, there's no such thing as an accidental style or inheritance issue. If you see `class="m"` in your markup, you know exactly where to look for its value.
 
-<div
-    class="z-alert z-alert-info mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-        class="size flex-none mt"
-        style="--size: 4; --mt: 1;"
-        icon="info"
-        ></z-icon>
-        <div>
-            <p>0build's <a target="_blank" href="https://play.0build.dev">Playground</a> has built-in intellisense to spot missing pairs, mismatches, and more. If you're working outside the Playground, you can set <code class="font-semibold">zRuntime.debug</code> to <code class="font-semibold">true</code> and open your devtools.</p>
-        </div>
-    </div>
-</div>
+0build's [Playground](https://play.0build.dev) has built-in intellisense to spot missing pairs, mismatches, and more. If you're working outside the Playground, you can set `zRuntime.debug` to `true` and open your devtools.
 
 ### Shorthand
 
@@ -131,22 +102,7 @@ It works with states, prefixes, and dark mode too. The full syntax just moves to
 A token without a state suffix (like `p=4`) still injects its variable and adds the class, but it skips the interactive CSS-generation path. It relies on a rule already in your stylesheet that references that variable.
 
 
-<div
-    class="z-alert z-alert-warning mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-            class="size flex-none mt"
-            style="--size: 4; --mt: 1;"
-            icon="triangle-alert"
-        ></z-icon>
-        <div>
-            <p class="font-medium">CLS Alert</p>
-            <p>While this feature is fully supported, it is highly discouraged as it may cause CLS (Cumulative Layout Shift). However, if you are working on internal apps, this might be fine for some use cases.</p>
-        </div>
-    </div>
-</div>
+CLS Alert: While this feature is fully supported, it is highly discouraged as it may cause CLS (Cumulative Layout Shift). However, if you are working on internal apps, this might be fine for some use cases.
 
 ### States
 
@@ -214,22 +170,7 @@ Pseudo-element need a `content` value before it renders at all. Hence, `.content
 ></div>
 ```
 
-<div
-    class="z-alert z-alert-warning mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-            class="size flex-none mt"
-            style="--size: 4; --mt: 1;"
-            icon="triangle-alert"
-            ></z-icon>
-        <div>
-            <p class="font-medium">CLS Alert</p>
-            <p>Unlike states or pseudo-classes, pseudo-elements might cause CLS because they dynamically inject new content and layout boxes into the DOM on the fly, altering element dimensions after the initial paint. However, if you are working on internal apps, this might be fine for some use cases.</p>
-        </div>
-    </div>
-</div>
+CLS Alert: Unlike states or pseudo-classes, pseudo-elements might cause CLS because they dynamically inject new content and layout boxes into the DOM on the fly, altering element dimensions after the initial paint. However, if you are working on internal apps, this might be fine for some use cases.
 
 ### Responsiveness
 

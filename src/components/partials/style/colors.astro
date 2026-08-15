@@ -358,7 +358,7 @@ const intensities = [
 ];
 ---
 
-<div class="overflow-x-auto">
+<div class="mt overflow-x-auto" style={stl({ "--mt": "6" })}>
   <div
     class="display-grid [grid-cols] gap w-fit color-grid pb mb mx-auto px sm:px xl:px"
     style={stl({
@@ -419,7 +419,6 @@ const intensities = [
                 "--border": "var(--z-border)",
                 "--border-o": "var(--z-border-o)",
               })}
-              data-z-tooltip={colors[name][intensity]}
               data-oklch={colors[name][intensity]}
               data-variable={`var(--color-${name}-${intensity})`}
               x-data
@@ -445,3 +444,17 @@ const intensities = [
     } catch (e) {}
   }
 </script>
+
+<div class="z-alert z-alert-info mt" style="--mt: 6">
+  <div class="display-flex gap-x" style="--gap-x: 2">
+    <z-icon class="size flex-none mt" style="--size: 4; --mt: 1;" icon="info"
+    ></z-icon>
+    <div>
+      <p>
+        Click to copy the <code class="font-semibold">oklch</code> value or <code
+          class="font-semibold">Alt</code
+        > + click to copy the CSS variables.
+      </p>
+    </div>
+  </div>
+</div>

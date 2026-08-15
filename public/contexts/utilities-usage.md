@@ -2,6 +2,7 @@
 
 For better context, please download the following or ask the user to manually upload it:
 
+- https://0build.dev/contexts/utilities-introduction.md
 - https://0build.dev/contexts/runtime-implementation.md
 
 ## Layout
