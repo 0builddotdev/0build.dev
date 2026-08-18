@@ -9,7 +9,7 @@ tbc: false
 import FeaturesGrid from 'components/partials/kit/features-grid.astro';
 import TradeOffs from 'components/partials/style/trade-offs.astro';
 
-0build is a full-fledged, opinionated, and highly customizable frontend design system. Born from real-world necessity, we don't chase hype. We build on what actually works. Our foundational approach worked a decade ago, and it will still work a decade from now.
+0build is a full-fledged, opinionated, and highly customizable frontend design system. Born from real-world necessity, we built it on top of what's already out there. No overengineering, no hype, and definitely no reinventing the wheel. Foundational approaches that worked a decade ago and will still work a decade from now.
 
 ## Kit
 
@@ -25,7 +25,7 @@ Here, plain CSS and semantic classes come first (e.g., `.z-card` or `.z-button-p
 
 Utilities are here as an escape hatch and helper, useful for a one-off spacing tweak or a fast prototype, not as the default way to build a page. We include them because the frontend landscape has moved toward utility-first workflows, and pretending otherwise doesn't help anyone ship.
 
-The reality is that coding has become dramatically cheaper and faster than it was a decade ago. Use vanilla CSS on top of our design API. That way, you aren’t fighting the framework because it actually works for you.
+The reality is that AI-assisted coding has made development dramatically cheaper and faster than it was a decade ago. Use vanilla CSS on top of the existing design API, so the framework works for you instead of getting in your way.
 
 <div
     class="z-alert z-alert-success mt"
@@ -43,3 +43,30 @@ The reality is that coding has become dramatically cheaper and faster than it wa
         </div>
     </div>
 </div>
+
+### Let utility classes win
+
+Here, we make extensive use of CSS layers:
+
+```css
+@layer theme, base, components, styles, utilities;
+```
+
+Component and named classes belong in the lower layers. Keep them intentionally weak so they can be overridden naturally by value-driven styles (`@layer styles`) and utility classes (`@layer utilities`). They're always within reach when you need them.
+
+Putting components or named classes in the highest layer—or outside the layer system—makes them difficult to override. This often leads to increasingly specific selectors, `!important`, and unnecessary workarounds. Keep them lower in the hierarchy and let the cascade work for you.
+
+```css
+@layer components {
+  .checkout-summary {}
+}
+```
+
+```html
+<!-- sm:m and display-flex classes are provided for you. -->
+<aside class="checkout-summary sm:p display-flex" style="--sm-p: 4;">
+  ...
+</aside>
+```
+
+Use unlayered styles—the highest level of the cascade—only as a last resort when customizing third-party libraries whose CSS you don't control, such as ApexCharts.

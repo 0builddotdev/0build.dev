@@ -2,6 +2,7 @@
 
 For better context, please download the following or ask the user to manually upload it:
 
+- https://0build.dev/boilerplate.txt
 - https://0build.dev/contexts/utilities-usage.md
 - https://0build.dev/contexts/runtime-implementation.md
 

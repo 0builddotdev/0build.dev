@@ -4,20 +4,18 @@ import type { HTMLAttributes } from "astro/types";
 export interface Props extends HTMLAttributes<"div"> {
   class?: string;
   border?: boolean | "x" | "y";
-  noColor?: boolean;
 }
 
-const { class: cls, border = false, noColor = false, ...rest } = Astro.props;
+const { class: cls, border = false, ...rest } = Astro.props;
 ---
 
 <div
   class:list={[
     "stripes-container",
     {
-      "border-all": border === true,
-      "border-x": border === "x",
-      "border-y": border === "y",
-      "has-default-color": !noColor,
+      "stripes-all": border === true,
+      "stripes-x": border === "x",
+      "stripes-y": border === "y",
     },
     cls,
   ]}

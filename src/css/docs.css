@@ -114,7 +114,8 @@
  * Background Stripes Pattern
  */
   .stripes-container {
-    --border-color: #e5e7eb; /* Tailwind gray-200 */
+    --stripes-color: #e5e7eb; /* Tailwind gray-200 */
+
     background-size: 0.5rem 0.5rem;
     background-position: top left;
     background-image: repeating-linear-gradient(
@@ -127,41 +128,30 @@
   }
 
   .dark .stripes-container {
-    --border-color: #374151; /* Tailwind gray-700 */
-  }
-
-  /* 
- * Default Text Color (drives the currentColor of the stripes)
- */
-  .has-default-color {
-    color: rgba(0, 0, 0, 0.1); /* text-black/10 */
-  }
-
-  .dark .has-default-color {
-    color: rgba(255, 255, 255, 0.125); /* dark:text-white/12.5 */
+    --stripes-color: #374151; /* Tailwind gray-700 */
   }
 
   /* 
  * Border Modifiers
  */
-  .border-all {
-    border: 0.0625rem solid var(--border-color);
+  .stripes-all {
+    border: 0.0625rem solid var(--stripes-color);
   }
 
-  .border-x {
-    border-left: 0.0625rem solid var(--border-color);
-    border-right: 0.0625rem solid var(--border-color);
+  .stripes-x {
+    border-left: 0.0625rem solid var(--stripes-color);
+    border-right: 0.0625rem solid var(--stripes-color);
   }
 
-  .border-y {
-    border-top: 0.0625rem solid var(--border-color);
-    border-bottom: 0.0625rem solid var(--border-color);
+  .stripes-y {
+    border-top: 0.0625rem solid var(--stripes-color);
+    border-bottom: 0.0625rem solid var(--stripes-color);
   }
 }
 
 @layer components {
   :root {
-    --ui-border: color-mix(
+    --docs-grid-border-computed: color-mix(
       in srgb,
       var(--z-border) var(--z-border-o),
       transparent
@@ -170,7 +160,7 @@
 
   .docs-grid {
     position: relative; /* required so the corner dots anchor to this box */
-    border: 1px solid var(--ui-border);
+    border: 1px solid var(--docs-grid-border-computed);
   }
 
   .docs-grid-items {
@@ -187,7 +177,7 @@
 
   .docs-grid-card {
     border-style: solid;
-    border-color: var(--ui-border);
+    border-color: var(--docs-grid-border-computed);
     border-width: 0;
   }
 
@@ -246,7 +236,7 @@
     height: 16px;
     border-radius: 50%;
     background: var(--z-bg);
-    border: 1px solid var(--ui-border);
+    border: 1px solid var(--docs-grid-border-computed);
     z-index: 2;
   }
 
@@ -254,7 +244,7 @@
   .docs-grid-corner::after {
     content: "";
     position: absolute;
-    background: var(--ui-border);
+    background: var(--docs-grid-border-computed);
   }
 
   .docs-grid-corner::before {
