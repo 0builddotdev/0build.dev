@@ -97,21 +97,80 @@ The `mode` group has special handling:
 
 ### Custom groups
 
-Other groups apply class names directly to the `<html>` element:
+The `<z-lsh>` component extends far beyond just toggling light and dark modes. By defining custom groups, you can allow users to control almost any global UI preference—such as layout density, corner styles, and many others.
+
+When a user switches options within a custom group, the component automatically updates the `<html>` element. Crucially, it intelligently removes the previous class that shares **the same prefix** before applying the new one, preventing conflicting classes from piling up.
+
+#### Example 1: Layout Density
+
+Because your components rely on base multipliers, creating a "density" toggle is incredibly simple.
+
+**1. Define your modifier classes**
+
+First, create CSS classes that override your default padding multipliers.
+
+```css
+@layer theme {
+  .z-density-compact {
+    --z-interactive-padding-block-multiplier: 0.35;
+    --z-interactive-padding-inline-multiplier: 0.75;
+  }
+  
+  .z-density-comfortable {
+    /* Assumes your default root multipliers are used here */
+  }
+  
+  .z-density-spacious {
+    --z-interactive-padding-block-multiplier: 1;
+    --z-interactive-padding-inline-multiplier: 1.75;
+  }
+}
+
+```
+
+**2. Implement the LSH toggles**
+
+Next, assign these values to `<z-lsh>` components using `group="density"`. Placing these anywhere in your app will automatically sync their active states.
 
 ```html
-<!-- Color themes -->
-<z-lsh group="color" value="z-theme-blue">
+<z-lsh group="density" value="z-density-compact">
   <template data-fn="template">
     <!-- -->
   </template>
 </z-lsh>
-<z-lsh group="color" value="z-theme-red">
+
+<z-lsh group="density" value="z-density-comfortable">
   <template data-fn="template">
     <!-- -->
   </template>
 </z-lsh>
-<z-lsh group="color" value="z-theme-green">
+
+<z-lsh group="density" value="z-density-spacious">
+  <template data-fn="template">
+    <!-- -->
+  </template>
+</z-lsh>
+```
+
+#### Example 2: Global UI Styles
+
+You can implement as many groups as your application requires. For instance, if you want to let users choose between sharp, rounded, or pill-shaped UI elements, simply create a new group.
+
+Class names are applied directly to the `<html>` element, meaning your entire application responds instantly:
+
+```html
+<!-- Themes -->
+<z-lsh group="theme" value="z-theme-blue">
+  <template data-fn="template">
+    <!-- -->
+  </template>
+</z-lsh>
+<z-lsh group="theme" value="z-theme-red">
+  <template data-fn="template">
+    <!-- -->
+  </template>
+</z-lsh>
+<z-lsh group="theme" value="z-theme-green">
   <template data-fn="template">
     <!-- -->
   </template>
@@ -133,9 +192,40 @@ Other groups apply class names directly to the `<html>` element:
     <!-- -->
   </template>
 </z-lsh>
+
+<!-- Radii -->
+<z-lsh group="corners" value="z-radius-sharp">
+  <template data-fn="template">
+    </template>
+</z-lsh>
+
+<z-lsh group="corners" value="z-radius-rounded">
+  <template data-fn="template">
+    </template>
+</z-lsh>
+
+<z-lsh group="corners" value="z-radius-pill">
+  <template data-fn="template">
+    </template>
+</z-lsh>
+
 ```
 
-When switching within a group, the component automatically removes the previous class with **the same** prefix.
+<div
+    class="z-alert z-alert-info mt"
+    style="--mt: 6"
+>
+    <div class="display-flex gap-x" style="--gap-x: 2">
+        <z-icon
+        class="size flex-none mt"
+        style="--size: 4; --mt: 1;"
+        icon="info"
+        ></z-icon>
+        <div>
+            <p>The automatic cleanup relies on the class prefix. When switching from <code class="font-semibold">z-radius-sharp</code> to <code class="font-semibold">z-radius-rounded</code>, the component sees the shared <code class="font-semibold">z-radius-</code> prefix and smoothly removes the old class before attaching the new one.</p>
+        </div>
+    </div>
+</div>
 
 ## Prevent auto-update
 

@@ -160,6 +160,85 @@ To set your newly added palette as the default, simply update the script in your
 </script>
 ```
 
-## Adding to LSH
+## Controls
 
-To register your newly added palette with the [LSH](/docs/latest/kit/lsh#custom-groups) component, please refer to the corresponding documentation or guide for step-by-step instructions on how to integrate it.
+Beyond colors, the API handles structural properties to maintain a consistent physical appearance across components.
+
+So, instead of hardcoding static pixel values, components dynamically calculate their size. For example, a button's height is determined by multiplying `--z-global-font-size` by the `--z-interactive-height-multiplier`. The button's block padding and inline padding are calculated similarly using their respective multipliers. This keeps the entire system proportionally synced whenever you change the base font size.
+
+Let's look at a common, real-world example: **readability**.
+
+In text-heavy interfaces—like story-sharing platforms, blogs, or reading apps—giving users control over readability is crucial. While users can rely on native browser zooming, this often leads to broken layouts, horizontal scrolling, or misaligned elements.
+
+Because this framework uses multipliers mathematically synced to `--z-global-font-size`, your entire UI remains perfectly proportional. This setup allows you to easily implement a custom "Text Size" toggle directly in your application. When a user increases the text size, you only need to update that single base variable, and the rest seamlessly follows:
+
+* **Buttons scale flawlessly:** Interactive elements grow proportionally without the text feeling cramped.
+* **Spacing remains balanced:** Padding and margins adjust automatically based on their multipliers.
+* **Layouts stay intact:** You avoid the structural chaos and overlapping elements that manual browser zooming sometimes triggers.
+
+Readability is just the beginning; there are countless other use cases where dynamic scaling shines. Build on top of 0build's API, and the framework will work for you, rather than you fighting against it.
+
+### Radii
+
+You can adjust the roundness of your components globally using the following tokens:
+
+| Variable | Default Value | Role |
+| --- | --- | --- |
+| `--z-global-radius` | `0.375rem` | The primary global radius used for standard components. |
+| `--z-global-radius-small` | `0.125rem` | A tighter radius intended for inner, smaller or compact elements. |
+
+### Shadows
+
+Depth and elevation are standardized using global shadow tokens:
+
+| Variable | Default Value | Role |
+| --- | --- | --- |
+| `--z-global-shadow` | `0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)` | The default, layered shadow for standard elevation. |
+| `--z-global-shadow-small` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` | A subtler shadow intended for flatter elevations. |
+
+### Interactives
+
+These multiplier variables act as a base scale shared by interactive components like buttons, forms, and pagination:
+
+| Variable | Default Value | Role |
+| --- | --- | --- |
+| `--z-interactive-height-multiplier` | `2.5` | Scales the overall height of an interactive element. |
+| `--z-interactive-padding-block-multiplier` | `0.625` | Scales the top and bottom padding. |
+| `--z-interactive-padding-inline-multiplier` | `1.25` | Scales the left and right padding. |
+
+We extensively use multipliers to control certain elements and keep them in sync, so you only need to update a few variables. However, you're free to leave them as they are and implement your own theme values.
+
+## Utilities
+
+To make applying these structural properties as seamless as possible, the framework provides utility classes that map directly to your global variables.
+
+### Layout & Typography
+
+You can apply this globally to the `<html>` tag to instantly control layout density of your app.
+
+| Class | CSS Variables Adjusted | Effect |
+| --- | --- | --- |
+| `.z-layout-small` | `--z-global-font-size`, `--z-global-line-height` | Scales the layout down to a compact size (base `0.875rem`). |
+| `.z-layout-medium` | `--z-global-font-size`, `--z-global-line-height` | Scales the layout up for a more spacious, readable UI (base `1.125rem`). |
+
+### Border Radius
+
+Use these classes to quickly apply your predefined corner tokens to elements like cards, dialogs, or custom containers.
+
+| Class | Maps To | Effect |
+| --- | --- | --- |
+| `.z-rounded` | `--z-global-radius` | Applies the standard default corner radius. |
+| `.z-rounded-small` | `--z-global-radius-small` | Applies the tighter, compact corner radius. |
+
+### Box Shadows
+
+These classes apply your global elevation tokens to create consistent depth across your application.
+
+| Class | Maps To | Effect |
+| --- | --- | --- |
+| `.z-shadow` | `--z-global-shadow` | Applies the standard layered shadow for primary elevation. |
+| `.z-shadow-small` | `--z-global-shadow-small` | Applies a subtle, minimal shadow—ideal for flatter UI elements. |
+
+## LSH Integration
+
+The true power of this multiplier and variable system unlocks when you give control directly to your users. Please see the [LSH](/docs/latest/kit/lsh#custom-groups) component documentation for step-by-step instructions on how to build interactive, state-synced preference toggles—like layout density switchers, text scalers, and custom theme selectors—that automatically save to local storage and update your UI instantly.

@@ -132,6 +132,17 @@
   }
 
   /* 
+ * Default Text Color (drives the currentColor of the stripes)
+ */
+  .has-default-color {
+    color: rgba(0, 0, 0, 0.1); /* text-black/10 */
+  }
+
+  .dark .has-default-color {
+    color: rgba(255, 255, 255, 0.125); /* dark:text-white/12.5 */
+  }
+
+  /* 
  * Border Modifiers
  */
   .stripes-all {
