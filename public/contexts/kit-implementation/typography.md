@@ -197,6 +197,17 @@ Add one of the following classes to modify the size and style of headings.
 | `.z-text-meta`     | <span class="z-text-meta">Add this class to a paragraph that contains meta text about an article or similar.</span> |
 | `.z-text-truncate` | Prevents text from wrapping into multiple lines, truncating it and displaying an ellipsis instead.                   |
 | `.z-text-break`    | Breaks strings, if their length exceeds the width of their container.                                                |
+| `.z-text-2xsmall` | Sets text size and line height to an extra-extra-small scale. |
+| `.z-text-xsmall` | Sets text size and line height to an extra-small scale. |
+| `.z-text-small` | Sets text size and line height to the global small size variables. |
+| `.z-text-base` | Sets text size and line height to the base global size variables. |
+| `.z-text-medium` | Sets text size and line height to a medium scale. |
+| `.z-text-large` | Sets text size and line height to a large scale. |
+| `.z-text-xlarge` | Sets text size and line height to an extra-large scale. |
+| `.z-text-2xlarge` | Sets text size and line height to a double extra-large scale. |
+| `.z-text-3xlarge` | Sets text size and line height to a triple extra-large scale. |
+
+Text utilities `z-text-2xsmall` to `z-text-3xlarge` use a 1.25 modular scale ratio.
 
 ### Background
 
