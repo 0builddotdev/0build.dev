@@ -255,17 +255,20 @@ Class names are applied directly to the `<html>` element, meaning your entire ap
 <!-- Radii -->
 <z-lsh group="corners" value="z-radius-sharp">
   <template data-fn="template">
-    </template>
+    <!-- -->
+  </template>
 </z-lsh>
 
 <z-lsh group="corners" value="z-radius-rounded">
   <template data-fn="template">
-    </template>
+    <!-- -->
+  </template>
 </z-lsh>
 
 <z-lsh group="corners" value="z-radius-pill">
   <template data-fn="template">
-    </template>
+    <!-- -->
+  </template>
 </z-lsh>
 
 ```

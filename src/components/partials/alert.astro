@@ -1,0 +1,29 @@
+---
+export interface Props {
+  status: string;
+  icon?: string;
+  title?: string;
+}
+
+const { status, icon, title } = Astro.props;
+---
+
+<div class={`z-alert z-alert-${status} mt`} style="--mt: 6">
+  <div class="display-flex gap-x" style="--gap-x: 2">
+    {
+      icon ? (
+        <z-icon
+          class="size flex-none mt"
+          style="--size: 4; --mt: 1;"
+          icon={icon}
+        />
+      ) : (
+        ""
+      )
+    }
+    <div>
+      {title ? <p class="font-medium">{title}</p> : ""}
+      <slot />
+    </div>
+  </div>
+</div>

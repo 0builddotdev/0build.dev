@@ -10,6 +10,7 @@ webc: true
 context: https://0build.dev/contexts/kit-implementation/lsh.md
 ---
 
+import Alert from "components/partials/alert.astro";
 import Snippet from "snippets/component.astro";
 
 ## Usage
@@ -44,7 +45,8 @@ To implement LSH, you'll need to make some modifications to your HTML code to al
 
 This will first check if a user previously set the theme color preference manually using `localStorage`, and as a fallback, it will either set dark or light mode based on the browser's color scheme preference.
 
-<span class="z-label z-label-primary">Note</span> You can replace `z-[group]-[value]` with anything you want as the default.
+<span class="z-label z-label-primary">Note</span> You can replace
+`z-[group]-[value]` with anything you want as the default.
 
 **2\.** Ensure that your `<body>` tag includes the classes `bg` and `color` to apply the proper background and text colors that automatically adapt to the currently set theme.
 
@@ -115,17 +117,16 @@ First, create CSS classes that override your default padding multipliers.
     --z-interactive-padding-block-multiplier: 0.35;
     --z-interactive-padding-inline-multiplier: 0.75;
   }
-  
+
   .z-density-comfortable {
     /* Assumes your default root multipliers are used here */
   }
-  
+
   .z-density-spacious {
     --z-interactive-padding-block-multiplier: 1;
     --z-interactive-padding-inline-multiplier: 1.75;
   }
 }
-
 ```
 
 **2. Implement the LSH toggles**
@@ -196,36 +197,34 @@ Class names are applied directly to the `<html>` element, meaning your entire ap
 <!-- Radii -->
 <z-lsh group="corners" value="z-radius-sharp">
   <template data-fn="template">
-    </template>
+    <!-- -->
+  </template>
 </z-lsh>
 
 <z-lsh group="corners" value="z-radius-rounded">
   <template data-fn="template">
-    </template>
+    <!-- -->
+  </template>
 </z-lsh>
 
 <z-lsh group="corners" value="z-radius-pill">
   <template data-fn="template">
-    </template>
+    <!-- -->
+  </template>
 </z-lsh>
-
 ```
 
-<div
-    class="z-alert z-alert-info mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-        class="size flex-none mt"
-        style="--size: 4; --mt: 1;"
-        icon="info"
-        ></z-icon>
-        <div>
-            <p>The automatic cleanup relies on the class prefix. When switching from <code class="font-semibold">z-radius-sharp</code> to <code class="font-semibold">z-radius-rounded</code>, the component sees the shared <code class="font-semibold">z-radius-</code> prefix and smoothly removes the old class before attaching the new one.</p>
-        </div>
-    </div>
-</div>
+<Alert status="info" icon="info">
+  {
+    <p>
+      The automatic cleanup relies on the class prefix. When switching from{" "}
+      <code class="font-semibold">z-radius-sharp</code> to{" "}
+      <code class="font-semibold">z-radius-rounded</code>, the component sees
+      the shared <code class="font-semibold">z-radius-</code> prefix and
+      smoothly removes the old class before attaching the new one.
+    </p>
+  }
+</Alert>
 
 ## Prevent auto-update
 
@@ -314,7 +313,7 @@ The LSH component supports internationalization through multiple methods with th
       }
     }
   </script>
-  
+
   <template data-fn="template">🌓</template>
 </z-lsh>
 ```
@@ -337,7 +336,7 @@ The LSH component supports custom CSS classes through the `cls` attribute.
 ```html
 <z-lsh cls="my-theme-button" toggle group="mode">
   <template data-fn="template">
-      <!-- -->
+    <!-- -->
   </template>
 </z-lsh>
 ```
@@ -345,11 +344,7 @@ The LSH component supports custom CSS classes through the `cls` attribute.
 ### Using JSON object format
 
 ```html
-<z-lsh
-  cls='{"button": "z-button z-button-primary z-lsh"}'
-  toggle
-  group="mode"
->
+<z-lsh cls='{"button": "z-button z-button-primary z-lsh"}' toggle group="mode">
   <template data-fn="template">
     <!-- -->
   </template>
@@ -384,7 +379,7 @@ The LSH component supports custom inline styles through the `stl` attribute.
 
 | Name                     | Type    | Default | Description                                                             |
 | ------------------------ | ------- | ------- | ----------------------------------------------------------------------- |
-| `value`                  | String  |         | The specific theme value to apply (e.g., "dark", "z-theme-blue")       |
+| `value`                  | String  |         | The specific theme value to apply (e.g., "dark", "z-theme-blue")        |
 | `group`                  | String  |         | Configuration group (e.g., "mode", "color", "font")                     |
 | `toggle`                 | Boolean | false   | Enables toggle behavior for mode switching (ignores value attribute)    |
 | `prevent-autoupdate`     | Boolean | false   | Prevents this instance from syncing with other instances                |
@@ -395,7 +390,7 @@ The LSH component supports custom inline styles through the `stl` attribute.
 
 ## Events
 
-| Name                   | Description                                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------------------------ |
+| Name                  | Description                                                                                            |
+| --------------------- | ------------------------------------------------------------------------------------------------------ |
 | `z-lsh:before-change` | Fired before theme change (cancelable). Event detail contains `{group, value, previousValue, config}`. |
 | `z-lsh:change`        | Fired after theme change. Event detail contains `{group, value, previousValue, config}`.               |

@@ -23,7 +23,7 @@ Tailwind CSS popularized utility-first styling, and it's genuinely good at the d
 | **Classes** | One class per property *per value* (`m-1`, `m-2`, `m-4`, and so on) | One class per property (`m`), value supplied separately |
 | **How you set a value** | Pick from a pre-generated set, or extend a config file | `style="--m: 8"`, any value, no config |
 | **Build step** | Required (PostCSS / JIT compiler) to generate only the classes you use | None. Ships pre-compiled, works straight off a CDN |
-| **New spacing value tomorrow** | Rebuild your entire app | Write a new number in `style` |
+| **New spacing value tomorrow** | Rebuild your entire app | Just update your value |
 | **Pseudo-classes and pseudo-elements** | Compiled into the bundle ahead of time | Generated at runtime, only for classes actually on the page |
 | **CSS footprint** | Grows with how many distinct values you use (purge helps) | Stays essentially flat, no matter how many values you use |
 
@@ -33,8 +33,17 @@ In practice:
 <!-- Tailwind CSS -->
 <div class="m-8"></div>
 
-<!-- 0build -->
+<!-- 0build (since v0.6.4)-->
+<div class="m=8"></div>
+
+<!-- 0build (intelligent redirect since v0.6.4) -->
+<div class="m=8px"></div>
+<!-- The runtime will transform to this for you -->
+<div class="[m]" style="--m: 8px"></div>
+
+<!-- 0build (correct way)-->
 <div class="m" style="--m: 8"></div>
+<div class="[m]" style="--m: 8px"></div>
 ```
 
 Same intent, same visual result, but the right side never needed a compiler to exist.
@@ -83,12 +92,68 @@ That's exactly the same as writing:
 <div class="p" style="--p: 4"></div>
 ```
 
+#### States
+
 It works with states, prefixes, and dark mode too. The full syntax just moves to the left side of the `=`:
 
 ```html
 <!-- sets --bg-hover: #ff0000 and registers bg:hover for CSS generation -->
 <div class="bg:hover=#ff0000"></div>
 ```
+
+#### Colors
+
+Since `v0.6.4`, the shorthand feature also works with [colors](/docs/latest/style/colors).
+
+```html
+<div class="bg=pink-500"></div>
+
+<!-- will automatically resolve to -->
+ <div class="bg" style="--bg: var(--color-pink-500)"></div>
+```
+
+<Alert status="info" icon="info">
+  {
+    <p>Only known colors registered in the framework will be resolved. Unknown values will be left as-is.</p>
+  }
+</Alert>
+
+#### Opacity
+
+You can now use the shorthand feature for opacity as well. 
+
+Previously, setting both a color and its opacity required multiple CSS variables:
+
+```html
+<div
+  class="bg/o dark:bg/o"
+  style="
+    --bg: var(--color-blue-800);
+    --bg-o: 80%;
+    --dark-bg: var(--color-green-800);
+    --dark-bg-o: 80%;
+  "
+></div>
+```
+
+Since `v0.6.4`, you can define both the color and the opacity directly within the class using shorthand syntax:
+
+```html
+<div class="bg/o=var(--color-blue-800)/80 dark:bg/o=var(--color-green-800)/80"></div>
+```
+
+#### Scale-based utilities
+
+Alongside colors, the `v0.6.4` shorthand feature intelligently redirects scale-based keys to their arbitrary-value counterparts when given a raw, non-integer value. For example, `m=4px` is automatically converted to `[m]=4px`:
+
+```html
+<div class="m=4px"></div>
+
+<!-- automatically resolves to -->
+<div class="[m]" style="--m: 4px"></div>
+```
+
+This happens because the `m` class is scaled, meaning its value is multiplied by `var(--spacing)` and therefore only accepts integers. When you need to break out of this scaling system, you would typically use a bracketed class like `[m]`, which accepts raw values. This shorthand allows you to use custom values without having to explicitly write the arbitrary-value syntax.
 
 **Variable naming reference:**
 
@@ -102,8 +167,7 @@ It works with states, prefixes, and dark mode too. The full syntax just moves to
 
 A token without a state suffix (like `p=4`) still injects its variable and adds the class, but it skips the interactive CSS-generation path. It relies on a rule already in your stylesheet that references that variable.
 
-
-CLS Alert: While this feature is fully supported, it is highly discouraged as it may cause CLS (Cumulative Layout Shift). However, if you are working on internal apps, this might be fine for some use cases.
+CLS Alert: This feature may cause CLS (Cumulative Layout Shift). Make sure to include a z-not-ready class in your `<head>` tag.
 
 ### States
 
@@ -171,7 +235,7 @@ Pseudo-element need a `content` value before it renders at all. Hence, `.content
 ></div>
 ```
 
-CLS Alert: Unlike states or pseudo-classes, pseudo-elements might cause CLS because they dynamically inject new content and layout boxes into the DOM on the fly, altering element dimensions after the initial paint. However, if you are working on internal apps, this might be fine for some use cases.
+CLS Alert: Unlike states or pseudo-classes, pseudo-elements might cause CLS because they dynamically inject new content and layout boxes into the DOM on the fly, altering element dimensions after the initial paint. Make sure to include a z-not-ready class in your `<head>` tag.
 
 ### Responsiveness
 
@@ -235,3 +299,29 @@ Opacity gets its own `/o` suffix and always travels with a paired value variable
 ```
 
 The same applies to the `dark:` prefix. Only utilities that deal with colors support the `/o` suffix.
+
+Starting with `v0.6.4`, shorthand support is now available for opacity.
+
+## Arbitrary Properties
+
+Starting `v0.6.4`, you can now apply any CSS property directly through classes using the arbitrary property syntax. This allows you to define specific styles without leaving your HTML or writing custom CSS rules.
+
+To use this feature, wrap the CSS property in brackets and assign the value using an equals sign: `[property]={value}`.
+
+```html
+<!-- Setting the writing mode to vertical-lr -->
+<div class="[writing-mode]={vertical-lr}">
+  This text is oriented vertically.
+</div>
+
+<!-- Also supports responsiveness -->
+<div class="md:[writing-mode]={vertical-lr}">
+  This text is oriented vertically on medium devices.
+</div>
+```
+
+This syntax is particularly useful for properties that aren't covered by the framework's built-in utility classes, giving you full control over the element's styling while maintaining the convenience of utility-first development.
+
+Note that this syntax generates CSS on the fly within the `@layer utilities` layer. 
+
+The required pattern is `[property]={value}`. Please note that the pattern `[class]=value` (without braces) is handled differently; it will not generate dynamic CSS and will instead simply split the class name and value, unless a state modifier is present (e.g., `:hover` or `::before`).

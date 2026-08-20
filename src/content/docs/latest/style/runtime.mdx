@@ -9,6 +9,8 @@ meta:
 context: https://0build.dev/contexts/runtime-implementation.md
 ---
 
+import Alert from "components/partials/alert.astro";
+
 ## Overview
 
 The runtime is the small JavaScript engine that builds the interactive utility classes. It scans your page, generates only the CSS your classes actually need, and gives you a handful of configuration hooks: debug mode, a safelist for dynamic markup, custom rules, and control over cascade layers. All of it is set through a single `window.zRuntime` object in your JS.
@@ -26,21 +28,19 @@ window.zRuntime = window.zRuntime || {};
 zRuntime.debug = true;
 ```
 
-<div
-    class="z-alert z-alert-info mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-        class="size flex-none mt"
-        style="--size: 4; --mt: 1;"
-        icon="info"
-        ></z-icon>
-        <div>
-            <p>By default, the boilerplate and <a target="_blank" href="https://play.0build.dev">Playground</a> already set <code class="font-semibold">zRuntime.debug</code> to <code class="font-semibold">true</code>. Make sure to turn it off before you hit production.</p>
-        </div>
-    </div>
-</div>
+<Alert status="info" icon="info">
+  {
+    <p>
+      By default, the boilerplate and{" "}
+      <a target="_blank" href="https://play.0build.dev">
+        Playground
+      </a>{" "}
+      already set <code class="font-semibold">zRuntime.debug</code> to{" "}
+      <code class="font-semibold">true</code>. Make sure to turn it off before
+      you hit production.
+    </p>
+  }
+</Alert>
 
 Debug mode scans every `[class]` element on the page and warns you if a variable a class needs isn't actually set.
 
@@ -77,21 +77,20 @@ Partial state coverage, where one variable is present and one is forgotten:
 <div class="opacity:hover opacity:active" style="--opacity-hover: 100%"></div>
 ```
 
-<div
-    class="z-alert z-alert-success mt"
-    style="--mt: 6"
->
-    <div class="display-flex gap-x" style="--gap-x: 2">
-        <z-icon
-        class="size flex-none mt"
-        style="--size: 4; --mt: 1;"
-        icon="lightbulb"
-        ></z-icon>
-        <div>
-            <p>Debug mode is the safety net you get once your markup is already wired up. If you're outside <a target="_blank" href="https://play.0build.dev">Playground</a>, that's what you use. Inside the Playground, you also get intellisense checks for the same class-without-variable pairing and vice-versa while you're typing, before you've saved anything.</p>
-        </div>
-    </div>
-</div>
+<Alert status="success" icon="lightbulb">
+  {
+    <p>
+      Debug mode is the safety net you get once your markup is already wired up.
+      If you're outside{" "}
+      <a target="_blank" href="https://play.0build.dev">
+        Playground
+      </a>
+      , that's what you use. Inside the Playground, you also get intellisense
+      checks for the same class-without-variable pairing and vice-versa while
+      you're typing, before you've saved anything.
+    </p>
+  }
+</Alert>
 
 ## Safelist
 
@@ -103,11 +102,11 @@ Set it before the runtime initializes:
 window.zRuntime = window.zRuntime || {};
 
 zRuntime.safelist = [
-  'opacity:hover',
+  "opacity:hover",
   {
-    class: 'bg',
-    states: [':hover', ':focus'],
-    prefixes: ['md'],
+    class: "bg",
+    states: [":hover", ":focus"],
+    prefixes: ["md"],
     dark: true,
   },
 ];
@@ -116,11 +115,7 @@ zRuntime.safelist = [
 **String form.** Each entry is a full class name, parsed exactly as if it were found in the DOM:
 
 ```js
-zRuntime.safelist = [
-  'opacity:hover',
-  'md:opacity:hover',
-  'dark:opacity:hover',
-];
+zRuntime.safelist = ["opacity:hover", "md:opacity:hover", "dark:opacity:hover"];
 ```
 
 **Object form.** Describe one base class and let the runtime generate every combination of states, breakpoints, and dark/light variants for you:
@@ -128,9 +123,9 @@ zRuntime.safelist = [
 ```js
 zRuntime.safelist = [
   {
-    class: 'opacity',
-    states: [':hover', ':focus'],
-    prefixes: ['md', 'lg'],
+    class: "opacity",
+    states: [":hover", ":focus"],
+    prefixes: ["md", "lg"],
     dark: true,
   },
 ];
@@ -144,12 +139,12 @@ zRuntime.safelist = [
 //   dark:lg:opacity:hover  dark:lg:opacity:focus
 ```
 
-| Property | Type | Description |
-|---|---|---|
-| `class` | `string` | Base class name (for example `opacity`) |
-| `states` | `string[]` | States to generate (for example `[':hover', ':focus']`) |
+| Property   | Type       | Description                                                           |
+| ---------- | ---------- | --------------------------------------------------------------------- |
+| `class`    | `string`   | Base class name (for example `opacity`)                               |
+| `states`   | `string[]` | States to generate (for example `[':hover', ':focus']`)               |
 | `prefixes` | `string[]` | Breakpoint prefixes (for example `['md', 'lg']`). Omit for no prefix. |
-| `dark` | `boolean` | If `true`, also generates every dark-mode variant |
+| `dark`     | `boolean`  | If `true`, also generates every dark-mode variant                     |
 
 Curious what's queued up? `zRuntime.getSafelist()` returns the parsed list that will be included in the next generation pass:
 
@@ -157,7 +152,6 @@ Curious what's queued up? `zRuntime.getSafelist()` returns the parsed list that 
 console.log(zRuntime.getSafelist());
 // [{ baseClass: 'opacity', state: ':hover', fullClass: 'opacity:hover', isDark: false, prefix: null }]
 ```
-
 
 ## Custom rules
 
@@ -168,22 +162,22 @@ window.zRuntime = window.zRuntime || {};
 
 zRuntime.customRules = [
   {
-    selector: 'ring',
-    properties: 'box-shadow',
-    values: ['0 0 0 3px blue'],
-    layer: 'utilities',
+    selector: "ring",
+    properties: "box-shadow",
+    values: ["0 0 0 3px blue"],
+    layer: "utilities",
   },
 ];
 ```
 
-| Field | Required | Description |
-|---|---|---|
-| `selector` | Yes | Base class name this rule matches (for example `opacity`) |
-| `properties` | Yes | CSS property, or an array of properties |
-| `values` | Yes (unless `arbitrary`) | Values mapped to each property |
-| `arbitrary` | No | `true` means the value comes from a CSS variable, no `values` needed |
-| `placeholders` | No | Template substitution: parts of `values` swapped for CSS vars |
-| `layer` | No | Cascade layer: `components`, `styles` (default), or `utilities` |
+| Field          | Required                 | Description                                                          |
+| -------------- | ------------------------ | -------------------------------------------------------------------- |
+| `selector`     | Yes                      | Base class name this rule matches (for example `opacity`)            |
+| `properties`   | Yes                      | CSS property, or an array of properties                              |
+| `values`       | Yes (unless `arbitrary`) | Values mapped to each property                                       |
+| `arbitrary`    | No                       | `true` means the value comes from a CSS variable, no `values` needed |
+| `placeholders` | No                       | Template substitution: parts of `values` swapped for CSS vars        |
+| `layer`        | No                       | Cascade layer: `components`, `styles` (default), or `utilities`      |
 
 If your `selector` matches a built-in rule, your version replaces it entirely. There's no partial merging to worry about.
 
@@ -197,10 +191,10 @@ The value always comes from a variable derived from the class name, state, prefi
 
   zRuntime.customRules = [
     {
-      selector: 'scale',
-      properties: 'transform',
+      selector: "scale",
+      properties: "transform",
       arbitrary: true,
-      layer: 'utilities',
+      layer: "utilities",
     },
   ];
 </script>
@@ -217,12 +211,12 @@ Template a value where specific parts are swapped for computed CSS variables:
 ```js
 zRuntime.customRules = [
   {
-    selector: 'shadow',
-    properties: 'box-shadow',
-    values: ['0 0 0 __size__ __color__'],
+    selector: "shadow",
+    properties: "box-shadow",
+    values: ["0 0 0 __size__ __color__"],
     placeholders: {
-      '__size__': 'shadow-size',
-      '__color__': 'shadow-color',
+      __size__: "shadow-size",
+      __color__: "shadow-color",
     },
   },
 ];
@@ -236,6 +230,7 @@ Want to see the full merged rule set, built-ins plus everything you've added? `z
 console.log(zRuntime.getRules());
 // [{ selector: 'opacity', properties: 'opacity', values: ['0', '1'], layer: 'styles' }]
 ```
+
 ### Layer
 
 Everything the runtime generates lives inside `@layer` blocks, controlled per rule through the `layer` field (default: `styles`):
@@ -247,10 +242,14 @@ Everything the runtime generates lives inside `@layer` blocks, controlled per ru
 
 @layer styles {
   /* default layer */
-  .opacity\:hover:hover { opacity: var(--opacity-hover); }
+  .opacity\:hover:hover {
+    opacity: var(--opacity-hover);
+  }
 
   @media (min-width: 48rem) {
-    .md\:opacity\:hover:hover { opacity: var(--opacity-hover); }
+    .md\:opacity\:hover:hover {
+      opacity: var(--opacity-hover);
+    }
   }
 }
 
@@ -263,10 +262,10 @@ The practical upshot: component styles always yield to utility overrides, and ut
 
 ## API reference
 
-| Method | What it does | When to use |
-|---|---|---|
-| `zRuntime.refresh()` | Clears the rule cache and re-runs style generation from scratch | After adding elements dynamically |
-| `zRuntime.regenerate()` | Re-runs style generation without clearing the cache | When your rule definitions haven't changed (faster than `refresh()`) |
-| `zRuntime.getCache()` | Returns the internal `Map` of generated rules, keyed by class, state, dark flag, and prefix | Debugging/inspection of generated output |
-| `zRuntime.getRules()` | Returns the full merged rule array: built-ins plus your custom rules | Inspecting the final rule set used for generation |
-| `zRuntime.getSafelist()` | Returns the parsed safelist entries queued for the next generation pass | Inspecting what's queued for the next generation pass |
+| Method                   | What it does                                                                                | When to use                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `zRuntime.refresh()`     | Clears the rule cache and re-runs style generation from scratch                             | After adding elements dynamically                                    |
+| `zRuntime.regenerate()`  | Re-runs style generation without clearing the cache                                         | When your rule definitions haven't changed (faster than `refresh()`) |
+| `zRuntime.getCache()`    | Returns the internal `Map` of generated rules, keyed by class, state, dark flag, and prefix | Debugging/inspection of generated output                             |
+| `zRuntime.getRules()`    | Returns the full merged rule array: built-ins plus your custom rules                        | Inspecting the final rule set used for generation                    |
+| `zRuntime.getSafelist()` | Returns the parsed safelist entries queued for the next generation pass                     | Inspecting what's queued for the next generation pass                |

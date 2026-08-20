@@ -7,7 +7,31 @@ title: Release Notes
 meta:
   robots: noindex
 tbc: false
+dot: true
 ---
+
+## August 21, 2026
+
+**v0.6.4**
+
+This release is packed with quality-of-life improvements and critical bug fixes designed to streamline your workflow and polish the user and development experience!
+
+**Shorthand Syntax Update**
+
+To prevent browsers from natively splitting classes by spaces (which often resulted in "garbage" classes), we have replaced the quote-system with underscores:
+
+| Old Syntax | New Syntax |
+| :--- | :--- |
+| `class="[m]='calc(var(--spacing) * 2)'"` | `class="[m]=calc(var(--spacing)_*_2)"` |
+
+**Other Improvements**
+
+- **Plugin System Migration**: We have moved to a new plugin-based architecture. This is an internal optimization, and no breaking changes are expected for your current projects.
+- **CLS Mitigation**: Introduced `z-not-ready` and `z-ready` classes to help developers eliminate Cumulative Layout Shift (CLS) and ensure smoother page loads. If you choose to migrate, make sure to include the `z-not-ready` class in your `<head>` tag.
+- **Arbitrary Properties**: You can now define any CSS property on the fly. For example: `class="[writing-mode]={vertical-lr}"`. Learn more [here](/docs/latest/style/introduction#arbitrary-properties).
+- **Color Shorthand**: Simplified color application with the new shorthand syntax, e.g., `color=pink-500`. Learn more [here](/docs/latest/style/introduction#colors).
+- **Intelligent Inline-Var Redirection**: Scaled keys now automatically redirect to their arbitrary counterparts when a raw, non-integer value is provided (e.g., `m=4px` → `[m]=4px`). Learn more [here](/docs/latest/style/introduction#scale-based-utilities).
+- **Enhanced Debugging**: The debugger now issues a warning when a scaled key is given a raw value without a matching arbitrary rule for redirection. This prevents the silent generation of broken `calc()` output.
 
 ## August 15, 2026
 
