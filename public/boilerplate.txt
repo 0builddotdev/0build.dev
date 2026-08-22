@@ -7,11 +7,11 @@
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/css/kit.min.css"
+      href="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/css/kit.min.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/css/chart.min.css"
+      href="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/css/chart.min.css"
     />
 
     <script>
@@ -36,14 +36,14 @@
 
     <!-- Load the core file in the <head> -->
     <script
-      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/js/hwc/core.iife.js"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/js/hwc/core.iife.js"
       type="module"
     ></script>
   </head>
   <body class="bg color" style="--bg: var(--z-bg); --color: var(--z-bg-f)">
     <!-- CODE HERE -->
 
-    <script src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/js/uikit.min.js"></script>
 
     <script>
       window.zRuntime = window.zRuntime || {};
@@ -57,25 +57,25 @@
 
     <!-- Optional: Runtime -->
     <script
-      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/js/runtime.iife.js"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/js/runtime.iife.js"
       type="module"
     ></script>
 
     <!-- Optional: Icons -->
     <script
-      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/js/hwc/icon.iife.js"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/js/hwc/icon.iife.js"
       type="module"
     ></script>
 
     <!-- Optional: Charts -->
     <script
-      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/js/hwc/chart.iife.js"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/js/hwc/chart.iife.js"
       type="module"
     ></script>
 
     <!-- Load components last -->
     <script
-      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.4/dist/js/hwc/components.iife.js"
+      src="https://cdn.jsdelivr.net/gh/0builddotdev/0build@0.6.5/dist/js/hwc/components.iife.js"
       type="module"
     ></script>
   </body>
