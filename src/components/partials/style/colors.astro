@@ -1,5 +1,6 @@
 ---
 import { stl } from "helpers/common";
+import Alert from "components/partials/alert.astro";
 
 const colors: { [key: string]: { [key: string]: string } } = {
   red: {
@@ -445,16 +446,9 @@ const intensities = [
   }
 </script>
 
-<div class="z-alert z-alert-info mt" style="--mt: 6">
-  <div class="display-flex gap-x" style="--gap-x: 2">
-    <z-icon class="size flex-none mt" style="--size: 4; --mt: 1;" icon="info"
-    ></z-icon>
-    <div>
-      <p>
-        Click to copy the <code class="font-semibold">oklch</code> value or <code
-          class="font-semibold">Alt</code
-        > + click to copy the CSS variables.
-      </p>
-    </div>
-  </div>
-</div>
+<Alert status="info">
+  <p>
+    Click to copy the <code class="font-semibold">oklch</code> value or
+    <code class="font-semibold">Alt</code> + click to copy the CSS variables.
+  </p>
+</Alert>

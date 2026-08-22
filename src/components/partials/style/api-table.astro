@@ -2,6 +2,7 @@
 import { Code } from "astro:components";
 import { rules, vd } from "registry/rules";
 import meta from "registry/meta/index";
+import Alert from "components/partials/alert.astro";
 import SyntaxHighlighter from "components/syntax-highlighter.astro";
 
 export interface Props {
@@ -392,25 +393,20 @@ const tableData = selectors
                             />
                           </SyntaxHighlighter>
 
-                          <div
-                            class="z-alert z-alert-warning mt"
-                            style="--mt: 6"
+                          <Alert
+                            status="warning"
+                            icon="triangle-alert"
+                            title="CLS Alert"
                           >
-                            <div class="display-flex gap-x" style="--gap-x: 2">
-                              <z-icon
-                                class="mt"
-                                style="--mt: 1;"
-                                icon="triangle-alert"
-                              />
-                              <p>
-                                While this feature is supported, it is highly
-                                discouraged as it may cause CLS (Cumulative
-                                Layout Shift). However, if you are working on
-                                internal apps, this might be fine for some use
-                                cases.
-                              </p>
-                            </div>
-                          </div>
+                            <p>
+                              This feature may cause CLS (Cumulative Layout
+                              Shift). Make sure to include a
+                              <code class="font-semibold">z-not-ready</code>
+                              class in your{" "}
+                              <code class="font-semibold">&lt;head&gt;</code>
+                              tag.
+                            </p>
+                          </Alert>
                         </Fragment>
                       )}
                     </div>
