@@ -74,7 +74,7 @@ Some utility values are multiplied by `var(--spacing)` behind the scenes, so a v
 
 Because the class and its value always come in pairs, there's no such thing as an accidental style or inheritance issue. If you see `class="m"` in your markup, you know exactly where to look for its value.
 
-0build's [Playground](https://play.0build.dev) has built-in intellisense to spot missing pairs, mismatches, and more. If you're working outside the Playground, you can set `zRuntime.debug` to `true` and open your devtools.
+0build's [Playground](https://play.0build.dev/playground) has built-in intellisense to spot missing pairs, mismatches, and more. If you're working outside the Playground, you can set `zRuntime.debug` to `true` and open your devtools.
 
 ### Shorthand
 

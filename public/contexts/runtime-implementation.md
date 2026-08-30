@@ -22,7 +22,7 @@ window.zRuntime = window.zRuntime || {};
 zRuntime.debug = true;
 ```
 
-By default, the boilerplate and [Playground](https://play.0build.dev) already set `zRuntime.debug` to `true`. Make sure to turn it off before you hit production.
+By default, the boilerplate and [Playground](https://play.0build.dev/playground) already set `zRuntime.debug` to `true`. Make sure to turn it off before you hit production.
 
 Debug mode scans every `[class]` element on the page and warns you if a variable a class needs isn't actually set.
 
@@ -59,7 +59,7 @@ Partial state coverage, where one variable is present and one is forgotten:
 <div class="opacity:hover opacity:active" style="--opacity-hover: 100%"></div>
 ```
 
-Debug mode is the safety net you get once your markup is already wired up. If you're outside [Playground](https://play.0build.dev), that's what you use. Inside the Playground, you also get intellisense checks for the same class-without-variable pairing and vice-versa while you're typing, before you've saved anything.
+Debug mode is the safety net you get once your markup is already wired up. If you're outside [Playground](https://play.0build.dev/playground), that's what you use. Inside the Playground, you also get intellisense checks for the same class-without-variable pairing and vice-versa while you're typing, before you've saved anything.
 
 ## Safelist
 
