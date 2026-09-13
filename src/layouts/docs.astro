@@ -11,6 +11,7 @@ import {
   type Kit,
   type Style,
 } from "helpers/docs";
+import Support from "components/partials/support.astro";
 
 function isActive(href: string): boolean {
   if (`${project}/${entry.data.alias}` === href) {
@@ -513,54 +514,7 @@ const tbc = transformHeadings(headings);
             </li>
           </ul>
 
-          <div
-            class="mt p border-w border-dashed border/o"
-            style={stl({
-              "--mt": "4",
-              "--p": "2",
-              "--border-w": "1px",
-              "--border": "var(--z-border)",
-              "--border-o": "var(--z-border-o)",
-            })}
-          >
-            <div class="text-lg font-bold">Support the Project</div>
-            <p
-              class="mt color"
-              style={stl({ "--mt": "2", "--color": "var(--z-muted-f)" })}
-            >
-              Your sponsorship helps keep it sustainable, supports new features,
-              and ensures it remains free, and accessible for everyone.
-            </p>
-
-            <div
-              class="mt display-flex flex-col gap"
-              style={stl({ "--mt": "2", "--gap": "1.5" })}
-            >
-              <a
-                class="z-button z-button-primary w-full"
-                href="https://github.com/sponsors/sveltecult"
-                target="_blank"
-              >
-                <z-icon
-                  class="size"
-                  style={stl({ "--size": "4" })}
-                  icon="github"></z-icon>
-                GitHub Sponsors
-              </a>
-
-              <a
-                class="z-button w-full"
-                href="https://ko-fi.com/sveltecult"
-                target="_blank"
-              >
-                <z-icon
-                  class="size"
-                  style={stl({ "--size": "4" })}
-                  icon="coffee"></z-icon>
-                Ko-Fi
-              </a>
-            </div>
-          </div>
+          <Support />
         </div>
       </div>
     </aside>

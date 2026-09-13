@@ -1,0 +1,532 @@
+<style>
+  .hire-widget {
+    --yellow: #ffc53d;
+    --yellow-bright: #ffd873;
+    --bg-from: #17140f;
+    --bg-to: #0a0806;
+    --text-primary: #f5f1e8;
+    --text-muted: #a49c8c;
+
+    position: relative;
+    margin: calc(var(--spacing) * 4) calc(var(--spacing) * -3);
+
+    border: none;
+    box-shadow: 6px 6px 0 0 var(--yellow);
+
+    background: radial-gradient(
+      120% 140% at 15% 0%,
+      var(--bg-from) 0%,
+      var(--bg-to) 60%
+    );
+    color: var(--text-primary);
+    font-family: var(--font-geist-mono);
+
+    overflow: hidden;
+  }
+
+  .dark .hire-widget {
+    --bg-from: #0d0d0d;
+    --bg-to: #000000;
+  }
+
+  .hire-widget__glow {
+    position: absolute;
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(20px);
+    background: radial-gradient(
+      circle,
+      rgba(255, 197, 61, 0.2),
+      transparent 70%
+    );
+  }
+  .hire-widget__glow--tl {
+    top: calc(var(--spacing) * -18);
+    left: calc(var(--spacing) * -18);
+  }
+  .hire-widget__glow--br {
+    bottom: calc(var(--spacing) * -18);
+    right: calc(var(--spacing) * -18);
+  }
+
+  .hire-widget__corner {
+    position: absolute;
+    width: 208px;
+    height: 192px;
+    pointer-events: none;
+  }
+  .hire-widget__corner canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hire-widget__corner--tl {
+    top: calc(var(--spacing) * -5);
+    left: calc(var(--spacing) * -5);
+    -webkit-mask-image: linear-gradient(
+      135deg,
+      black 0%,
+      black 15%,
+      rgba(0, 0, 0, 0.2) 40%,
+      transparent 60%
+    );
+    mask-image: linear-gradient(
+      135deg,
+      black 0%,
+      black 15%,
+      rgba(0, 0, 0, 0.2) 40%,
+      transparent 60%
+    );
+  }
+  .hire-widget__corner--br {
+    bottom: calc(var(--spacing) * -5);
+    right: calc(var(--spacing) * -5);
+    -webkit-mask-image: linear-gradient(
+      315deg,
+      black 0%,
+      black 15%,
+      rgba(0, 0, 0, 0.2) 40%,
+      transparent 60%
+    );
+    mask-image: linear-gradient(
+      315deg,
+      black 0%,
+      black 15%,
+      rgba(0, 0, 0, 0.2) 40%,
+      transparent 60%
+    );
+  }
+
+  .hire-widget__content {
+    padding: calc(var(--spacing) * 12) calc(var(--spacing) * 2);
+  }
+
+  .hire-widget__headline {
+    margin: 0 0 calc(var(--spacing) * 2.5);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+  }
+
+  /* Typing animation for the header */
+  .typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing-anim 1.5s steps(18, end) forwards;
+  }
+
+  @keyframes typing-anim {
+    from {
+      width: 0;
+    }
+    to {
+      width: 18ch;
+    }
+  }
+
+  /* Terminal blinking cursor */
+  .terminal-cursor {
+    display: inline-block;
+    opacity: 0;
+    animation: cursor-blink 1s step-end infinite;
+    margin-left: 0.15em;
+  }
+
+  @keyframes cursor-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .hire-widget__body {
+    margin: 0 0 calc(var(--spacing) * 5);
+    color: var(--text-muted);
+  }
+
+  /* New Hexagon Bullet List */
+  .hire-widget__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 calc(var(--spacing) * 5);
+  }
+
+  .hire-widget__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: calc(var(--spacing) * 3);
+    margin-bottom: calc(var(--spacing) * 3);
+    color: var(--text-muted);
+  }
+
+  .hire-widget__list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .hex-bullet {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: calc(var(--spacing) * 0.75);
+    overflow: visible;
+  }
+
+  .hex-base {
+    stroke: var(--yellow);
+    opacity: 0.45;
+    stroke-width: 2px;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 3px rgba(255, 213, 115, 0.9))
+      drop-shadow(0 0 8px rgba(255, 197, 61, 0.4));
+  }
+
+  .hex-glow {
+    stroke: var(--yellow-bright);
+    stroke-width: 2.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    stroke-dasharray: 12 48;
+    animation: dash-spin 5s linear infinite;
+    filter: drop-shadow(0 0 3px rgba(255, 213, 115, 0.9))
+      drop-shadow(0 0 8px rgba(255, 197, 61, 0.4));
+  }
+
+  @keyframes dash-spin {
+    to {
+      stroke-dashoffset: -60;
+    }
+  }
+
+  .hire-widget__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4);
+    border-radius: 0;
+    border: none;
+    border-right: 3px solid var(--text-primary);
+    border-bottom: 3px solid var(--text-primary);
+    background: var(--yellow);
+    color: #000;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    box-shadow: 3px 3px 0 0 var(--text-primary);
+    transition:
+      transform 0.1s ease,
+      box-shadow 0.1s ease,
+      border-color 0.1s ease;
+  }
+
+  /* Consistent hover physics with support links to prevent "jumping" */
+  .hire-widget__cta:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 0 var(--text-primary);
+  }
+
+  .hire-widget__cta:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 var(--text-primary);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  .hire-widget__cta:focus-visible,
+  .hire-widget__support-link:focus-visible {
+    outline: 2px dotted var(--text-primary);
+    outline-offset: 1px;
+  }
+
+  .hire-widget__support-text {
+    margin: calc(var(--spacing) * 5.5) 0 calc(var(--spacing) * 4);
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .hire-widget__support {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 3);
+  }
+
+  /* Smaller Support Buttons */
+  .hire-widget__support-link {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2.5);
+    border-radius: 0;
+    border: none;
+    border-right: 3px solid var(--yellow);
+    border-bottom: 3px solid var(--yellow);
+    background: transparent;
+    color: var(--yellow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 3px 3px 0 0 var(--yellow);
+    transition:
+      transform 0.1s ease,
+      box-shadow 0.1s ease,
+      background 0.1s ease,
+      color 0.1s ease,
+      border-color 0.1s ease;
+  }
+
+  .hire-widget__support-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 0 var(--yellow);
+    background: var(--yellow);
+    color: #000;
+  }
+
+  .hire-widget__support-link:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 var(--yellow);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hire-widget__cta,
+    .hire-widget__support-link,
+    .hex-bullet path,
+    .typing-text,
+    .terminal-cursor {
+      transition: none;
+      animation: none;
+    }
+
+    .typing-text {
+      width: 18ch;
+    }
+    .terminal-cursor {
+      opacity: 1;
+    }
+  }
+</style>
+
+<div class="hire-widget">
+  <div class="hire-widget__glow hire-widget__glow--tl" aria-hidden="true"></div>
+  <div class="hire-widget__glow hire-widget__glow--br" aria-hidden="true"></div>
+
+  <div class="hire-widget__corner hire-widget__corner--tl" aria-hidden="true">
+    <canvas class="hive-canvas"></canvas>
+  </div>
+
+  <div class="hire-widget__corner hire-widget__corner--br" aria-hidden="true">
+    <canvas class="hive-canvas"></canvas>
+  </div>
+
+  <div class="hire-widget__content text-sm">
+    <h3 class="hire-widget__headline text-xl">
+      <span class="typing-text">Extra brain cells?</span><span
+        class="terminal-cursor">_</span
+      >
+    </h3>
+
+    <p class="hire-widget__body">
+      I'm a practical and effective full-stack dev, and one of my portfolio is
+      the site you're looking at right now. Let's skip the endless search:
+    </p>
+
+    <ul class="hire-widget__list">
+      <li>
+        <svg
+          class="hex-bullet"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            class="hex-base"
+            d="M12 2 L20.66 7 L20.66 17 L12 22 L3.34 17 L3.34 7 Z"></path>
+          <path
+            class="hex-glow"
+            d="M12 2 L20.66 7 L20.66 17 L12 22 L3.34 17 L3.34 7 Z"></path>
+        </svg>
+        <span
+          ><strong class="color" style="--color: var(--yellow)">Hiring?</strong> Let's
+          talk about your project.</span
+        >
+      </li>
+      <li>
+        <svg
+          class="hex-bullet"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            class="hex-base"
+            d="M12 2 L20.66 7 L20.66 17 L12 22 L3.34 17 L3.34 7 Z"></path>
+          <path
+            class="hex-glow"
+            d="M12 2 L20.66 7 L20.66 17 L12 22 L3.34 17 L3.34 7 Z"></path>
+        </svg>
+        <span
+          ><strong class="color" style="--color: var(--yellow)"
+            >Know someone who is?</strong
+          > I'd really appreciate a referral.</span
+        >
+      </li>
+    </ul>
+
+    <a class="hire-widget__cta" href="mailto:reden@franken-ui.dev">
+      Hire me <span class="terminal-cursor">_</span>
+    </a>
+
+    <p class="hire-widget__support-text">Prefer to support my work instead?</p>
+
+    <div class="hire-widget__support">
+      <a
+        class="hire-widget__support-link"
+        href="https://github.com/sponsors/sveltecult"
+        target="_blank">GitHub Sponsors</a
+      >
+      <a
+        class="hire-widget__support-link"
+        href="https://ko-fi.com/sveltecult"
+        target="_blank">Ko-fi</a
+      >
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvases = document.querySelectorAll(".hive-canvas");
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    const baseAlpha = isDark ? 0.55 : 0.45;
+
+    const R = 20;
+    const dx = R * Math.sqrt(3);
+    const dy = R * 1.5;
+
+    function createHexagons() {
+      const hexes = [];
+      for (let row = 0; row < 7; row++) {
+        for (let col = 0; col < 6; col++) {
+          hexes.push({
+            cx: -25 + col * dx + (row % 2 === 0 ? 0 : dx / 2),
+            cy: -25 + row * dy,
+            phase: Math.random() * 120,
+            speed:
+              (Math.random() > 0.5 ? 1 : -1) *
+              (120 / (4000 + Math.random() * 3000)),
+          });
+        }
+      }
+      return hexes;
+    }
+
+    function drawHex(ctx, cx, cy) {
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 180) * (60 * i - 90);
+        ctx.lineTo(cx + R * Math.cos(angle), cy + R * Math.sin(angle));
+      }
+      ctx.closePath();
+    }
+
+    canvases.forEach((canvas) => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = 260 * dpr;
+      canvas.height = 240 * dpr;
+
+      const ctx = canvas.getContext("2d");
+      ctx.scale(dpr, dpr);
+
+      // Base hexagons (cached)
+      const offscreen = document.createElement("canvas");
+      offscreen.width = canvas.width;
+      offscreen.height = canvas.height;
+      const offCtx = offscreen.getContext("2d");
+      offCtx.scale(dpr, dpr);
+      offCtx.translate(50, 50);
+      offCtx.strokeStyle = `rgba(255, 197, 61, ${baseAlpha})`;
+      offCtx.lineWidth = 2.5;
+
+      const hexagons = createHexagons();
+      hexagons.forEach((hex) => {
+        drawHex(offCtx, hex.cx, hex.cy);
+        offCtx.stroke();
+      });
+
+      // Glow canvas (animated)
+      const glowCanvas = document.createElement("canvas");
+      glowCanvas.width = canvas.width;
+      glowCanvas.height = canvas.height;
+      const glowCtx = glowCanvas.getContext("2d");
+      glowCtx.scale(dpr, dpr);
+
+      let lastTime = 0;
+      function animate(time) {
+        const delta = lastTime ? time - lastTime : 16.67;
+        lastTime = time;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(offscreen, 0, 0);
+
+        glowCtx.save();
+        glowCtx.setTransform(1, 0, 0, 1, 0, 0);
+        glowCtx.clearRect(0, 0, glowCanvas.width, glowCanvas.height);
+        glowCtx.restore();
+
+        glowCtx.save();
+        glowCtx.translate(50, 50);
+        glowCtx.strokeStyle = "#ffd873";
+        glowCtx.lineWidth = 2.5;
+        glowCtx.lineCap = "round";
+        glowCtx.setLineDash([12, 108]);
+
+        hexagons.forEach((hex) => {
+          if (!prefersReducedMotion) {
+            hex.phase += hex.speed * delta;
+          }
+          glowCtx.lineDashOffset = hex.phase;
+          drawHex(glowCtx, hex.cx, hex.cy);
+          glowCtx.stroke();
+        });
+        glowCtx.restore();
+
+        ctx.save();
+        ctx.shadowColor = "rgba(255, 213, 115, 0.9)";
+        ctx.shadowBlur = 3;
+        ctx.drawImage(glowCanvas, 0, 0);
+
+        ctx.shadowColor = "rgba(255, 197, 61, 0.4)";
+        ctx.shadowBlur = 8;
+        ctx.drawImage(glowCanvas, 0, 0);
+        ctx.restore();
+
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+    });
+  });
+</script>
