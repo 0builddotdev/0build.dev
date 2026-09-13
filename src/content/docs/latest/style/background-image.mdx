@@ -9,6 +9,9 @@ tbc: false
 ---
 
 import ApiTable from "components/partials/style/api-table.astro";
+import Example from 'components/partials/style/example.astro';
+import Stripes from 'components/partials/style/stripes.astro';
+import Figure from 'components/partials/style/figure.astro';
 
 <ApiTable
   selectors={[
@@ -45,3 +48,449 @@ import ApiTable from "components/partials/style/api-table.astro";
     "linear-to-tr",
   ]}
 />
+
+## Adding a linear gradient
+
+Use the `linear` utility together with a direction modifier like `linear-to-r`, `linear-to-t`, or `linear-to-bl`, and the color stop utilities, to add a linear gradient to an element. Use the `--linear` custom property to set a custom angle and interpolation mode (e.g., `65deg in oklab`):
+
+<Figure>
+
+<Example>
+  {
+    <div class="space-y" style="--space-y: 4">
+      <div class="h rounded-lg linear linear-to-r from to" style="--h: 14; --from: var(--color-cyan-500); --to: var(--color-blue-500)"></div>
+      <div class="h rounded-lg linear linear-to-t from to" style="--h: 14; --from: var(--color-sky-500); --to: var(--color-indigo-500)"></div>
+      <div class="h rounded-lg linear linear-to-bl from to" style="--h: 14; --from: var(--color-violet-500); --to: var(--color-fuchsia-500)"></div>
+      <div class="h rounded-lg linear from to" style="--h: 14; --linear: 65deg in oklab; --from: var(--color-purple-500); --to: var(--color-pink-500)"></div>
+    </div>
+
+  }
+</Example>
+
+</Figure>
+
+```html
+<div
+  class="h rounded-lg linear linear-to-r from to"
+  style="
+    --h: 14;
+    --from: var(--color-cyan-500);
+    --to: var(--color-blue-500)
+  "
+></div>
+<div
+  class="h rounded-lg linear linear-to-t from to"
+  style="
+    --h: 14;
+    --from: var(--color-sky-500);
+    --to: var(--color-indigo-500)
+  "
+></div>
+<div
+  class="h rounded-lg linear linear-to-bl from to"
+  style="
+    --h: 14;
+    --from: var(--color-violet-500);
+    --to: var(--color-fuchsia-500)
+  "
+></div>
+<div
+  class="h rounded-lg linear from to"
+  style="
+    --h: 14;
+    --linear: 65deg in oklab;
+    --from: var(--color-purple-500);
+    --to: var(--color-pink-500)
+  "
+></div>
+```
+
+## Adding a radial gradient
+
+Use the `radial` utility with the color stop utilities to add a radial gradient to an element. Use the `--radial` custom property to set a custom position (e.g., `at 50% 75%`):
+
+<Figure>
+
+<Example padding={false}>
+  {
+    <div
+      class="display-flex justify-around p sm:p"
+      style="
+        --p: 8;
+        --sm-p: 12
+      "
+    >
+      <div
+        class="size rounded-full radial from to from-position sm:size"
+        style="
+          --size: 18;
+          --from: var(--color-pink-400);
+          --to: var(--color-fuchsia-700);
+          --from-position: 40%;
+          --sm-size: 24
+        "
+      ></div>
+      <div
+        class="size rounded-full radial from via to to-position sm:size"
+        style="
+          --size: 18;
+          --radial: at 50% 75%;
+          --from: var(--color-sky-200);
+          --via: var(--color-blue-400);
+          --to: var(--color-indigo-900);
+          --to-position: 90%;
+          --sm-size: 24
+        "
+      ></div>
+      <div
+        class="size rounded-full radial from to to-position sm:size"
+        style="
+          --size: 18;
+          --radial: at 25% 25%;
+          --from: var(--color-white);
+          --to: var(--color-zinc-900);
+          --to-position: 75%;
+          --sm-size: 24
+        "
+      ></div>
+    </div>
+
+  }
+</Example>
+
+</Figure>
+
+```html
+<div
+  class="display-flex justify-around p sm:p"
+  style="
+    --p: 8;
+    --sm-p: 12
+  "
+>
+  <div
+    class="size rounded-full radial from to from-position sm:size"
+    style="
+      --size: 18;
+      --from: var(--color-pink-400);
+      --to: var(--color-fuchsia-700);
+      --from-position: 40%;
+      --sm-size: 24
+    "
+  ></div>
+  <div
+    class="size rounded-full radial from via to to-position sm:size"
+    style="
+      --size: 18;
+      --radial: at 50% 75%;
+      --from: var(--color-sky-200);
+      --via: var(--color-blue-400);
+      --to: var(--color-indigo-900);
+      --to-position: 90%;
+      --sm-size: 24
+    "
+  ></div>
+  <div
+    class="size rounded-full radial from to to-position sm:size"
+    style="
+      --size: 18;
+      --radial: at 25% 25%;
+      --from: var(--color-white);
+      --to: var(--color-zinc-900);
+      --to-position: 75%;
+      --sm-size: 24
+    "
+  ></div>
+</div>
+```
+
+## Adding a conic gradient
+
+Use the `conic` utility with the color stop utilities to add a conic gradient to an element. Use the `--conic` custom property to set a custom starting angle or interpolation mode (e.g., `from 180deg in oklab`, or `in oklch decreasing hue`):
+
+<Figure>
+
+<Example padding={false}>
+  {
+    <div
+      class="display-flex justify-around p sm:p"
+      style="
+        --p: 8;
+        --sm-p: 12
+      "
+    >
+      <div
+        class="size rounded-full conic from to to-position sm:size"
+        style="
+          --size: 18;
+          --from: var(--color-blue-600);
+          --to: var(--color-sky-400);
+          --to-position: 50%;
+          --sm-size: 24
+        "
+      ></div>
+      <div
+        class="size rounded-full conic from via to sm:size"
+        style="
+          --size: 18;
+          --conic: from 180deg in oklab;
+          --from: var(--color-indigo-600);
+          --via: var(--color-indigo-50);
+          --to: var(--color-indigo-600);
+          --sm-size: 24
+        "
+      ></div>
+      <div
+        class="size rounded-full conic from via to sm:size"
+        style="
+          --size: 18;
+          --conic: in oklch decreasing hue;
+          --from: var(--color-violet-700);
+          --via: var(--color-lime-300);
+          --to: var(--color-violet-700);
+          --sm-size: 24
+        "
+      ></div>
+    </div>
+
+  }
+</Example>
+
+</Figure>
+
+```html
+<div
+  class="display-flex justify-around p sm:p"
+  style="
+    --p: 8;
+    --sm-p: 12
+  "
+>
+  <div
+    class="size rounded-full conic from to to-position sm:size"
+    style="
+      --size: 18;
+      --from: var(--color-blue-600);
+      --to: var(--color-sky-400);
+      --to-position: 50%;
+      --sm-size: 24
+    "
+  ></div>
+  <div
+    class="size rounded-full conic from via to sm:size"
+    style="
+      --size: 18;
+      --conic: from 180deg in oklab;
+      --from: var(--color-indigo-600);
+      --via: var(--color-indigo-50);
+      --to: var(--color-indigo-600);
+      --sm-size: 24
+    "
+  ></div>
+  <div
+    class="size rounded-full conic from via to sm:size"
+    style="
+      --size: 18;
+      --conic: in oklch decreasing hue;
+      --from: var(--color-violet-700);
+      --via: var(--color-lime-300);
+      --to: var(--color-violet-700);
+      --sm-size: 24
+    "
+  ></div>
+</div>
+```
+
+## Setting gradient color stops
+
+Use the `from`, `via`, and `to` utilities together with the `--from`, `--via`, and `--to` custom properties to set the colors of the gradient stops:
+
+<Figure>
+
+<Example>
+  {
+    <div class="mx" style="--mx: 5;">
+      <div class="relative h" style="--h: 14.5;">
+        <div
+          class="absolute display-flex flex-col items-center top [left] ml h"
+          style="--top: 0; --left: 1px; --ml: -4; --h: 12;"
+        >
+          <svg
+            viewBox="0 0 32 34"
+            class="flex-none drop-shadow w fill"
+            style="--w: 8; --fill: var(--color-indigo-500);"
+          >
+            <symbol id="gradient-color-stop" viewBox="0 0 32 34">
+              <path
+                d="M1 4a4 4 0 0 1 4-4h22a4 4 0 0 1 4 4v19.6a4 4 0 0 1-2.118 3.53L16 34 3.118 27.13A4 4 0 0 1 1 23.6V4Z"
+              ></path>
+              <path
+                fill="none"
+                stroke="#000"
+                stroke-opacity=".05"
+                d="M5 .5h22A3.5 3.5 0 0 1 30.5 4v19.6a3.5 3.5 0 0 1-1.853 3.088L16 33.433 3.353 26.688A3.5 3.5 0 0 1 1.5 23.6V4A3.5 3.5 0 0 1 5 .5Z"
+              ></path>
+            </symbol>
+            <use href="#gradient-color-stop"></use>
+          </svg>
+          <div
+            class="mt h w bg/o dark:bg/o"
+            style="--mt: 2; --h: 2; --w: 0.5; --bg: var(--color-gray-900); --bg-o: 30%; --dark-bg: white; --dark-bg-o: 30%;"
+          ></div>
+        </div>
+        <div
+          class="absolute -ml=4 display-flex flex-col items-center top [left] h"
+          style="--top: 0; --left: 50%; --h: 12;"
+        >
+          <svg
+            viewBox="0 0 32 34"
+            class="flex-none drop-shadow w fill"
+            style="--w: 8; --fill: var(--color-purple-500);"
+          >
+            <use href="#gradient-color-stop"></use>
+          </svg>
+          <div
+            class="mt h w bg/o dark:bg/o"
+            style="--mt: 2; --h: 2; --w: 0.5; --bg: var(--color-gray-900); --bg-o: 30%; --dark-bg: white; --dark-bg-o: 30%;"
+          ></div>
+        </div>
+        <div
+          class="absolute display-flex flex-col items-center top [right] mr h"
+          style="--top: 0; --right: 1px; --mr: -4; --h: 12;"
+        >
+          <svg
+            viewBox="0 0 32 34"
+            class="flex-none drop-shadow w fill"
+            style="--w: 8; --fill: var(--color-pink-500);"
+          >
+            <use href="#gradient-color-stop"></use>
+          </svg>
+          <div
+            class="mt h w bg/o dark:bg/o"
+            style="--mt: 2; --h: 2; --w: 0.5; --bg: var(--color-gray-900); --bg-o: 30%; --dark-bg: white; --dark-bg-o: 30%;"
+          ></div>
+        </div>
+      </div>
+      <div
+        class="rounded-lg linear linear-to-r h from via to"
+        style="--h: 10; --from: var(--color-indigo-500); --via: var(--color-purple-500); --to: var(--color-pink-500);"
+      ></div>
+    </div>
+  }
+</Example>
+
+</Figure>
+
+```html
+<div
+  class="rounded-lg linear linear-to-r h from via to"
+  style="
+    --h: 10;
+    --from: var(--color-indigo-500);
+    --via: var(--color-purple-500);
+    --to: var(--color-pink-500);
+  "
+></div>
+```
+
+## Setting gradient stop positions
+
+Use the `from-position`, `via-position`, and `to-position` utilities together with the `--from-position`, `--via-position`, and `--to-position` custom properties to set more precise positions for the gradient color stops:
+
+<Figure>
+
+<Example>
+  {
+    <div class="mx" style="--mx: 5;">
+      <div class="relative h" style="--h: 14.5;">
+        <div
+          class="absolute display-flex flex-col items-center top [left] ml h"
+          style="--top: 0; --left: 10%; --ml: -4; --h: 12;"
+        >
+          <svg
+            viewBox="0 0 32 34"
+            class="flex-none drop-shadow w fill"
+            style="--w: 8; --fill: var(--color-indigo-500);"
+          >
+            <use href="#gradient-color-stop"></use>
+          </svg>
+          <div
+            class="mt h w bg/o dark:bg/o"
+            style="--mt: 2; --h: 2; --w: 0.5; --bg: var(--color-gray-900); --bg-o: 30%; --dark-bg: white; --dark-bg-o: 30%;"
+          ></div>
+          <div
+            class="absolute display-flex w-full items-center justify-center font-mono font-semibold tracking-wider top left h font-size color"
+            style="--top: 0; --left: 0; --h: 8; --font-size: 0.6875rem; --color: white;"
+          >
+            10%
+          </div>
+        </div>
+        <div
+          class="absolute display-flex flex-col items-center top [left] ml h"
+          style="--top: 0; --left: 30%; --ml: -4; --h: 12;"
+        >
+          <svg
+            viewBox="0 0 32 34"
+            class="flex-none drop-shadow w fill"
+            style="--w: 8; --fill: var(--color-sky-500);"
+          >
+            <use href="#gradient-color-stop"></use>
+          </svg>
+          <div
+            class="mt h w bg/o dark:bg/o"
+            style="--mt: 2; --h: 2; --w: 0.5; --bg: var(--color-gray-900); --bg-o: 30%; --dark-bg: white; --dark-bg-o: 30%;"
+          ></div>
+          <div
+            class="absolute display-flex w-full items-center justify-center font-mono font-semibold tracking-wider top left h font-size color"
+            style="--top: 0; --left: 0; --h: 8; --font-size: 0.6875rem; --color: white;"
+          >
+            30%
+          </div>
+        </div>
+        <div
+          class="absolute display-flex flex-col items-center top [right] mr h"
+          style="--top: 0; --right: 10%; --mr: -4; --h: 12;"
+        >
+          <svg
+            viewBox="0 0 32 34"
+            class="flex-none drop-shadow w fill"
+            style="--w: 8; --fill: var(--color-emerald-500);"
+          >
+            <use href="#gradient-color-stop"></use>
+          </svg>
+          <div
+            class="mt h w bg/o dark:bg/o"
+            style="--mt: 2; --h: 2; --w: 0.5; --bg: var(--color-gray-900); --bg-o: 30%; --dark-bg: white; --dark-bg-o: 30%;"
+          ></div>
+          <div
+            class="absolute display-flex w-full items-center justify-center font-mono font-semibold tracking-wider top left h font-size color"
+            style="--top: 0; --left: 0; --h: 8; --font-size: 0.6875rem; --color: white;"
+          >
+            90%
+          </div>
+        </div>
+      </div>
+      
+      <div
+        class="rounded-lg linear linear-to-r h from from-position via via-position to to-position"
+        style="--h: 10; --from: var(--color-indigo-500); --from-position: 10%; --via: var(--color-sky-500); --via-position: 30%; --to: var(--color-emerald-500); --to-position: 90%;"
+      ></div>
+    </div>
+  }
+</Example>
+
+</Figure>
+
+```html
+<div
+  class="rounded-lg linear linear-to-r h from from-position via via-position to to-position"
+  style="
+    --h: 10;
+    --from: var(--color-indigo-500);
+    --from-position: 10%;
+    --via: var(--color-sky-500);
+    --via-position: 30%;
+    --to: var(--color-emerald-500);
+    --to-position: 90%;"
+></div>
+```

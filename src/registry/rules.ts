@@ -1288,7 +1288,7 @@ export const rules: Rule[] = [
     layer: 'styles',
     selector: 'border-spacing',
     properties: ['border-spacing'],
-    values: ['calc(var(--spacing) * var({var}));'],
+    values: ['calc(var(--spacing) * var({var}))'],
     placeholders: { '{var}': 'border-spacing' },
   },
   {
@@ -7792,67 +7792,70 @@ export const rules: Rule[] = [
     values: ['0 0 #0000'],
   },
   {
-    layer: 'components',
+    layer: 'styles',
     selector: 'linear',
-    properties: ['background-image'],
-    values: ['linear-gradient(var(--tw-gradient-stops))'],
+    properties: ['--tw-gradient-position', 'background-image'],
+    values: ['var({var}, in oklab)', 'linear-gradient(var(--tw-gradient-stops))'],
+    placeholders: { '{var}': 'linear' },
   },
   {
-    layer: 'components',
+    layer: 'styles',
     selector: 'radial',
-    properties: ['background-image'],
-    values: ['radial-gradient(var(--tw-gradient-stops))'],
+    properties: ['--tw-gradient-position', 'background-image'],
+    values: ['var({var}, in oklab)', 'radial-gradient(var(--tw-gradient-stops))'],
+    placeholders: { '{var}': 'radial' },
   },
   {
-    layer: 'components',
+    layer: 'styles',
     selector: 'conic',
-    properties: ['background-image'],
-    values: ['conic-gradient(var(--tw-gradient-stops))'],
+    properties: ['--tw-gradient-position', 'background-image'],
+    values: ['var({var}, in oklab)', 'conic-gradient(var(--tw-gradient-stops))'],
+    placeholders: { '{var}': 'conic' },
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-t',
     properties: ['--tw-gradient-position'],
     values: ['to top in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-tr',
     properties: ['--tw-gradient-position'],
     values: ['to top right in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-r',
     properties: ['--tw-gradient-position'],
     values: ['to right in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-br',
     properties: ['--tw-gradient-position'],
     values: ['to bottom right in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-b',
     properties: ['--tw-gradient-position'],
     values: ['to bottom in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-bl',
     properties: ['--tw-gradient-position'],
     values: ['to bottom left in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-l',
     properties: ['--tw-gradient-position'],
     values: ['to left in oklab'],
   },
   {
-    layer: 'components',
+    layer: 'utilities',
     selector: 'linear-to-tl',
     properties: ['--tw-gradient-position'],
     values: ['to top left in oklab'],
@@ -7940,3 +7943,12 @@ export const vd: Set<string> = new Set([
   'space-y',
   '[space-y]',
 ]);
+
+// 3. Derive `scaled` from rules where the first value matches the spacing calculation pattern
+export const scaled: Set<string> = new Set(
+  rules
+    .filter(
+      rule => Array.isArray(rule.values) && rule.values[0] === 'calc(var(--spacing) * var({var}))',
+    )
+    .map(rule => rule.selector),
+);
