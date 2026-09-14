@@ -80,6 +80,39 @@ const tbc = transformHeadings(headings);
 ---
 
 <style>
+  .submit {
+    --paper-panel: #f7f4ec;
+    --ink: #1b1a17;
+    --ink-soft: #5c584c;
+
+    font-family:
+      Geist Mono,
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Monaco,
+      Consolas,
+      "Liberation Mono",
+      "Courier New",
+      monospace;
+    font-size: 0.9rem;
+    background: var(--ink);
+    color: var(--paper-panel);
+    border: 2px solid var(--ink);
+    padding: 0.25rem 1.25rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 3px 3px 0 var(--ink-soft);
+    transition:
+      transform 0.1s,
+      box-shadow 0.1s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+  }
+
   :root {
     --root-offset-top: calc((var(--spacing) * 14) + 1px);
   }
@@ -266,6 +299,9 @@ const tbc = transformHeadings(headings);
                 Theme Builder
               </a>
             </nav>
+            <a class="submit z-focus-visible mr" style="--mr: 1" href="/hire-me"
+              >Tyler vs Me</a
+            >
             <z-lsh
               class="size"
               style={stl({

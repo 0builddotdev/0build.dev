@@ -1,0 +1,30 @@
+---
+import HireMe from "components/hire-me/main.svelte";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="preload"
+      href="/fonts/geist-font/fonts/GeistVariableVF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/geist-font/fonts/GeistMonoVariableVF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/fonts/geist-font/style.css" />
+  </head>
+  <body>
+    <HireMe client:only />
+  </body>
+</html>

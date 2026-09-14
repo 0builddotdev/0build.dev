@@ -1,10 +1,9 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-import { visit } from "unist-util-visit";
+import svelte from "@astrojs/svelte";
+import { visit, SKIP } from "unist-util-visit";
 import { unified } from "@astrojs/markdown-remark";
-
-import { visit, SKIP } from "unist-util-visit"; // add SKIP to your import
 
 function plugin() {
   const classMap = {
@@ -105,7 +104,7 @@ function plugin() {
 export default defineConfig({
   trailingSlash: "never",
   compressHTML: true,
-  integrations: [mdx()],
+  integrations: [mdx(), svelte()],
   markdown: {
     processor: unified({
       rehypePlugins: [plugin],
